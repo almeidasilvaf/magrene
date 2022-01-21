@@ -1,0 +1,4 @@
+^dev$
+^README\.Rmd$
+^\.github$
+^codecov\.yml$
