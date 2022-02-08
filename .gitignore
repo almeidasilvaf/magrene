@@ -4,3 +4,4 @@
 .Ruserdata
 *.Rproj
 inst/doc
+inst/script/data_creation.Rmd
