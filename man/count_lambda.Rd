@@ -10,7 +10,8 @@ count_lambda(edgelist = NULL, paralogs = NULL)
 \item{edgelist}{A 2-column data frame with regulators in column 1 and
 targets in column 2.}
 
-\item{paralogs}{}
+\item{paralogs}{A 2-column data frame with gene IDs for each paralog
+in the paralog pair.}
 }
 \value{
 Numeric scalar with the frequency of lambda motifs in the network.

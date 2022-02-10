@@ -22,8 +22,8 @@ are_paralogs <- function(gene1 = NULL, gene2 = NULL, paralogs = NULL) {
     names(paralogs) <- c("duplicate1", "duplicate2")
     paralogs_gene1 <- paralogs[paralogs$duplicate1 == gene1 |
                                    paralogs$duplicate2 == gene1, ]
-    paralogs_gene1 <- c(as.character(paralogs_gene1$duplicate1),
-                        as.character(paralogs_gene1$duplicate2))
+    paralogs_gene1 <- unique(c(as.character(paralogs_gene1$duplicate1),
+                               as.character(paralogs_gene1$duplicate2)))
     status <- FALSE
     if(gene2 %in% paralogs_gene1) {
         status <- TRUE
@@ -36,7 +36,8 @@ are_paralogs <- function(gene1 = NULL, gene2 = NULL, paralogs = NULL) {
 #'
 #' @param edgelist A 2-column data frame with regulators in column 1 and
 #' targets in column 2.
-#' @param paralogs
+#' @param paralogs A 2-column data frame with gene IDs for each paralog
+#' in the paralog pair.
 #'
 #' @return Numeric scalar with the frequency of lambda motifs in the network.
 #' @importFrom utils combn
