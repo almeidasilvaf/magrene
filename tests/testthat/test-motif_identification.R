@@ -11,6 +11,11 @@ paralogs_wgd <- gma_paralogs[gma_paralogs$type == "WGD", 1:2]
 
 # Start tests
 test_that("are_paralogs() returns a logical scalar", {
+    p <- are_paralogs(gene1, gene2, paralogs)
+    expect_true(is.logical(p))
+})
+
+test_that("count_lambda() returns a numeric scalar", {
     count <- count_lambda(edgelist, paralogs)
     expect_true(is.numeric(count))
 })

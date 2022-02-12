@@ -32,6 +32,38 @@ are_paralogs <- function(gene1 = NULL, gene2 = NULL, paralogs = NULL) {
 }
 
 
+#' Check if the proteins encoded by two genes interact
+#' 
+#' @param gene1 Character of gene ID for gene 1.
+#' @param gene2 Character of gene ID for gene 2.
+#' @param edgelist_ppi A 2-column data frame with IDs of genes that encode
+#' each protein in the interacting pair.
+#' 
+#' @return Logical indicating whether the proteins encoded 
+#' by \strong{gene1} and \strong{gene2} interact in a PPI network.
+#' 
+#' @export
+#' @rdname are_interacting
+#' @examples 
+#' data(gma_ppi)
+#' gene1 <- "Glyma.19G213200"
+#' gene2 <- "Glyma.01G004300"
+#' are_paralogs(gene1, gene2, gma_ppi)
+are_interacting <- function(gene1 = NULL, gene2 = NULL, edgelist_ppi = NULL) {
+    
+    names(edgelist_ppi) <- c("gene1", "gene2")
+    partners_gene1 <- paralogs[paralogs$gene1 == gene1 |
+                                   paralogs$gene2 == gene1, ]
+    partners_gene1 <- unique(c(as.character(paralogs_gene1$gene1),
+                               as.character(paralogs_gene1$gene2)))
+    status <- FALSE
+    if(gene2 %in% partners_gene1) {
+        status <- TRUE
+    }
+    return(status)
+}
+
+
 #' Count the frequency of lambda motifs
 #'
 #' @param edgelist A 2-column data frame with regulators in column 1 and
@@ -56,7 +88,8 @@ count_lambda <- function(edgelist = NULL, paralogs = NULL) {
     len <- vapply(tfs_and_interactions, nrow, numeric(1))
     tfs_and_interactions <- tfs_and_interactions[len >= 2]
     
-    # Create a list of all combinations of partners for each TF
+    # Create a list of all combinations of partners for each TF, then
+    # count how many combinations include a paralog pair
     count <- lapply(tfs_and_interactions, function(x) {
         partners <- unique(x[, 2])
         comb <- utils::combn(partners, 2, simplify = FALSE)
@@ -70,5 +103,9 @@ count_lambda <- function(edgelist = NULL, paralogs = NULL) {
     final_count <- sum(unlist(count))
     return(final_count)
 }
+
+
+
+
 
 

@@ -44,3 +44,17 @@
 "gma_paralogs"
 
 
+#' Sample soybean PPI network
+#' 
+#' PPI were retrieved from the STRING database and filtered to keep only
+#' medium confidence edges and nodes in the GRN.
+#'
+#' @name gma_ppi
+#' @format A 2-column data frame with node1 and node2.
+#'
+#' @examples 
+#' data(gma_ppi)
+#' @usage data(gma_ppi)
+"gma_ppi"
+
+
