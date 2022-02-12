@@ -52,10 +52,10 @@ are_paralogs <- function(gene1 = NULL, gene2 = NULL, paralogs = NULL) {
 are_interacting <- function(gene1 = NULL, gene2 = NULL, edgelist_ppi = NULL) {
     
     names(edgelist_ppi) <- c("gene1", "gene2")
-    partners_gene1 <- paralogs[paralogs$gene1 == gene1 |
-                                   paralogs$gene2 == gene1, ]
-    partners_gene1 <- unique(c(as.character(paralogs_gene1$gene1),
-                               as.character(paralogs_gene1$gene2)))
+    partners_gene1 <- edgelist_ppi[edgelist_ppi$gene1 == gene1 |
+                                       edgelist_ppi$gene2 == gene1, ]
+    partners_gene1 <- unique(c(as.character(partners_gene1$gene1),
+                               as.character(partners_gene1$gene2)))
     status <- FALSE
     if(gene2 %in% partners_gene1) {
         status <- TRUE
