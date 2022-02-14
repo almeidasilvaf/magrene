@@ -73,3 +73,57 @@ gma_paralogs <- Reduce(rbind, lapply(seq_along(files), function(x) {
 names(gma_paralogs) <- c("duplicate1", "duplicate2", "type")
 usethis::use_data(gma_paralogs, compress = "xz")
 ```
+
+## gma\_ppi.rda
+
+Retrieve genes included in the GRN.
+
+``` r
+data(gma_grn)
+genes <- unique(c(gma_grn$Node1, gma_grn$Node2))
+genes <- gsub("Glyma\\.", "GLYMA_", genes)
+```
+
+The PPI network and protein ID correspondences were downloaded from
+STRING.
+
+``` r
+# Create a table of protein to gene correspondence
+gma_aliases <- read.csv(
+    "~/Downloads/3847.protein.aliases.v11.5.txt.gz", sep = "\t", header = TRUE
+)
+
+gma_ids <- gma_aliases[gma_aliases$source == "Ensembl_UniProt_GN", ]
+gma_ids <- gma_ids[startsWith(gma_ids$alias, "GLYMA"), 1:2]
+gma_ids$gene <- gsub("GLYMA_", "Glyma.", gma_ids$alias)
+gma_ids <- gma_ids[, -2]
+names(gma_ids) <- c("STRING_ID", "gene")
+rm(gma_aliases)
+```
+
+Create the final PPI.
+
+``` bash
+# Keep only interactions with confidence scores > 0.4
+cd ~/Downloads
+cat 3847.protein.physical.links.v11.5.txt.gz | zcat | awk '($3 > 400) {print}' > gma_ppi.txt
+```
+
+``` r
+# Read files and convert protein names to Glyma IDs
+gma_ppi <- read.csv(
+    "~/Downloads/gma_ppi.txt", header = TRUE, sep = " "
+)[, 1:2]
+gma_ppi <- merge(gma_ppi, gma_ids, by.x = "protein1", by.y = "STRING_ID")
+gma_ppi$protein1 <- NULL
+gma_ppi <- merge(gma_ppi, gma_ids, by.x = "protein2", by.y = "STRING_ID")
+gma_ppi$protein2 <- NULL
+names(gma_ppi) <- c("node1", "node2")
+
+
+# Filter PPI network to only keep genes in the GRN
+genes_grn <- unique(c(gma_grn$Node1, gma_grn$Node2))
+gma_ppi <- gma_ppi[gma_ppi$node1 %in% genes_grn, ]
+gma_ppi <- gma_ppi[gma_ppi$node2 %in% genes_grn, ]
+usethis::use_data(gma_ppi, compress = "xz")
+```
