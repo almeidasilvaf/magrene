@@ -8,7 +8,7 @@ paralogs <- gma_paralogs[, 1:2]
 gene1 <- "Glyma.01G011500"
 gene2 <- "Glyma.01G011600"
 
-edgelist <- gma_grn[1:500, 1:2]
+edgelist <- gma_grn[500:1000, 1:2]
 paralogs_wgd <- gma_paralogs[gma_paralogs$type == "WGD", 1:2]
 
 # Start tests
@@ -22,8 +22,12 @@ test_that("are_interacting() returns a logical scalar", {
     expect_true(is.logical(i))
 })
 
-test_that("count_lambda() returns a numeric scalar", {
-    count <- count_lambda(edgelist, paralogs)
-    expect_true(is.numeric(count))
+test_that("find_lambda() returns motifs as an edge list", {
+    motifs <- find_lambda(edgelist, paralogs)
+    expect_equal(class(motifs), "list")
 })
 
+test_that("find_delta() returns motifs as an edge list", {
+    motifs <- find_delta(edgelist, paralogs, gma_ppi)
+    expect_true(is.null(motifs))
+})

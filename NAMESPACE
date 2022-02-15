@@ -2,5 +2,6 @@
 
 export(are_interacting)
 export(are_paralogs)
-export(count_lambda)
+export(find_delta)
+export(find_lambda)
 importFrom(utils,combn)

@@ -63,45 +63,119 @@ are_interacting <- function(gene1 = NULL, gene2 = NULL, edgelist_ppi = NULL) {
     return(status)
 }
 
-
-#' Count the frequency of lambda motifs
+#' Find lambda motifs
 #'
 #' @param edgelist A 2-column data frame with regulators in column 1 and
 #' targets in column 2.
 #' @param paralogs A 2-column data frame with gene IDs for each paralog
 #' in the paralog pair.
 #'
-#' @return Numeric scalar with the frequency of lambda motifs in the network.
+#' @return A list of data frames, each data frame being an egde list with
+#' the interactions in the motif.
 #' @importFrom utils combn
 #' @export
-#' @rdname count_lambda
+#' @rdname find_lambda
 #' @examples 
 #' data(gma_grn)
 #' data(gma_paralogs)
-#' edgelist <- gma_grn[1:500, 1:2] # reducing for test purposes
+#' edgelist <- gma_grn[500:1000, 1:2] # reducing for test purposes
 #' paralogs <- gma_paralogs[gma_paralogs$type == "WGD", 1:2]
-#' count <- count_lambda(edgelist, paralogs)
-count_lambda <- function(edgelist = NULL, paralogs = NULL) {
+#' motifs <- find_lambda(edgelist, paralogs)
+find_lambda <- function(edgelist = NULL, paralogs = NULL) {
     
     # Create list of TFs and its interacting partners
+    names(edgelist) <- c("Node1", "Node2")
     tfs_and_interactions <- split(edgelist, edgelist[,1])
     len <- vapply(tfs_and_interactions, nrow, numeric(1))
     tfs_and_interactions <- tfs_and_interactions[len >= 2]
     
     # Create a list of all combinations of partners for each TF, then
     # count how many combinations include a paralog pair
-    count <- lapply(tfs_and_interactions, function(x) {
+    motifs <- lapply(tfs_and_interactions, function(x) {
         partners <- unique(x[, 2])
         comb <- utils::combn(partners, 2, simplify = FALSE)
         paralog_partners <- lapply(comb, function(y) {
-            check <- are_paralogs(y[1], y[2], paralogs)
+            check_paralogs <- are_paralogs(y[1], y[2], paralogs)
+            return(check_paralogs)
+        })
+        lambda.idx <- which(unlist(paralog_partners) == TRUE)
+        if(length(lambda.idx) >= 1) {
+            edges <- lapply(lambda.idx, function(i) {
+                target_nodes <- comb[[i]]
+                e <- x[x$Node2 %in% target_nodes, ]
+                return(e)
+            })
+        } else {
+            edges <- NULL
+        }
+        return(edges)
+    })
+    remove <- vapply(motifs, is.null, logical(1))
+    final_motifs <- unlist(motifs[!remove], recursive = FALSE)
+    return(final_motifs)
+}
+
+
+#' Find delta motifs
+#'
+#' @param edgelist A 2-column data frame with regulators in column 1 and
+#' targets in column 2.
+#' @param paralogs A 2-column data frame with gene IDs for each paralog
+#' in the paralog pair.
+#' @param edgelist_ppi A 2-column data frame with IDs of genes that encode
+#' each protein in the interacting pair.
+#' 
+#' @return A list of data frames, each data frame being an egde list with
+#' the interactions in the motif.
+#' @importFrom utils combn
+#' @export
+#' @rdname find_delta
+#' @examples 
+#' data(gma_grn)
+#' data(gma_paralogs)
+#' data(gma_ppi)
+#' edgelist <- gma_grn[500:1000, 1:2] # reducing for test purposes
+#' paralogs <- gma_paralogs[gma_paralogs$type == "WGD", 1:2]
+#' edgelist_ppi <- gma_ppi
+#' motifs <- find_delta(edgelist, paralogs, edgelist_ppi)
+find_delta <- function(edgelist = NULL, paralogs = NULL,
+                       edgelist_ppi = NULL) {
+    
+    # Create list of TFs and its interacting partners
+    names(edgelist) <- c("Node1", "Node2")
+    tfs_and_interactions <- split(edgelist, edgelist[,1])
+    len <- vapply(tfs_and_interactions, nrow, numeric(1))
+    tfs_and_interactions <- tfs_and_interactions[len >= 2]
+    
+    # Create a list of all combinations of partners for each TF, then
+    # count how many combinations include a paralog pair
+    motifs <- lapply(tfs_and_interactions, function(x) {
+        partners <- unique(x[, 2])
+        comb <- utils::combn(partners, 2, simplify = FALSE)
+        paralog_partners <- lapply(comb, function(y) {
+            check_paralogs <- are_paralogs(y[1], y[2], paralogs)
+            check_ppi <- are_interacting(y[1], y[2], edgelist_ppi)
+            check <- FALSE
+            if(check_paralogs == TRUE & check_ppi == TRUE) {
+                check <- TRUE
+            }
             return(check)
         })
-        lambda_count <- sum(unlist(paralog_partners))
-        return(lambda_count)
+        lambda.idx <- which(unlist(paralog_partners) == TRUE)
+        if(length(lambda.idx) >= 1) {
+            edges <- lapply(lambda.idx, function(i) {
+                target_nodes <- comb[[i]]
+                e <- x[x$Node2 %in% target_nodes, ]
+                return(e)
+            })
+        } else {
+            edges <- NULL
+        }
+        return(edges)
     })
-    final_count <- sum(unlist(count))
-    return(final_count)
+    remove <- vapply(motifs, is.null, logical(1))
+    final_motifs <- unlist(motifs[!remove], recursive = FALSE)
+    return(final_motifs)
 }
 
 
