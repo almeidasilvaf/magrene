@@ -34,7 +34,10 @@
     <loc>/reference/are_paralogs.html</loc>
   </url>
   <url>
-    <loc>/reference/count_lambda.html</loc>
+    <loc>/reference/find_delta.html</loc>
+  </url>
+  <url>
+    <loc>/reference/find_lambda.html</loc>
   </url>
   <url>
     <loc>/reference/gma_grn.html</loc>
