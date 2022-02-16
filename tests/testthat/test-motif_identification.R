@@ -23,19 +23,23 @@ test_that("are_interacting() returns a logical scalar", {
 })
 
 test_that("find_lambda() returns motifs as an edge list", {
-    motifs <- find_lambda(edgelist, paralogs)
+    motifs <- find_lambda(edgelist, paralogs_wgd)
     expect_equal(class(motifs), "list")
 })
 
 test_that("find_delta() returns motifs as an edge list", {
-    motifs <- find_delta(edgelist, paralogs, gma_ppi)
+    motifs <- find_delta(edgelist, paralogs_wgd, gma_ppi)
     expect_true(is.null(motifs))
 })
 
-
 test_that("find_v() returns motifs as an edge list", {
     edgelist <- gma_grn[2000:4000, 1:2] # reducing for test purposes
-    motifs <- find_v(edgelist, paralogs)
+    motifs <- find_v(edgelist, paralogs_wgd)
     expect_true(is.list(motifs))
+})
+
+test_that("find_bifan() returns motifs as an edge list", {
+    motifs <- find_bifan(edgelist, paralogs_wgd)
+    expect_true(is.null(motifs))
 })
 

@@ -2,6 +2,7 @@
 
 export(are_interacting)
 export(are_paralogs)
+export(find_bifan)
 export(find_delta)
 export(find_lambda)
 export(find_v)

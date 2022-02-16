@@ -236,6 +236,54 @@ find_v <- function(edgelist = NULL, paralogs = NULL) {
 
 
 
+#' Find bifan motifs
+#'
+#' @param edgelist A 2-column data frame with regulators in column 1 and
+#' targets in column 2.
+#' @param paralogs A 2-column data frame with gene IDs for each paralog
+#' in the paralog pair.
+#'
+#' @return A list of data frames, each data frame being an egde list with
+#' the interactions in the motif.
+#' @importFrom utils combn
+#' @export
+#' @rdname find_bifan
+#' @examples 
+#' data(gma_grn)
+#' data(gma_paralogs)
+#' edgelist <- gma_grn[600:1400, 1:2] # reducing for test purposes
+#' paralogs <- gma_paralogs[gma_paralogs$type == "WGD", 1:2]
+#' bifan <- find_bifan(edgelist, paralogs)
+find_bifan <- function(edgelist = NULL, paralogs = NULL) {
+    
+    # Find lambda motifs and compare them pairwise to look for shared neighbors
+    lambdas <- find_lambda(edgelist, paralogs)
+    final_motifs <- NULL
+    if(length(names(lambdas)) > 1) {
+        comb <- utils::combn(names(lambdas), 2, simplify = FALSE)
+        bifans <- lapply(comb, function(x) {
+            tf1 <- x[1]
+            tf2 <- x[2]
+            # Are TFs in the lambda motifs paralogs?
+            check_paralogs <- are_paralogs(tf1, tf2, paralogs)
+            check_shared <- FALSE
+            # Do paralogous TFs regulate the same targets?
+            if(check_paralogs) {
+                partners_tf1 <- lambdas[[tf1]]$Node2
+                partners_tf2 <- lambdas[[tf2]]$Node2
+                check_shared <- sum(partners_tf1 %in% partners_tf2) == 2
+            }
+            motif <- NULL
+            if(check_paralogs == TRUE & check_shared == TRUE) {
+                motif <- rbind(lambdas[[tf1]], lambdas[[tf2]]) 
+            }
+            return(motif)
+        })
+        remove <- vapply(bifans, is.null, logical(1))
+        final_motifs <- unlist(bifans[!remove], recursive = FALSE)
+    }
+    return(final_motifs)
+}
 
 
 
