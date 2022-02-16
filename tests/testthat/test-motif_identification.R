@@ -31,3 +31,11 @@ test_that("find_delta() returns motifs as an edge list", {
     motifs <- find_delta(edgelist, paralogs, gma_ppi)
     expect_true(is.null(motifs))
 })
+
+
+test_that("find_v() returns motifs as an edge list", {
+    edgelist <- gma_grn[2000:4000, 1:2] # reducing for test purposes
+    motifs <- find_v(edgelist, paralogs)
+    expect_true(is.list(motifs))
+})
+

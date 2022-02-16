@@ -85,7 +85,7 @@ find_lambda <- function(edgelist = NULL, paralogs = NULL) {
     
     # Create list of TFs and its interacting partners
     names(edgelist) <- c("Node1", "Node2")
-    tfs_and_interactions <- split(edgelist, edgelist[,1])
+    tfs_and_interactions <- split(edgelist, edgelist$Node1)
     len <- vapply(tfs_and_interactions, nrow, numeric(1))
     tfs_and_interactions <- tfs_and_interactions[len >= 2]
     
@@ -143,7 +143,7 @@ find_delta <- function(edgelist = NULL, paralogs = NULL,
     
     # Create list of TFs and its interacting partners
     names(edgelist) <- c("Node1", "Node2")
-    tfs_and_interactions <- split(edgelist, edgelist[,1])
+    tfs_and_interactions <- split(edgelist, edgelist$Node1)
     len <- vapply(tfs_and_interactions, nrow, numeric(1))
     tfs_and_interactions <- tfs_and_interactions[len >= 2]
     
@@ -154,7 +154,10 @@ find_delta <- function(edgelist = NULL, paralogs = NULL,
         comb <- utils::combn(partners, 2, simplify = FALSE)
         paralog_partners <- lapply(comb, function(y) {
             check_paralogs <- are_paralogs(y[1], y[2], paralogs)
-            check_ppi <- are_interacting(y[1], y[2], edgelist_ppi)
+            check_ppi <- FALSE
+            if(check_paralogs) {
+                check_ppi <- are_interacting(y[1], y[2], edgelist_ppi)
+            }
             check <- FALSE
             if(check_paralogs == TRUE & check_ppi == TRUE) {
                 check <- TRUE
@@ -177,6 +180,60 @@ find_delta <- function(edgelist = NULL, paralogs = NULL,
     final_motifs <- unlist(motifs[!remove], recursive = FALSE)
     return(final_motifs)
 }
+
+
+#' Find V motifs
+#'
+#' @param edgelist A 2-column data frame with regulators in column 1 and
+#' targets in column 2.
+#' @param paralogs A 2-column data frame with gene IDs for each paralog
+#' in the paralog pair.
+#'
+#' @return A list of data frames, each data frame being an egde list with
+#' the interactions in the motif.
+#' @importFrom utils combn
+#' @export
+#' @rdname find_v
+#' @examples 
+#' data(gma_grn)
+#' data(gma_paralogs)
+#' edgelist <- gma_grn[2000:4000, 1:2] # reducing for test purposes
+#' paralogs <- gma_paralogs[gma_paralogs$type == "WGD", 1:2]
+#' motifs <- find_v(edgelist, paralogs)
+find_v <- function(edgelist = NULL, paralogs = NULL) {
+    
+    # Create list of TFs and its interacting partners
+    names(edgelist) <- c("Node1", "Node2")
+    targets_and_tfs <- split(edgelist, edgelist$Node2)
+    len <- vapply(targets_and_tfs, nrow, numeric(1))
+    targets_and_tfs <- targets_and_tfs[len >= 2]
+    
+    # Create a list of all combinations of partners for each TF, then
+    # count how many combinations include a paralog pair
+    motifs <- lapply(targets_and_tfs, function(x) {
+        tfs <- unique(x$Node1)
+        comb <- utils::combn(tfs, 2, simplify = FALSE)
+        paralog_tfs <- lapply(comb, function(y) {
+            check_paralogs <- are_paralogs(y[1], y[2], paralogs)
+            return(check_paralogs)
+        })
+        v.idx <- which(unlist(paralog_tfs) == TRUE)
+        if(length(v.idx) >= 1) {
+            edges <- lapply(v.idx, function(i) {
+                tf_nodes <- comb[[i]]
+                e <- x[x$Node1 %in% tf_nodes, ]
+                return(e)
+            })
+        } else {
+            edges <- NULL
+        }
+        return(edges)
+    })
+    remove <- vapply(motifs, is.null, logical(1))
+    final_motifs <- unlist(motifs[!remove], recursive = FALSE)
+    return(final_motifs)
+}
+
 
 
 
