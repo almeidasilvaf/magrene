@@ -2,9 +2,11 @@
 
 export(are_interacting)
 export(are_paralogs)
+export(calculate_Z)
 export(find_bifan)
 export(find_delta)
 export(find_lambda)
 export(find_v)
 export(generate_nulls)
+importFrom(stats,sd)
 importFrom(utils,combn)
