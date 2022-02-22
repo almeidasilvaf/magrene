@@ -212,20 +212,24 @@ find_v <- function(edgelist = NULL, paralogs = NULL) {
     # count how many combinations include a paralog pair
     motifs <- lapply(targets_and_tfs, function(x) {
         tfs <- unique(x$Node1)
-        comb <- utils::combn(tfs, 2, simplify = FALSE)
-        paralog_tfs <- lapply(comb, function(y) {
-            check_paralogs <- are_paralogs(y[1], y[2], paralogs)
-            return(check_paralogs)
-        })
-        v.idx <- which(unlist(paralog_tfs) == TRUE)
-        if(length(v.idx) >= 1) {
-            edges <- lapply(v.idx, function(i) {
-                tf_nodes <- comb[[i]]
-                e <- x[x$Node1 %in% tf_nodes, ]
-                return(e)
-            })
-        } else {
+        if(length(tfs) < 2) {
             edges <- NULL
+        } else {
+            comb <- utils::combn(tfs, 2, simplify = FALSE)
+            paralog_tfs <- lapply(comb, function(y) {
+                check_paralogs <- are_paralogs(y[1], y[2], paralogs)
+                return(check_paralogs)
+            })
+            v.idx <- which(unlist(paralog_tfs) == TRUE)
+            if(length(v.idx) >= 1) {
+                edges <- lapply(v.idx, function(i) {
+                    tf_nodes <- comb[[i]]
+                    e <- x[x$Node1 %in% tf_nodes, ]
+                    return(e)
+                })
+            } else {
+                edges <- NULL
+            }
         }
         return(edges)
     })
