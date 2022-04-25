@@ -14,8 +14,8 @@ targets in column 2.}
 in the paralog pair.}
 }
 \value{
-A list of data frames, each data frame being an egde list with
-the interactions in the motif.
+A character vector with bifan motifs represented
+in the format \strong{regulator1, regulator2->target1, target2}.
 }
 \description{
 Find bifan motifs
@@ -25,5 +25,10 @@ data(gma_grn)
 data(gma_paralogs)
 edgelist <- gma_grn[600:1400, 1:2] # reducing for test purposes
 paralogs <- gma_paralogs[gma_paralogs$type == "WGD", 1:2]
+paralogs <- rbind(
+paralogs,
+data.frame(duplicate1 = "Glyma.01G177200", 
+           duplicate2 = "Glyma.08G116700")
+)
 bifan <- find_bifan(edgelist, paralogs)
 }

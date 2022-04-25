@@ -4,42 +4,34 @@ data(gma_paralogs)
 data(gma_grn)
 data(gma_ppi)
 
-paralogs <- gma_paralogs[, 1:2]
-gene1 <- "Glyma.01G011500"
-gene2 <- "Glyma.01G011600"
-
 edgelist <- gma_grn[500:1000, 1:2]
 paralogs_wgd <- gma_paralogs[gma_paralogs$type == "WGD", 1:2]
 
 # Start tests
-test_that("are_paralogs() returns a logical scalar", {
-    p <- are_paralogs(gene1, gene2, paralogs)
-    expect_true(is.logical(p))
-})
-
-test_that("are_interacting() returns a logical scalar", {
-    i <- are_interacting("Glyma.19G213200", "Glyma.01G004300", gma_ppi)
-    expect_true(is.logical(i))
-})
-
-test_that("find_lambda() returns motifs as an edge list", {
+test_that("find_lambda() returns motifs as a character vector", {
     motifs <- find_lambda(edgelist, paralogs_wgd)
-    expect_equal(class(motifs), "list")
+    expect_equal(class(motifs), "character")
 })
 
-test_that("find_delta() returns motifs as an edge list", {
+test_that("find_delta() returns motifs as a character vector", {
     motifs <- find_delta(edgelist, paralogs_wgd, gma_ppi)
     expect_true(is.null(motifs))
 })
 
-test_that("find_v() returns motifs as an edge list", {
+test_that("find_v() returns motifs as a character vector", {
     edgelist <- gma_grn[2000:4000, 1:2] # reducing for test purposes
     motifs <- find_v(edgelist, paralogs_wgd)
-    expect_true(is.list(motifs))
+    expect_equal(class(motifs), "character")
 })
 
 test_that("find_bifan() returns motifs as an edge list", {
-    motifs <- find_bifan(edgelist, paralogs_wgd)
-    expect_true(is.null(motifs))
+    paralogs <- rbind(
+        paralogs_wgd,
+        data.frame(duplicate1 = "Glyma.01G177200", 
+                   duplicate2 = "Glyma.08G116700")
+    )
+    
+    motifs <- find_bifan(gma_grn[600:1400, ], paralogs)
+    expect_equal(class(motifs), "character")
 })
 

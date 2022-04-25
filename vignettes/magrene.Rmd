@@ -30,7 +30,7 @@ knitr::opts_chunk$set(
 ```
 
 
-## Install `magrene`
+# Installation
 
 `R` is an open-source statistical environment which can be easily modified to enhance its functionality via packages. `r Biocpkg("magrene")` is a `R` package available via the [Bioconductor](http://bioconductor.org) repository for packages. `R` can be installed on any operating system from [CRAN](https://cran.r-project.org/) after which you can install `r Biocpkg("magrene")` by using the following commands in your `R` session:
 
@@ -45,8 +45,28 @@ BiocManager::install("magrene")
 BiocManager::valid()
 ```
 
+# Introduction and data description
 
-## Session information {.unnumbered}
+```{r data}
+data(gma_grn)
+head(gma_grn)
+
+data(gma_ppi)
+head(gma_ppi)
+
+data(gma_paralogs)
+head(gma_paralogs)
+```
+
+# Finding motifs
+
+```{r}
+lambda <- find_lambda(gma_grn[, 1:2], gma_paralogs[, 1:2])
+
+```
+
+
+# Session information {.unnumbered}
 
 This document was created under the following conditions:
 

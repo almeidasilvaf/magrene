@@ -17,8 +17,8 @@ in the paralog pair.}
 each protein in the interacting pair.}
 }
 \value{
-A list of data frames, each data frame being an egde list with
-the interactions in the motif.
+A character vector with lambda motifs represented
+in the format \strong{target1<-regulator->target2}.
 }
 \description{
 Find delta motifs
