@@ -161,6 +161,65 @@ find_v <- function(edgelist = NULL, paralogs = NULL) {
 }
 
 
+#' Find V motifs in protein-protein interactions
+#'
+#' @param edgelist A 2-column data frame with regulators in column 1 and
+#' targets in column 2.
+#' @param paralogs A 2-column data frame with gene IDs for each paralog
+#' in the paralog pair.
+#'
+#' @return A character vector with V motifs represented 
+#' in the format \strong{paralog1-partner-paralog2}.
+#' 
+#' @details This function aims to find the number of paralogous gene
+#' pairs that share an interaction partner.
+#' 
+#' @importFrom utils combn
+#' @export
+#' @rdname find_ppi_v
+#' @examples 
+#' data(gma_ppi)
+#' data(gma_paralogs)
+#' edgelist <- gma_ppi
+#' paralogs <- gma_paralogs[gma_paralogs$type == "WGD", 1:2]
+#' motifs <- find_ppi_v(edgelist, paralogs)
+find_ppi_v <- function(edgelist = NULL, paralogs = NULL) {
+    
+    pvec <- paste0(paralogs[,1], paralogs[,2]) # paralogs vector
+    
+    # Create list of proteins and their interacting partners
+    names(edgelist) <- c("Node1", "Node2")
+    edgelist <- edgelist[!duplicated(edgelist$Node1, edgelist$Node2), ]
+    targets_and_p <- split(edgelist, edgelist$Node2)
+    len <- vapply(targets_and_p, nrow, numeric(1))
+    targets_and_p <- targets_and_p[len >= 2]
+    
+    motifs <- NULL
+    if(length(targets_and_p) > 0) {
+        motifs <- unlist(lapply(targets_and_p, function(x) {
+            p <- unique(x[, 1])
+            comb <- utils::combn(p, 2, simplify = FALSE)
+            comb1 <- unlist(lapply(comb, function(x) paste0(x[1], x[2])))
+            comb2 <- unlist(lapply(comb, function(x) paste0(x[2], x[1])))
+            para1 <- comb1 %in% pvec
+            para2 <- comb2 %in% pvec
+            paralog_partners <- para1 + para2
+            v.idx <- which(paralog_partners >= 1)
+            if(length(v.idx) >= 1) {
+                edges <- unlist(lapply(v.idx, function(i) {
+                    ps <- comb[[i]]
+                    e <- paste0(ps[1], "-", x[1,2], "-", ps[2])
+                    return(e)
+                }))
+            } else {
+                edges <- NULL
+            }
+            return(edges)
+        }))
+    }
+    return(motifs)
+}
+
 
 #' Find bifan motifs
 #'

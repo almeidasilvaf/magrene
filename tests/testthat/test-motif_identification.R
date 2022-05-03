@@ -18,10 +18,16 @@ test_that("find_delta() returns motifs as a character vector", {
     expect_true(is.null(motifs))
 })
 
-test_that("find_v() returns motifs as a character vector", {
-    edgelist <- gma_grn[2000:4000, 1:2] # reducing for test purposes
+test_that("find_ppi_v() returns motifs as a character vector", {
+    edgelist <- gma_ppi
     motifs <- find_v(edgelist, paralogs_wgd)
     expect_equal(class(motifs), "character")
+})
+
+test_that("find_v() returns motifs as a character vector", {
+    edgelist <- gma_grn[1:4000, 1:2] # reducing for test purposes
+    motifs <- find_v(edgelist, paralogs_wgd)
+    expect_true(class(motifs) %in% c("character", "NULL"))
 })
 
 test_that("find_bifan() returns motifs as an edge list", {
