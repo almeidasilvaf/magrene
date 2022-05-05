@@ -28,20 +28,25 @@
 generate_nulls <- function(edgelist = NULL, paralogs = NULL, 
                            edgelist_ppi = NULL, n = 1000) {
     
+    names(edgelist) <- c("Node1", "Node2")
+    names(edgelist_ppi) <- c("Node1", "Node2")
+    
     nulls <- lapply(seq_len(n), function(x) { # for each iteration x
         # Simulate network by shuffling target genes
-        names(edgelist) <- c("Node1", "Node2")
         sim_grn <- edgelist
         sim_grn$Node2 <- sample(sim_grn$Node2, replace = FALSE)
+        sim_ppi <- edgelist_ppi
+        sim_ppi$Node2 <- sample(sim_ppi$Node2, replace = FALSE)
 
         # Calculate motif frequencies in iteration x and store them in a vector
         n_lambda <- length(find_lambda(sim_grn, paralogs))
-        n_delta <- length(find_delta(sim_grn, paralogs, edgelist_ppi))
+        n_delta <- length(find_delta(sim_grn, paralogs, sim_ppi))
         n_v <- length(find_v(sim_grn, paralogs))
+        n_v_ppi <- length(find_ppi_v(sim_ppi, paralogs))
         n_bifan <- length(find_bifan(sim_grn, paralogs))
         
-        n_iteration <- c(n_lambda, n_delta, n_v, n_bifan)
-        names(n_iteration) <- c("lambda", "delta", "V", "bifan")
+        n_iteration <- c(n_lambda, n_delta, n_v, n_v_ppi, n_bifan)
+        names(n_iteration) <- c("lambda", "delta", "V", "PPI_V", "bifan")
         return(n_iteration)
     })
     
@@ -50,12 +55,13 @@ generate_nulls <- function(edgelist = NULL, paralogs = NULL,
     lambda_distro <- nulls_vector[names(nulls_vector) == "lambda"]
     delta_distro <- nulls_vector[names(nulls_vector) == "delta"]
     v_distro <- nulls_vector[names(nulls_vector) == "V"]
+    ppi_v_distro <- nulls_vector[names(nulls_vector) == "PPI_V"]
     bifan_distro <- nulls_vector[names(nulls_vector) == "bifan"]
     
     # Store results in a list
     null_list <- list(
         lambda = lambda_distro, delta = delta_distro,
-        V = v_distro, bifan = bifan_distro
+        V = v_distro, PPI_V = ppi_v_distro, bifan = bifan_distro
     )
     return(null_list)
 }

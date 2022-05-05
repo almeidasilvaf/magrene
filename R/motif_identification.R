@@ -198,19 +198,23 @@ find_ppi_v <- function(edgelist = NULL, paralogs = NULL) {
     if(length(targets_and_p) > 0) {
         motifs <- unlist(lapply(targets_and_p, function(x) {
             p <- unique(x[, 1])
-            comb <- utils::combn(p, 2, simplify = FALSE)
-            comb1 <- unlist(lapply(comb, function(x) paste0(x[1], x[2])))
-            comb2 <- unlist(lapply(comb, function(x) paste0(x[2], x[1])))
-            para1 <- comb1 %in% pvec
-            para2 <- comb2 %in% pvec
-            paralog_partners <- para1 + para2
-            v.idx <- which(paralog_partners >= 1)
-            if(length(v.idx) >= 1) {
-                edges <- unlist(lapply(v.idx, function(i) {
-                    ps <- comb[[i]]
-                    e <- paste0(ps[1], "-", x[1,2], "-", ps[2])
-                    return(e)
-                }))
+            if(length(p) > 1) {
+                comb <- utils::combn(p, 2, simplify = FALSE)
+                comb1 <- unlist(lapply(comb, function(x) paste0(x[1], x[2])))
+                comb2 <- unlist(lapply(comb, function(x) paste0(x[2], x[1])))
+                para1 <- comb1 %in% pvec
+                para2 <- comb2 %in% pvec
+                paralog_partners <- para1 + para2
+                v.idx <- which(paralog_partners >= 1)
+                if(length(v.idx) >= 1) {
+                    edges <- unlist(lapply(v.idx, function(i) {
+                        ps <- comb[[i]]
+                        e <- paste0(ps[1], "-", x[1,2], "-", ps[2])
+                        return(e)
+                    }))
+                } else {
+                    edges <- NULL
+                }
             } else {
                 edges <- NULL
             }
