@@ -58,3 +58,16 @@
 "gma_ppi"
 
 
+#' Null distribution of motif frequencies for vignette data set
+#' 
+#' Data were filtered exactly as demonstrated in the vignette.
+#'
+#' @name nulls
+#' @format A list of numeric vectors with the motif frequencies in each
+#' simulated network.
+#'
+#' @examples 
+#' data(nulls)
+#' @usage data(nulls)
+"nulls"
+

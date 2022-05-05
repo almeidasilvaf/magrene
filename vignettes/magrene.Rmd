@@ -3,18 +3,17 @@ title: "Introduction to magrene"
 author: 
   - name: Fabrício Almeida-Silva
     affiliation:
-    - Ghent University / VIB Center for Plant Systems Biology
+    - Ghent University / VIB Center for Plant Systems Biology, Ghent, Belgium
   - name: Yves Van de Peer
     affiliation:
-    - Ghent University / VIB Center for Plant Systems Biology
+    - Ghent University / VIB Center for Plant Systems Biology, Ghent, Belgium
 output: 
   BiocStyle::html_document:
     self_contained: yes
     toc: true
     toc_depth: 2
-    code_folding: show
-date: "`r doc_date()`"
-package: "`r pkg_ver('magrene')`"
+date: "`r Sys.Date()`"
+bibliography: vignette_bibliography.bib
 vignette: >
   %\VignetteIndexEntry{Introduction to magrene}
   %\VignetteEngine{knitr::rmarkdown}
@@ -25,13 +24,28 @@ vignette: >
 knitr::opts_chunk$set(
     collapse = TRUE,
     comment = "#>",
+    fig.align = 'center',
     crop = NULL ## Related to https://stat.ethz.ch/pipermail/bioc-devel/2020-April/016656.html
 )
 ```
 
 # Introduction
 
-Intro.
+Network motifs are the building blocks of complex networks, and they can be 
+interpreted as small genetic circuits. Identifying and counting motifs in 
+gene regulatory networks can reveal important aspects of the evolution of
+transcriptional regulation. In particular, they can be used to explore
+the impact of gene duplication in the rewriring of 
+regulatory interactions [@mottes2021impact]. `magrene` aims to identify and
+analyze motifs in (duplicated) gene regulatory networks to better comprehend
+the role of gene duplication in network evolution. The figure below shows
+the networks motifs users can identify with `magrene`.
+
+
+```{r intro_motifs, echo = FALSE, fig.cap = "Network motifs and functions to identify them. Shaded boxes indicate paralogs. Regulators and targets are indicated in purple and green, respectively."}
+img <- system.file("extdata", "motifs_vignette.png", package = "magrene")
+knitr::include_graphics(img)
+```
 
 # Installation
 
@@ -45,7 +59,29 @@ if (!requireNamespace("BiocManager", quietly = TRUE)) {
 BiocManager::install("magrene")
 ```
 
+Then, you can load the package with:
+
+```{r load}
+library(magrene)
+```
+
 # Data description
+
+For this vignette, we will use three example data sets:
+
+1. **gma_grn:** A gene regulatory network inferred with 
+`BioNERO` [@almeida2022bionero] using soybean RNA-seq data from the Soybean
+Expression Atlas [@machado2020systematic].
+
+2. **gma_ppi:** A protein-protein interaction (PPI) network for soybean
+obtained from the STRING database [@szklarczyk2021string], filtered to contain
+only physical interactions with confidence score > 0.4.
+
+3. **gma_paralogs:** Soybean paralogous gene pairs derived by whole-genome,
+tandem, proximal, transposed, and dispersed duplications (WGD, TD, PD, TRD,
+and DD, respectively). This data set was obtained from @almeida2020exploring.
+
+Networks are represented as edge lists. Let's take a look at the data.
 
 ```{r data}
 data(gma_grn)
@@ -58,11 +94,199 @@ data(gma_paralogs)
 head(gma_paralogs)
 ```
 
+
 # Finding motifs
 
-```{r}
-lambda <- find_lambda(gma_grn[, 1:2], gma_paralogs[, 1:2])
+Motifs can be found using `find_*` motifs, as shown in Figure 1. Each function
+returns a character vector of motifs, and each motif has its own character
+representation. Let's demonstrate how they work. 
+For the sake of demonstration, we will only use WGD-derived paralogs. 
+For GRN motifs, we will only use a smaller subset of the edge list.
 
+```{r filtering}
+# Include only WGD-derived paralogs
+paralogs <- gma_paralogs[gma_paralogs$type == "WGD", 1:2]
+
+# Keep only the top 10k edges of the GRN, remove "Weight" variable
+grn <- gma_grn[1:10^4, 1:2]
+```
+
+## PPI V
+
+PPI V motifs are paralogous proteins that share an interaction partner.
+To find them, you will use `find_ppi_v()`. The character representation of
+PPI V motifs is:
+
+$$
+\text{paralog1-partner-paralog2}
+$$
+
+```{r ppi_v}
+# Find PPI V motifs
+ppi_v <- find_ppi_v(gma_ppi, paralogs)
+head(ppi_v)
+```
+
+## V
+
+V motifs are paralogous regulators that regulate the same target.
+These motifs can be created when a regulator undergoes a 
+small-scale duplication. To find them, you will use `find_v()`. 
+The character representation of V motifs is:
+
+$$
+\text{regulator->target<-regulator}
+$$
+
+```{r V}
+# Find V motifs
+v <- find_v(grn, paralogs)
+head(v)
+```
+
+As you can see, there are no V motifs in this example data set. When that is
+the case, `find_*` functions return NULL.
+
+## Lambda
+
+Lambda motifs are the opposite of V motifs: a single regulator that regulates
+two target genes that are paralogous. These motifs can be created when
+an ancestral target gene undergoes a small-scale duplication. To find them
+you will use `find_lambda()`. The character representation of lambda motifs is:
+
+$$
+\text{target1<-regulator->target2}
+$$
+
+
+```{r lambda}
+lambda <- find_lambda(grn, paralogs)
+head(lambda)
+```
+
+## Delta
+
+Delta motifs are pretty similar to lambda motifs, but here we take 
+protein-protein interactions between targets into account. Thus, they are
+represented by a regulator that regulates two targets that interact at the
+protein level. They can be created by the same evolutionary mechanism of
+lambda motifs. To find them, you will use `find_delta()`. The character
+representation of delta motifs is:
+
+$$
+\text{target1<-regulator->target2}
+$$
+
+```{r delta}
+delta <- find_delta(grn, paralogs, gma_ppi)
+head(delta)
+```
+
+## Bifan
+
+Bifan motifs are the most complex: they are represented by 
+two paralogous regulators that regulate the same set of two paralogous targets.
+They can be created when both the ancestral regulator and the ancestral target
+are duplicated by small-scale duplications, or when the genome undergoes a 
+whole-genome duplication event. To find these motifs, 
+you will use `find_bifan()`. The character representation of bifan motifs is:
+
+$$
+\text{regulator1,regulator2->target1,target2}
+$$
+
+```{r bifan}
+bifan <- find_bifan(grn, paralogs)
+head(bifan)
+```
+
+# Counting motifs and evaluating significance
+
+As motifs are simple character vectors, one can count their frequencies with 
+the base R `length()` function. For example, let's count the frequency of 
+each motif in our example data set:
+
+```{r count}
+count_df <- data.frame(
+    Motif = c("PPI V", "V", "Lambda", "Delta", "Bifan"),
+    Count = c(
+        length(ppi_v), length(v), length(lambda), length(delta), length(bifan)
+    )
+)
+
+count_df
+```
+
+However, unless you have another data set to which you can compare your
+frequencies, counting is not enough. You need to evaluate the significance
+of your motif frequencies. One way to do that is by comparing your observed
+frequencies to a null distribution generated by counting motifs in
+*N* (e.g., 1000) simulated networks [^1]. `magrene` allows you to generate
+null distributions of motif frequencies for each motif type with the function
+`generate_nulls()`. As generating the null distributions takes a bit of time,
+we will load pre-computed null distributions of *N* = 100. 
+As a rule of thumb, you would probably want *N* >= 1000.
+
+
+[^1]: **NOTE:** Simulated networks are created by node label permutation 
+(i.e., resampling node labels without replacement). This method allows you
+to have random networks that preserve the same degree of the 
+original network. Hence, networks are called 
+**degree-preserving simulated networks**.
+
+```{r generate_nulls}
+# Load null distros
+data(nulls)
+head(nulls)
+```
+
+As you can see, the output of `generate_nulls()` is a list of numeric vectors
+with the frequency of each motif type in the simulated networks. You can use
+the null distribution to calculate Z-scores for your observed frequencies,
+which are defined as below:
+
+$$
+Z = \frac{ n_{observed} - \bar{n}_{null} }{ \sigma_{null} }
+$$
+
+To calculate Z-scores, you can use the function `calculate_Z()`. As input,
+you need to give a list of observed frequencies and a list of nulls.
+
+```{r calculate_Z}
+# Create list of observed frequencies
+observed <- list(
+    lambda = length(lambda), 
+    bifan = length(bifan), 
+    V = length(v),
+    delta = length(delta)
+)
+calculate_Z(observed, nulls)
+```
+
+Now that you have Z-scores, you can use a cut-off of your choice to 
+define significance.
+
+# Evaluting interaction similarity
+
+Finally, another interesting pattern you may want to analyze is the interaction
+similarity between paralogous gene pairs. Previous studies have demonstrated
+that the Sorensen-Dice similarity is a suitable index for interaction 
+similarity [@defoort2019evolution; @mottes2021impact], which is defined as:
+
+$$
+S(A,B) = \frac{2 \left| A \cap B \right|}{ \left|A \right| + \left| B \right|}
+$$
+
+where A and B are the interacting partners of nodes A and B. 
+To calculate the Sorensen-Dice similarity for paralogous gene pairs,
+you can use the function `sd_similarity()`. Let's demonstrate it by
+calculating the similarity between paralogs in the PPI network.
+
+```{r similarity}
+sim <- sd_similarity(gma_ppi, paralogs)
+head(sim)
+
+summary(sim$sorensen_dice)
 ```
 
 
@@ -73,3 +297,5 @@ This document was created under the following conditions:
 ```{r sessioninfo}
 sessionInfo()
 ```
+
+# References {.unnumbered}
