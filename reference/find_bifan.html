@@ -70,8 +70,8 @@ in the paralog pair.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A list of data frames, each data frame being an egde list with
-the interactions in the motif.</p>
+    <p>A character vector with bifan motifs represented
+in the format <strong>regulator1, regulator2-&gt;target1, target2</strong>.</p>
     </div>
 
     <div id="ref-examples">
@@ -80,6 +80,11 @@ the interactions in the motif.</p>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">gma_paralogs</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">edgelist</span> <span class="op">&lt;-</span> <span class="va">gma_grn</span><span class="op">[</span><span class="fl">600</span><span class="op">:</span><span class="fl">1400</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span> <span class="co"># reducing for test purposes</span></span>
 <span class="r-in"><span class="va">paralogs</span> <span class="op">&lt;-</span> <span class="va">gma_paralogs</span><span class="op">[</span><span class="va">gma_paralogs</span><span class="op">$</span><span class="va">type</span> <span class="op">==</span> <span class="st">"WGD"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span>
+<span class="r-in"><span class="va">paralogs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span></span>
+<span class="r-in"><span class="va">paralogs</span>,</span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>duplicate1 <span class="op">=</span> <span class="st">"Glyma.01G177200"</span>, </span>
+<span class="r-in">           duplicate2 <span class="op">=</span> <span class="st">"Glyma.08G116700"</span><span class="op">)</span></span>
+<span class="r-in"><span class="op">)</span></span>
 <span class="r-in"><span class="va">bifan</span> <span class="op">&lt;-</span> <span class="fu">find_bifan</span><span class="op">(</span><span class="va">edgelist</span>, <span class="va">paralogs</span><span class="op">)</span></span>
 </code></pre></div>
     </div>
@@ -95,7 +100,7 @@ the interactions in the motif.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
       </footer></div>

@@ -1,7 +1,7 @@
 pandoc: 2.11.4
-pkgdown: 2.0.2
+pkgdown: 2.0.3
 pkgdown_sha: ~
 articles:
   magrene: magrene.html
-last_built: 2022-02-22T12:45Z
+last_built: 2022-05-05T09:27Z
 
