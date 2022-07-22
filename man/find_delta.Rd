@@ -4,17 +4,33 @@
 \alias{find_delta}
 \title{Find delta motifs}
 \usage{
-find_delta(edgelist = NULL, paralogs = NULL, edgelist_ppi = NULL)
+find_delta(
+  edgelist = NULL,
+  paralogs = NULL,
+  edgelist_ppi = NULL,
+  lambda_vec = NULL,
+  bp_param = BiocParallel::SerialParam()
+)
 }
 \arguments{
 \item{edgelist}{A 2-column data frame with regulators in column 1 and
-targets in column 2.}
+targets in column 2. It can be ignored if you give lambda motifs
+to parameter \strong{lambda_vec} (recommended).}
 
 \item{paralogs}{A 2-column data frame with gene IDs for each paralog
-in the paralog pair.}
+in the paralog pair. It can be ignored if you give lambda motifs
+to parameter \strong{lambda_vec} (recommended).}
 
 \item{edgelist_ppi}{A 2-column data frame with IDs of genes that encode
 each protein in the interacting pair.}
+
+\item{lambda_vec}{A character of lambda motifs as returned
+by \code{find_lambda()}. If this is NULL, this function will find lambda
+motifs from \strong{edgelist} and \strong{paralogs} first. Passing
+previously identified lambda motifs will make this function much faster.}
+
+\item{bp_param}{BiocParallel back-end to be used.
+Default: BiocParallel::SerialParam().}
 }
 \value{
 A character vector with lambda motifs represented
@@ -30,5 +46,6 @@ data(gma_ppi)
 edgelist <- gma_grn[500:1000, 1:2] # reducing for test purposes
 paralogs <- gma_paralogs[gma_paralogs$type == "WGD", 1:2]
 edgelist_ppi <- gma_ppi
-motifs <- find_delta(edgelist, paralogs, edgelist_ppi)
+lambda_vec <- find_lambda(edgelist, paralogs)
+motifs <- find_delta(edgelist_ppi = edgelist_ppi, lambda_vec = lambda_vec)
 }

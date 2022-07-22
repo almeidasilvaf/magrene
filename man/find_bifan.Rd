@@ -4,14 +4,28 @@
 \alias{find_bifan}
 \title{Find bifan motifs}
 \usage{
-find_bifan(edgelist = NULL, paralogs = NULL)
+find_bifan(
+  edgelist = NULL,
+  paralogs = NULL,
+  lambda_vec = NULL,
+  bp_param = BiocParallel::SerialParam()
+)
 }
 \arguments{
 \item{edgelist}{A 2-column data frame with regulators in column 1 and
-targets in column 2.}
+targets in column 2. It can be ignored if you give lambda motifs
+to parameter \strong{lambda_vec} (recommended).}
 
 \item{paralogs}{A 2-column data frame with gene IDs for each paralog
 in the paralog pair.}
+
+\item{lambda_vec}{A character of lambda motifs as returned
+by \code{find_lambda()}. If this is NULL, this function will find lambda
+motifs from \strong{edgelist} and \strong{paralogs} first. Passing
+previously identified lambda motifs will make this function much faster.}
+
+\item{bp_param}{BiocParallel back-end to be used.
+Default: BiocParallel::SerialParam().}
 }
 \value{
 A character vector with bifan motifs represented

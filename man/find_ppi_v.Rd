@@ -4,14 +4,21 @@
 \alias{find_ppi_v}
 \title{Find V motifs in protein-protein interactions}
 \usage{
-find_ppi_v(edgelist = NULL, paralogs = NULL)
+find_ppi_v(
+  edgelist = NULL,
+  paralogs = NULL,
+  bp_param = BiocParallel::SerialParam()
+)
 }
 \arguments{
-\item{edgelist}{A 2-column data frame with regulators in column 1 and
-targets in column 2.}
+\item{edgelist}{A 2-column data frame with protein 1 in column 1 and
+protein 2 in column 2.}
 
 \item{paralogs}{A 2-column data frame with gene IDs for each paralog
 in the paralog pair.}
+
+\item{bp_param}{BiocParallel back-end to be used.
+Default: BiocParallel::SerialParam().}
 }
 \value{
 A character vector with V motifs represented
@@ -29,5 +36,5 @@ data(gma_ppi)
 data(gma_paralogs)
 edgelist <- gma_ppi
 paralogs <- gma_paralogs[gma_paralogs$type == "WGD", 1:2]
-motifs <- find_ppi_v(edgelist, paralogs)
+motifs <- find_ppi_v(edgelist, paralogs) 
 }

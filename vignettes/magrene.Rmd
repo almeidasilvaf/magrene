@@ -106,8 +106,8 @@ For GRN motifs, we will only use a smaller subset of the edge list.
 # Include only WGD-derived paralogs
 paralogs <- gma_paralogs[gma_paralogs$type == "WGD", 1:2]
 
-# Keep only the top 10k edges of the GRN, remove "Weight" variable
-grn <- gma_grn[1:10^4, 1:2]
+# Keep only the top 30k edges of the GRN, remove "Weight" variable
+grn <- gma_grn[1:30000, 1:2]
 ```
 
 ## PPI V
@@ -176,8 +176,20 @@ $$
 \text{target1<-regulator->target2}
 $$
 
+To find delta motifs, you have two options:
+
+1. Pass PPI edge list + a vector of previously identified lambda motifs
+(recommended).
+
+2. Pass PPI edge list + GRN edge list + paralogs data frame. In this option,
+`find_delta()` will find lambda motifs first, then use the lambda vector to 
+find delta motifs. If you have identified lambda motifs beforehand, it is 
+way faster to pass the lambda vector to `find_delta()`, so you don't have
+to do double work.
+
 ```{r delta}
-delta <- find_delta(grn, paralogs, gma_ppi)
+# Find delta motifs from lambda motifs
+delta <- find_delta(edgelist_ppi = gma_ppi, lambda_vec = lambda)
 head(delta)
 ```
 
@@ -194,8 +206,14 @@ $$
 \text{regulator1,regulator2->target1,target2}
 $$
 
+Under the hood, what `find_bifan()` does it to find lambda motifs involving
+the same targets and check if their regulators are paralogs. Thus, if you have 
+identified lambda motifs beforehand, it is much faster to simply give them
+to `find_bifan()`, so it doesn't have to find them again.
+
 ```{r bifan}
-bifan <- find_bifan(grn, paralogs)
+# Find bifans from lambda motifs
+bifan <- find_bifan(paralogs = paralogs, lambda_vec = lambda)
 head(bifan)
 ```
 
