@@ -81,7 +81,7 @@
             <address class="author_afil">
       Ghent University / VIB Center for Plant Systems Biology, Ghent, Belgium<br><h4 data-toc-skip class="author">Yves Van de Peer</h4>
             <address class="author_afil">
-      Ghent University / VIB Center for Plant Systems Biology, Ghent, Belgium<br><h4 data-toc-skip class="date">2022-05-05</h4>
+      Ghent University / VIB Center for Plant Systems Biology, Ghent, Belgium<br><h4 data-toc-skip class="date">2022-07-22</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/almeidasilvaf/magrene/blob/HEAD/vignettes/magrene.Rmd" class="external-link"><code>vignettes/magrene.Rmd</code></a></small>
       <div class="hidden name"><code>magrene.Rmd</code></div>
@@ -97,7 +97,7 @@
 </h2>
 <p>Network motifs are the building blocks of complex networks, and they can be interpreted as small genetic circuits. Identifying and counting motifs in gene regulatory networks can reveal important aspects of the evolution of transcriptional regulation. In particular, they can be used to explore the impact of gene duplication in the rewriring of regulatory interactions <span class="citation">(Mottes et al. 2021)</span>. <code>magrene</code> aims to identify and analyze motifs in (duplicated) gene regulatory networks to better comprehend the role of gene duplication in network evolution. The figure below shows the networks motifs users can identify with <code>magrene</code>.</p>
 <div class="figure" style="text-align: center">
-<img src="../../../_temp/Library/magrene/extdata/motifs_vignette.png" alt="Network motifs and functions to identify them. Shaded boxes indicate paralogs. Regulators and targets are indicated in purple and green, respectively."><p class="caption">
+<img src="motifs_vignette.png" alt="Network motifs and functions to identify them. Shaded boxes indicate paralogs. Regulators and targets are indicated in purple and green, respectively."><p class="caption">
 Network motifs and functions to identify them. Shaded boxes indicate paralogs. Regulators and targets are indicated in purple and green, respectively.
 </p>
 </div>
@@ -107,14 +107,14 @@ Network motifs and functions to identify them. Shaded boxes indicate paralogs. R
 </h2>
 <p>You can install <code>magrene</code> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-      <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span>
-  <span class="op">}</span>
-
-<span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"magrene"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span></span>
+<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"magrene"</span><span class="op">)</span></span></code></pre></div>
 <p>Then, you can load the package with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/almeidasilvaf/magrene" class="external-link">magrene</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/almeidasilvaf/magrene" class="external-link">magrene</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="data-description">Data description<a class="anchor" aria-label="anchor" href="#data-description"></a>
@@ -127,46 +127,46 @@ Network motifs and functions to identify them. Shaded boxes indicate paralogs. R
 </ol>
 <p>Networks are represented as edge lists. Let’s take a look at the data.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">gma_grn</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">gma_grn</span><span class="op">)</span>
-<span class="co">#&gt;                  Node1           Node2     Weight</span>
-<span class="co">#&gt; 615572 Glyma.20G042000 Glyma.13G027300 0.09219597</span>
-<span class="co">#&gt; 177435 Glyma.06G225200 Glyma.04G205700 0.09054177</span>
-<span class="co">#&gt; 208602 Glyma.09G278100 Glyma.05G084800 0.08846030</span>
-<span class="co">#&gt; 190115 Glyma.18G039200 Glyma.05G002100 0.08382400</span>
-<span class="co">#&gt; 78998  Glyma.01G075800 Glyma.02G221200 0.08271081</span>
-<span class="co">#&gt; 870271 Glyma.09G231700 Glyma.18G220700 0.08208945</span>
-
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">gma_ppi</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">gma_ppi</span><span class="op">)</span>
-<span class="co">#&gt;                node1           node2</span>
-<span class="co">#&gt; 4971 Glyma.19G213200 Glyma.01G004300</span>
-<span class="co">#&gt; 4985 Glyma.14G061100 Glyma.01G004300</span>
-<span class="co">#&gt; 4995 Glyma.03G179000 Glyma.01G004300</span>
-<span class="co">#&gt; 5021 Glyma.03G097900 Glyma.01G004300</span>
-<span class="co">#&gt; 5037 Glyma.07G047700 Glyma.01G004300</span>
-<span class="co">#&gt; 5053 Glyma.19G051900 Glyma.01G004300</span>
-
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">gma_paralogs</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">gma_paralogs</span><span class="op">)</span>
-<span class="co">#&gt;        duplicate1      duplicate2 type</span>
-<span class="co">#&gt; 1 Glyma.01G007200 Glyma.01G007300   TD</span>
-<span class="co">#&gt; 2 Glyma.01G007400 Glyma.01G007500   TD</span>
-<span class="co">#&gt; 3 Glyma.01G011500 Glyma.01G011600   TD</span>
-<span class="co">#&gt; 4 Glyma.01G012100 Glyma.01G012200   TD</span>
-<span class="co">#&gt; 5 Glyma.01G015200 Glyma.01G015300   TD</span>
-<span class="co">#&gt; 6 Glyma.01G020600 Glyma.01G020700   TD</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">gma_grn</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">gma_grn</span><span class="op">)</span></span>
+<span><span class="co">#&gt;                  Node1           Node2     Weight</span></span>
+<span><span class="co">#&gt; 615572 Glyma.20G042000 Glyma.13G027300 0.09219597</span></span>
+<span><span class="co">#&gt; 177435 Glyma.06G225200 Glyma.04G205700 0.09054177</span></span>
+<span><span class="co">#&gt; 208602 Glyma.09G278100 Glyma.05G084800 0.08846030</span></span>
+<span><span class="co">#&gt; 190115 Glyma.18G039200 Glyma.05G002100 0.08382400</span></span>
+<span><span class="co">#&gt; 78998  Glyma.01G075800 Glyma.02G221200 0.08271081</span></span>
+<span><span class="co">#&gt; 870271 Glyma.09G231700 Glyma.18G220700 0.08208945</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">gma_ppi</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">gma_ppi</span><span class="op">)</span></span>
+<span><span class="co">#&gt;                node1           node2</span></span>
+<span><span class="co">#&gt; 4971 Glyma.19G213200 Glyma.01G004300</span></span>
+<span><span class="co">#&gt; 4985 Glyma.14G061100 Glyma.01G004300</span></span>
+<span><span class="co">#&gt; 4995 Glyma.03G179000 Glyma.01G004300</span></span>
+<span><span class="co">#&gt; 5021 Glyma.03G097900 Glyma.01G004300</span></span>
+<span><span class="co">#&gt; 5037 Glyma.07G047700 Glyma.01G004300</span></span>
+<span><span class="co">#&gt; 5053 Glyma.19G051900 Glyma.01G004300</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">gma_paralogs</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">gma_paralogs</span><span class="op">)</span></span>
+<span><span class="co">#&gt;        duplicate1      duplicate2 type</span></span>
+<span><span class="co">#&gt; 1 Glyma.01G007200 Glyma.01G007300   TD</span></span>
+<span><span class="co">#&gt; 2 Glyma.01G007400 Glyma.01G007500   TD</span></span>
+<span><span class="co">#&gt; 3 Glyma.01G011500 Glyma.01G011600   TD</span></span>
+<span><span class="co">#&gt; 4 Glyma.01G012100 Glyma.01G012200   TD</span></span>
+<span><span class="co">#&gt; 5 Glyma.01G015200 Glyma.01G015300   TD</span></span>
+<span><span class="co">#&gt; 6 Glyma.01G020600 Glyma.01G020700   TD</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="finding-motifs">Finding motifs<a class="anchor" aria-label="anchor" href="#finding-motifs"></a>
 </h2>
 <p>Motifs can be found using <code>find_*</code> motifs, as shown in Figure 1. Each function returns a character vector of motifs, and each motif has its own character representation. Let’s demonstrate how they work. For the sake of demonstration, we will only use WGD-derived paralogs. For GRN motifs, we will only use a smaller subset of the edge list.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Include only WGD-derived paralogs</span>
-<span class="va">paralogs</span> <span class="op">&lt;-</span> <span class="va">gma_paralogs</span><span class="op">[</span><span class="va">gma_paralogs</span><span class="op">$</span><span class="va">type</span> <span class="op">==</span> <span class="st">"WGD"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>
-
-<span class="co"># Keep only the top 10k edges of the GRN, remove "Weight" variable</span>
-<span class="va">grn</span> <span class="op">&lt;-</span> <span class="va">gma_grn</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">^</span><span class="fl">4</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Include only WGD-derived paralogs</span></span>
+<span><span class="va">paralogs</span> <span class="op">&lt;-</span> <span class="va">gma_paralogs</span><span class="op">[</span><span class="va">gma_paralogs</span><span class="op">$</span><span class="va">type</span> <span class="op">==</span> <span class="st">"WGD"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># Keep only the top 10k edges of the GRN, remove "Weight" variable</span></span>
+<span><span class="va">grn</span> <span class="op">&lt;-</span> <span class="va">gma_grn</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">^</span><span class="fl">4</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="ppi-v">PPI V<a class="anchor" aria-label="anchor" href="#ppi-v"></a>
 </h3>
@@ -175,21 +175,21 @@ Network motifs and functions to identify them. Shaded boxes indicate paralogs. R
 \text{paralog1-partner-paralog2}
 \]</span></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Find PPI V motifs</span>
-<span class="va">ppi_v</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_ppi_v.html">find_ppi_v</a></span><span class="op">(</span><span class="va">gma_ppi</span>, <span class="va">paralogs</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ppi_v</span><span class="op">)</span>
-<span class="co">#&gt;                                  Glyma.01G0043001 </span>
-<span class="co">#&gt; "Glyma.19G213200-Glyma.01G004300-Glyma.03G216600" </span>
-<span class="co">#&gt;                                  Glyma.01G0043002 </span>
-<span class="co">#&gt; "Glyma.07G034300-Glyma.01G004300-Glyma.08G207800" </span>
-<span class="co">#&gt;                                  Glyma.01G0043003 </span>
-<span class="co">#&gt; "Glyma.14G101700-Glyma.01G004300-Glyma.06G061100" </span>
-<span class="co">#&gt;                                  Glyma.01G0043004 </span>
-<span class="co">#&gt; "Glyma.12G028500-Glyma.01G004300-Glyma.11G103700" </span>
-<span class="co">#&gt;                                  Glyma.01G0043005 </span>
-<span class="co">#&gt; "Glyma.19G189600-Glyma.01G004300-Glyma.03G189300" </span>
-<span class="co">#&gt;                                  Glyma.01G0043006 </span>
-<span class="co">#&gt; "Glyma.15G006700-Glyma.01G004300-Glyma.07G029200"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Find PPI V motifs</span></span>
+<span><span class="va">ppi_v</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_ppi_v.html">find_ppi_v</a></span><span class="op">(</span><span class="va">gma_ppi</span>, <span class="va">paralogs</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ppi_v</span><span class="op">)</span></span>
+<span><span class="co">#&gt;                                  Glyma.01G0043001 </span></span>
+<span><span class="co">#&gt; "Glyma.19G213200-Glyma.01G004300-Glyma.03G216600" </span></span>
+<span><span class="co">#&gt;                                  Glyma.01G0043002 </span></span>
+<span><span class="co">#&gt; "Glyma.07G034300-Glyma.01G004300-Glyma.08G207800" </span></span>
+<span><span class="co">#&gt;                                  Glyma.01G0043003 </span></span>
+<span><span class="co">#&gt; "Glyma.14G101700-Glyma.01G004300-Glyma.06G061100" </span></span>
+<span><span class="co">#&gt;                                  Glyma.01G0043004 </span></span>
+<span><span class="co">#&gt; "Glyma.12G028500-Glyma.01G004300-Glyma.11G103700" </span></span>
+<span><span class="co">#&gt;                                  Glyma.01G0043005 </span></span>
+<span><span class="co">#&gt; "Glyma.19G189600-Glyma.01G004300-Glyma.03G189300" </span></span>
+<span><span class="co">#&gt;                                  Glyma.01G0043006 </span></span>
+<span><span class="co">#&gt; "Glyma.15G006700-Glyma.01G004300-Glyma.07G029200"</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="v">V<a class="anchor" aria-label="anchor" href="#v"></a>
@@ -199,10 +199,10 @@ Network motifs and functions to identify them. Shaded boxes indicate paralogs. R
 \text{regulator-&gt;target&lt;-regulator}
 \]</span></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Find V motifs</span>
-<span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_v.html">find_v</a></span><span class="op">(</span><span class="va">grn</span>, <span class="va">paralogs</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span>
-<span class="co">#&gt; NULL</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Find V motifs</span></span>
+<span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_v.html">find_v</a></span><span class="op">(</span><span class="va">grn</span>, <span class="va">paralogs</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span></span>
+<span><span class="co">#&gt; NULL</span></span></code></pre></div>
 <p>As you can see, there are no V motifs in this example data set. When that is the case, <code>find_*</code> functions return NULL.</p>
 </div>
 <div class="section level3">
@@ -213,20 +213,20 @@ Network motifs and functions to identify them. Shaded boxes indicate paralogs. R
 \text{target1&lt;-regulator-&gt;target2}
 \]</span></p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lambda</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_lambda.html">find_lambda</a></span><span class="op">(</span><span class="va">grn</span>, <span class="va">paralogs</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">lambda</span><span class="op">)</span>
-<span class="co">#&gt;                                     Glyma.01G177200 </span>
-<span class="co">#&gt; "Glyma.09G152400&lt;-Glyma.01G177200-&gt;Glyma.20G151800" </span>
-<span class="co">#&gt;                                     Glyma.02G051900 </span>
-<span class="co">#&gt; "Glyma.01G207700&lt;-Glyma.02G051900-&gt;Glyma.11G034700" </span>
-<span class="co">#&gt;                                     Glyma.02G236400 </span>
-<span class="co">#&gt; "Glyma.05G223800&lt;-Glyma.02G236400-&gt;Glyma.08G030900" </span>
-<span class="co">#&gt;                                     Glyma.06G028300 </span>
-<span class="co">#&gt; "Glyma.11G038800&lt;-Glyma.06G028300-&gt;Glyma.05G066700" </span>
-<span class="co">#&gt;                                     Glyma.06G096500 </span>
-<span class="co">#&gt; "Glyma.05G223800&lt;-Glyma.06G096500-&gt;Glyma.08G030900" </span>
-<span class="co">#&gt;                                     Glyma.07G042800 </span>
-<span class="co">#&gt; "Glyma.15G165100&lt;-Glyma.07G042800-&gt;Glyma.13G100100"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">lambda</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_lambda.html">find_lambda</a></span><span class="op">(</span><span class="va">grn</span>, <span class="va">paralogs</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">lambda</span><span class="op">)</span></span>
+<span><span class="co">#&gt;                                     Glyma.01G177200 </span></span>
+<span><span class="co">#&gt; "Glyma.09G152400&lt;-Glyma.01G177200-&gt;Glyma.20G151800" </span></span>
+<span><span class="co">#&gt;                                     Glyma.02G051900 </span></span>
+<span><span class="co">#&gt; "Glyma.01G207700&lt;-Glyma.02G051900-&gt;Glyma.11G034700" </span></span>
+<span><span class="co">#&gt;                                     Glyma.02G236400 </span></span>
+<span><span class="co">#&gt; "Glyma.05G223800&lt;-Glyma.02G236400-&gt;Glyma.08G030900" </span></span>
+<span><span class="co">#&gt;                                     Glyma.06G028300 </span></span>
+<span><span class="co">#&gt; "Glyma.11G038800&lt;-Glyma.06G028300-&gt;Glyma.05G066700" </span></span>
+<span><span class="co">#&gt;                                     Glyma.06G096500 </span></span>
+<span><span class="co">#&gt; "Glyma.05G223800&lt;-Glyma.06G096500-&gt;Glyma.08G030900" </span></span>
+<span><span class="co">#&gt;                                     Glyma.07G042800 </span></span>
+<span><span class="co">#&gt; "Glyma.15G165100&lt;-Glyma.07G042800-&gt;Glyma.13G100100"</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="delta">Delta<a class="anchor" aria-label="anchor" href="#delta"></a>
@@ -236,9 +236,9 @@ Network motifs and functions to identify them. Shaded boxes indicate paralogs. R
 \text{target1&lt;-regulator-&gt;target2}
 \]</span></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">delta</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_delta.html">find_delta</a></span><span class="op">(</span><span class="va">grn</span>, <span class="va">paralogs</span>, <span class="va">gma_ppi</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">delta</span><span class="op">)</span>
-<span class="co">#&gt; NULL</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">delta</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_delta.html">find_delta</a></span><span class="op">(</span><span class="va">grn</span>, <span class="va">paralogs</span>, <span class="va">gma_ppi</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">delta</span><span class="op">)</span></span>
+<span><span class="co">#&gt; NULL</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="bifan">Bifan<a class="anchor" aria-label="anchor" href="#bifan"></a>
@@ -248,9 +248,9 @@ Network motifs and functions to identify them. Shaded boxes indicate paralogs. R
 \text{regulator1,regulator2-&gt;target1,target2}
 \]</span></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">bifan</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_bifan.html">find_bifan</a></span><span class="op">(</span><span class="va">grn</span>, <span class="va">paralogs</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">bifan</span><span class="op">)</span>
-<span class="co">#&gt; NULL</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">bifan</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_bifan.html">find_bifan</a></span><span class="op">(</span><span class="va">grn</span>, <span class="va">paralogs</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">bifan</span><span class="op">)</span></span>
+<span><span class="co">#&gt; NULL</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -258,106 +258,106 @@ Network motifs and functions to identify them. Shaded boxes indicate paralogs. R
 </h2>
 <p>As motifs are simple character vectors, one can count their frequencies with the base R <code><a href="https://rdrr.io/r/base/length.html" class="external-link">length()</a></code> function. For example, let’s count the frequency of each motif in our example data set:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">count_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>
-    Motif <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"PPI V"</span>, <span class="st">"V"</span>, <span class="st">"Lambda"</span>, <span class="st">"Delta"</span>, <span class="st">"Bifan"</span><span class="op">)</span>,
-    Count <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
-        <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">ppi_v</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">lambda</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">delta</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">bifan</span><span class="op">)</span>
-    <span class="op">)</span>
-<span class="op">)</span>
-
-<span class="va">count_df</span>
-<span class="co">#&gt;    Motif Count</span>
-<span class="co">#&gt; 1  PPI V  1521</span>
-<span class="co">#&gt; 2      V     0</span>
-<span class="co">#&gt; 3 Lambda    18</span>
-<span class="co">#&gt; 4  Delta     0</span>
-<span class="co">#&gt; 5  Bifan     0</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">count_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>    Motif <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"PPI V"</span>, <span class="st">"V"</span>, <span class="st">"Lambda"</span>, <span class="st">"Delta"</span>, <span class="st">"Bifan"</span><span class="op">)</span>,</span>
+<span>    Count <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>        <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">ppi_v</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">lambda</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">delta</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">bifan</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">count_df</span></span>
+<span><span class="co">#&gt;    Motif Count</span></span>
+<span><span class="co">#&gt; 1  PPI V  1521</span></span>
+<span><span class="co">#&gt; 2      V     0</span></span>
+<span><span class="co">#&gt; 3 Lambda    18</span></span>
+<span><span class="co">#&gt; 4  Delta     0</span></span>
+<span><span class="co">#&gt; 5  Bifan     0</span></span></code></pre></div>
 <p>However, unless you have another data set to which you can compare your frequencies, counting is not enough. You need to evaluate the significance of your motif frequencies. One way to do that is by comparing your observed frequencies to a null distribution generated by counting motifs in <em>N</em> (e.g., 1000) simulated networks.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> <code>magrene</code> allows you to generate null distributions of motif frequencies for each motif type with the function <code><a href="../reference/generate_nulls.html">generate_nulls()</a></code>. As generating the null distributions takes a bit of time, we will load pre-computed null distributions of <em>N</em> = 100. As a rule of thumb, you would probably want <em>N</em> &gt;= 1000.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Load null distros</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">nulls</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">nulls</span><span class="op">)</span>
-<span class="co">#&gt; $lambda</span>
-<span class="co">#&gt; lambda lambda lambda lambda lambda lambda lambda lambda lambda lambda lambda </span>
-<span class="co">#&gt;      4      3     11     10      8     11     13     13     13     12      6 </span>
-<span class="co">#&gt; lambda lambda lambda lambda lambda lambda lambda lambda lambda lambda lambda </span>
-<span class="co">#&gt;     16      8     11      8     11      8      5     10      8      6     11 </span>
-<span class="co">#&gt; lambda lambda lambda lambda lambda lambda lambda lambda lambda lambda lambda </span>
-<span class="co">#&gt;      9      6     11     12      9      6      8      9     15      6     11 </span>
-<span class="co">#&gt; lambda lambda lambda lambda lambda lambda lambda lambda lambda lambda lambda </span>
-<span class="co">#&gt;      5     13     16      8     13      7     10      7     10     22     18 </span>
-<span class="co">#&gt; lambda lambda lambda lambda lambda lambda lambda lambda lambda lambda lambda </span>
-<span class="co">#&gt;      8      4     12     10     14      6     15     13      8     14      5 </span>
-<span class="co">#&gt; lambda lambda lambda lambda lambda lambda lambda lambda lambda lambda lambda </span>
-<span class="co">#&gt;      7     10      8      6     11     14      9     10     14     15     13 </span>
-<span class="co">#&gt; lambda lambda lambda lambda lambda lambda lambda lambda lambda lambda lambda </span>
-<span class="co">#&gt;     10     10      8      8      9     11     13     10      7      7     11 </span>
-<span class="co">#&gt; lambda lambda lambda lambda lambda lambda lambda lambda lambda lambda lambda </span>
-<span class="co">#&gt;     11      7     11     13      8      4     11     11     14     11     18 </span>
-<span class="co">#&gt; lambda lambda lambda lambda lambda lambda lambda lambda lambda lambda lambda </span>
-<span class="co">#&gt;     10     14     10     11      8      7     11      6     10     18      6 </span>
-<span class="co">#&gt; lambda </span>
-<span class="co">#&gt;      8 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $delta</span>
-<span class="co">#&gt; delta delta delta delta delta delta delta delta delta delta delta delta delta </span>
-<span class="co">#&gt;     0     0     2     0     0     0     0     0     0     0     0     0     0 </span>
-<span class="co">#&gt; delta delta delta delta delta delta delta delta delta delta delta delta delta </span>
-<span class="co">#&gt;     0     0     0     0     0     0     0     0     0     0     0     0     0 </span>
-<span class="co">#&gt; delta delta delta delta delta delta delta delta delta delta delta delta delta </span>
-<span class="co">#&gt;     0     0     0     0     0     0     0     0     0     0     0     0     0 </span>
-<span class="co">#&gt; delta delta delta delta delta delta delta delta delta delta delta delta delta </span>
-<span class="co">#&gt;     0     0     0     0     0     0     0     0     0     0     0     0     0 </span>
-<span class="co">#&gt; delta delta delta delta delta delta delta delta delta delta delta delta delta </span>
-<span class="co">#&gt;     0     0     0     0     0     0     0     0     0     0     0     0     0 </span>
-<span class="co">#&gt; delta delta delta delta delta delta delta delta delta delta delta delta delta </span>
-<span class="co">#&gt;     0     0     0     0     0     0     0     0     0     0     0     0     1 </span>
-<span class="co">#&gt; delta delta delta delta delta delta delta delta delta delta delta delta delta </span>
-<span class="co">#&gt;     0     0     0     0     0     0     0     0     0     0     0     0     0 </span>
-<span class="co">#&gt; delta delta delta delta delta delta delta delta delta </span>
-<span class="co">#&gt;     0     0     0     0     0     0     1     0     0 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $V</span>
-<span class="co">#&gt; V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V </span>
-<span class="co">#&gt; 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </span>
-<span class="co">#&gt; V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V </span>
-<span class="co">#&gt; 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </span>
-<span class="co">#&gt; V V V V V V V V V V V V V V V V V V V V </span>
-<span class="co">#&gt; 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $bifan</span>
-<span class="co">#&gt; bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan </span>
-<span class="co">#&gt;     0     0     0     0     0     0     0     0     0     0     0     0     0 </span>
-<span class="co">#&gt; bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan </span>
-<span class="co">#&gt;     0     0     0     0     0     0     0     0     0     0     0     0     0 </span>
-<span class="co">#&gt; bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan </span>
-<span class="co">#&gt;     0     0     0     0     0     0     0     0     0     0     0     0     0 </span>
-<span class="co">#&gt; bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan </span>
-<span class="co">#&gt;     0     0     0     0     0     0     0     0     0     0     0     0     0 </span>
-<span class="co">#&gt; bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan </span>
-<span class="co">#&gt;     0     0     0     0     0     0     0     0     0     0     0     0     0 </span>
-<span class="co">#&gt; bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan </span>
-<span class="co">#&gt;     0     0     0     0     0     0     0     0     0     0     0     0     0 </span>
-<span class="co">#&gt; bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan </span>
-<span class="co">#&gt;     0     0     0     0     0     0     0     0     0     0     0     0     0 </span>
-<span class="co">#&gt; bifan bifan bifan bifan bifan bifan bifan bifan bifan </span>
-<span class="co">#&gt;     0     0     0     0     0     0     0     0     0</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Load null distros</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">nulls</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">nulls</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $lambda</span></span>
+<span><span class="co">#&gt; lambda lambda lambda lambda lambda lambda lambda lambda lambda lambda lambda </span></span>
+<span><span class="co">#&gt;      4      3     11     10      8     11     13     13     13     12      6 </span></span>
+<span><span class="co">#&gt; lambda lambda lambda lambda lambda lambda lambda lambda lambda lambda lambda </span></span>
+<span><span class="co">#&gt;     16      8     11      8     11      8      5     10      8      6     11 </span></span>
+<span><span class="co">#&gt; lambda lambda lambda lambda lambda lambda lambda lambda lambda lambda lambda </span></span>
+<span><span class="co">#&gt;      9      6     11     12      9      6      8      9     15      6     11 </span></span>
+<span><span class="co">#&gt; lambda lambda lambda lambda lambda lambda lambda lambda lambda lambda lambda </span></span>
+<span><span class="co">#&gt;      5     13     16      8     13      7     10      7     10     22     18 </span></span>
+<span><span class="co">#&gt; lambda lambda lambda lambda lambda lambda lambda lambda lambda lambda lambda </span></span>
+<span><span class="co">#&gt;      8      4     12     10     14      6     15     13      8     14      5 </span></span>
+<span><span class="co">#&gt; lambda lambda lambda lambda lambda lambda lambda lambda lambda lambda lambda </span></span>
+<span><span class="co">#&gt;      7     10      8      6     11     14      9     10     14     15     13 </span></span>
+<span><span class="co">#&gt; lambda lambda lambda lambda lambda lambda lambda lambda lambda lambda lambda </span></span>
+<span><span class="co">#&gt;     10     10      8      8      9     11     13     10      7      7     11 </span></span>
+<span><span class="co">#&gt; lambda lambda lambda lambda lambda lambda lambda lambda lambda lambda lambda </span></span>
+<span><span class="co">#&gt;     11      7     11     13      8      4     11     11     14     11     18 </span></span>
+<span><span class="co">#&gt; lambda lambda lambda lambda lambda lambda lambda lambda lambda lambda lambda </span></span>
+<span><span class="co">#&gt;     10     14     10     11      8      7     11      6     10     18      6 </span></span>
+<span><span class="co">#&gt; lambda </span></span>
+<span><span class="co">#&gt;      8 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $delta</span></span>
+<span><span class="co">#&gt; delta delta delta delta delta delta delta delta delta delta delta delta delta </span></span>
+<span><span class="co">#&gt;     0     0     2     0     0     0     0     0     0     0     0     0     0 </span></span>
+<span><span class="co">#&gt; delta delta delta delta delta delta delta delta delta delta delta delta delta </span></span>
+<span><span class="co">#&gt;     0     0     0     0     0     0     0     0     0     0     0     0     0 </span></span>
+<span><span class="co">#&gt; delta delta delta delta delta delta delta delta delta delta delta delta delta </span></span>
+<span><span class="co">#&gt;     0     0     0     0     0     0     0     0     0     0     0     0     0 </span></span>
+<span><span class="co">#&gt; delta delta delta delta delta delta delta delta delta delta delta delta delta </span></span>
+<span><span class="co">#&gt;     0     0     0     0     0     0     0     0     0     0     0     0     0 </span></span>
+<span><span class="co">#&gt; delta delta delta delta delta delta delta delta delta delta delta delta delta </span></span>
+<span><span class="co">#&gt;     0     0     0     0     0     0     0     0     0     0     0     0     0 </span></span>
+<span><span class="co">#&gt; delta delta delta delta delta delta delta delta delta delta delta delta delta </span></span>
+<span><span class="co">#&gt;     0     0     0     0     0     0     0     0     0     0     0     0     1 </span></span>
+<span><span class="co">#&gt; delta delta delta delta delta delta delta delta delta delta delta delta delta </span></span>
+<span><span class="co">#&gt;     0     0     0     0     0     0     0     0     0     0     0     0     0 </span></span>
+<span><span class="co">#&gt; delta delta delta delta delta delta delta delta delta </span></span>
+<span><span class="co">#&gt;     0     0     0     0     0     0     1     0     0 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $V</span></span>
+<span><span class="co">#&gt; V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V </span></span>
+<span><span class="co">#&gt; 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </span></span>
+<span><span class="co">#&gt; V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V </span></span>
+<span><span class="co">#&gt; 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </span></span>
+<span><span class="co">#&gt; V V V V V V V V V V V V V V V V V V V V </span></span>
+<span><span class="co">#&gt; 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $bifan</span></span>
+<span><span class="co">#&gt; bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan </span></span>
+<span><span class="co">#&gt;     0     0     0     0     0     0     0     0     0     0     0     0     0 </span></span>
+<span><span class="co">#&gt; bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan </span></span>
+<span><span class="co">#&gt;     0     0     0     0     0     0     0     0     0     0     0     0     0 </span></span>
+<span><span class="co">#&gt; bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan </span></span>
+<span><span class="co">#&gt;     0     0     0     0     0     0     0     0     0     0     0     0     0 </span></span>
+<span><span class="co">#&gt; bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan </span></span>
+<span><span class="co">#&gt;     0     0     0     0     0     0     0     0     0     0     0     0     0 </span></span>
+<span><span class="co">#&gt; bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan </span></span>
+<span><span class="co">#&gt;     0     0     0     0     0     0     0     0     0     0     0     0     0 </span></span>
+<span><span class="co">#&gt; bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan </span></span>
+<span><span class="co">#&gt;     0     0     0     0     0     0     0     0     0     0     0     0     0 </span></span>
+<span><span class="co">#&gt; bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan bifan </span></span>
+<span><span class="co">#&gt;     0     0     0     0     0     0     0     0     0     0     0     0     0 </span></span>
+<span><span class="co">#&gt; bifan bifan bifan bifan bifan bifan bifan bifan bifan </span></span>
+<span><span class="co">#&gt;     0     0     0     0     0     0     0     0     0</span></span></code></pre></div>
 <p>As you can see, the output of <code><a href="../reference/generate_nulls.html">generate_nulls()</a></code> is a list of numeric vectors with the frequency of each motif type in the simulated networks. You can use the null distribution to calculate Z-scores for your observed frequencies, which are defined as below:</p>
 <p><span class="math display">\[
 Z = \frac{ n_{observed} - \bar{n}_{null} }{ \sigma_{null} }
 \]</span></p>
 <p>To calculate Z-scores, you can use the function <code><a href="../reference/calculate_Z.html">calculate_Z()</a></code>. As input, you need to give a list of observed frequencies and a list of nulls.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Create list of observed frequencies</span>
-<span class="va">observed</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
-    lambda <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">lambda</span><span class="op">)</span>, 
-    bifan <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">bifan</span><span class="op">)</span>, 
-    V <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span>,
-    delta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">delta</span><span class="op">)</span>
-<span class="op">)</span>
-<span class="fu"><a href="../reference/calculate_Z.html">calculate_Z</a></span><span class="op">(</span><span class="va">observed</span>, <span class="va">nulls</span><span class="op">)</span>
-<span class="co">#&gt;     lambda      delta          V      bifan </span>
-<span class="co">#&gt;  2.2903930 -0.1646915        NaN        NaN</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Create list of observed frequencies</span></span>
+<span><span class="va">observed</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    lambda <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">lambda</span><span class="op">)</span>, </span>
+<span>    bifan <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">bifan</span><span class="op">)</span>, </span>
+<span>    V <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span>,</span>
+<span>    delta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">delta</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/calculate_Z.html">calculate_Z</a></span><span class="op">(</span><span class="va">observed</span>, <span class="va">nulls</span><span class="op">)</span></span>
+<span><span class="co">#&gt;     lambda      delta          V      bifan </span></span>
+<span><span class="co">#&gt;  2.2903930 -0.1646915        NaN        NaN</span></span></code></pre></div>
 <p>Now that you have Z-scores, you can use a cut-off of your choice to define significance.</p>
 </div>
 <div class="section level2">
@@ -369,59 +369,59 @@ S(A,B) = \frac{2 \left| A \cap B \right|}{ \left|A \right| + \left| B \right|}
 \]</span></p>
 <p>where A and B are the interacting partners of nodes A and B. To calculate the Sorensen-Dice similarity for paralogous gene pairs, you can use the function <code><a href="../reference/sd_similarity.html">sd_similarity()</a></code>. Let’s demonstrate it by calculating the similarity between paralogs in the PPI network.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sd_similarity.html">sd_similarity</a></span><span class="op">(</span><span class="va">gma_ppi</span>, <span class="va">paralogs</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">sim</span><span class="op">)</span>
-<span class="co">#&gt;            duplicate1      duplicate2 sorensen_dice</span>
-<span class="co">#&gt; 11631 Glyma.01G004300 Glyma.05G223800             1</span>
-<span class="co">#&gt; 11696 Glyma.01G205300 Glyma.05G064600             1</span>
-<span class="co">#&gt; 11706 Glyma.01G207700 Glyma.05G061400             1</span>
-<span class="co">#&gt; 12157 Glyma.01G004300 Glyma.08G030900             1</span>
-<span class="co">#&gt; 12803 Glyma.01G207700 Glyma.11G034700             1</span>
-<span class="co">#&gt; 13298 Glyma.01G163300 Glyma.16G123100             1</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">sim</span><span class="op">$</span><span class="va">sorensen_dice</span><span class="op">)</span>
-<span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span>
-<span class="co">#&gt;  0.2200  1.0000  1.0000  0.9812  1.0000  1.0000</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sd_similarity.html">sd_similarity</a></span><span class="op">(</span><span class="va">gma_ppi</span>, <span class="va">paralogs</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">sim</span><span class="op">)</span></span>
+<span><span class="co">#&gt;            duplicate1      duplicate2 sorensen_dice</span></span>
+<span><span class="co">#&gt; 11631 Glyma.01G004300 Glyma.05G223800             1</span></span>
+<span><span class="co">#&gt; 11696 Glyma.01G205300 Glyma.05G064600             1</span></span>
+<span><span class="co">#&gt; 11706 Glyma.01G207700 Glyma.05G061400             1</span></span>
+<span><span class="co">#&gt; 12157 Glyma.01G004300 Glyma.08G030900             1</span></span>
+<span><span class="co">#&gt; 12803 Glyma.01G207700 Glyma.11G034700             1</span></span>
+<span><span class="co">#&gt; 13298 Glyma.01G163300 Glyma.16G123100             1</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">sim</span><span class="op">$</span><span class="va">sorensen_dice</span><span class="op">)</span></span>
+<span><span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
+<span><span class="co">#&gt;  0.2200  1.0000  1.0000  0.9812  1.0000  1.0000</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 class="unnumbered" id="session-information">Session information<a class="anchor" aria-label="anchor" href="#session-information"></a>
 </h2>
 <p>This document was created under the following conditions:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; R version 4.1.1 (2021-08-10)</span>
-<span class="co">#&gt; Platform: x86_64-pc-linux-gnu (64-bit)</span>
-<span class="co">#&gt; Running under: Ubuntu 20.04.3 LTS</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Matrix products: default</span>
-<span class="co">#&gt; BLAS/LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.8.so</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; locale:</span>
-<span class="co">#&gt;  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              </span>
-<span class="co">#&gt;  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    </span>
-<span class="co">#&gt;  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=C             </span>
-<span class="co">#&gt;  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 </span>
-<span class="co">#&gt;  [9] LC_ADDRESS=C               LC_TELEPHONE=C            </span>
-<span class="co">#&gt; [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; attached base packages:</span>
-<span class="co">#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; other attached packages:</span>
-<span class="co">#&gt; [1] magrene_0.99.0   BiocStyle_2.20.2</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; loaded via a namespace (and not attached):</span>
-<span class="co">#&gt;  [1] knitr_1.39          magrittr_2.0.3      R6_2.5.1           </span>
-<span class="co">#&gt;  [4] ragg_1.2.2          rlang_1.0.2         fastmap_1.1.0      </span>
-<span class="co">#&gt;  [7] highr_0.9           stringr_1.4.0       tools_4.1.1        </span>
-<span class="co">#&gt; [10] xfun_0.30           cli_3.3.0           jquerylib_0.1.4    </span>
-<span class="co">#&gt; [13] systemfonts_1.0.4   htmltools_0.5.2     yaml_2.3.5         </span>
-<span class="co">#&gt; [16] digest_0.6.29       rprojroot_2.0.3     pkgdown_2.0.3      </span>
-<span class="co">#&gt; [19] bookdown_0.26       textshaping_0.3.6   BiocManager_1.30.17</span>
-<span class="co">#&gt; [22] purrr_0.3.4         sass_0.4.1          fs_1.5.2           </span>
-<span class="co">#&gt; [25] memoise_2.0.1       cachem_1.0.6        evaluate_0.15      </span>
-<span class="co">#&gt; [28] rmarkdown_2.14      stringi_1.7.6       compiler_4.1.1     </span>
-<span class="co">#&gt; [31] bslib_0.3.1         desc_1.4.1          jsonlite_1.8.0</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; R version 4.1.1 (2021-08-10)</span></span>
+<span><span class="co">#&gt; Platform: x86_64-pc-linux-gnu (64-bit)</span></span>
+<span><span class="co">#&gt; Running under: Ubuntu 20.04.3 LTS</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Matrix products: default</span></span>
+<span><span class="co">#&gt; BLAS/LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.8.so</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; locale:</span></span>
+<span><span class="co">#&gt;  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              </span></span>
+<span><span class="co">#&gt;  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    </span></span>
+<span><span class="co">#&gt;  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=C             </span></span>
+<span><span class="co">#&gt;  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 </span></span>
+<span><span class="co">#&gt;  [9] LC_ADDRESS=C               LC_TELEPHONE=C            </span></span>
+<span><span class="co">#&gt; [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; attached base packages:</span></span>
+<span><span class="co">#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; other attached packages:</span></span>
+<span><span class="co">#&gt; [1] magrene_0.99.0   BiocStyle_2.20.2</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
+<span><span class="co">#&gt;  [1] knitr_1.39          magrittr_2.0.3      R6_2.5.1           </span></span>
+<span><span class="co">#&gt;  [4] ragg_1.2.2          rlang_1.0.4         fastmap_1.1.0      </span></span>
+<span><span class="co">#&gt;  [7] highr_0.9           stringr_1.4.0       tools_4.1.1        </span></span>
+<span><span class="co">#&gt; [10] xfun_0.31           cli_3.3.0           jquerylib_0.1.4    </span></span>
+<span><span class="co">#&gt; [13] systemfonts_1.0.4   htmltools_0.5.3     yaml_2.3.5         </span></span>
+<span><span class="co">#&gt; [16] digest_0.6.29       rprojroot_2.0.3     pkgdown_2.0.6      </span></span>
+<span><span class="co">#&gt; [19] bookdown_0.27       textshaping_0.3.6   BiocManager_1.30.18</span></span>
+<span><span class="co">#&gt; [22] purrr_0.3.4         sass_0.4.2          fs_1.5.2           </span></span>
+<span><span class="co">#&gt; [25] memoise_2.0.1       cachem_1.0.6        evaluate_0.15      </span></span>
+<span><span class="co">#&gt; [28] rmarkdown_2.14      stringi_1.7.8       compiler_4.1.1     </span></span>
+<span><span class="co">#&gt; [31] bslib_0.4.0         desc_1.4.1          jsonlite_1.8.0</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
@@ -472,7 +472,7 @@ Szklarczyk, Damian, Annika L Gable, Katerina C Nastou, David Lyon, Rebecca Kirsc
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
