@@ -43,8 +43,7 @@ the networks motifs users can identify with `magrene`.
 
 
 ```{r intro_motifs, echo = FALSE, fig.cap = "Network motifs and functions to identify them. Shaded boxes indicate paralogs. Regulators and targets are indicated in purple and green, respectively."}
-img <- system.file("extdata", "motifs_vignette.png", package = "magrene")
-knitr::include_graphics(img)
+knitr::include_graphics("motifs_vignette.png")
 ```
 
 # Installation
