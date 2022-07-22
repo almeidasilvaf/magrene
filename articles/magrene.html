@@ -165,8 +165,8 @@ Network motifs and functions to identify them. Shaded boxes indicate paralogs. R
 <code class="sourceCode R"><span><span class="co"># Include only WGD-derived paralogs</span></span>
 <span><span class="va">paralogs</span> <span class="op">&lt;-</span> <span class="va">gma_paralogs</span><span class="op">[</span><span class="va">gma_paralogs</span><span class="op">$</span><span class="va">type</span> <span class="op">==</span> <span class="st">"WGD"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span>
 <span></span>
-<span><span class="co"># Keep only the top 10k edges of the GRN, remove "Weight" variable</span></span>
-<span><span class="va">grn</span> <span class="op">&lt;-</span> <span class="va">gma_grn</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">^</span><span class="fl">4</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span></code></pre></div>
+<span><span class="co"># Keep only the top 30k edges of the GRN, remove "Weight" variable</span></span>
+<span><span class="va">grn</span> <span class="op">&lt;-</span> <span class="va">gma_grn</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">30000</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="ppi-v">PPI V<a class="anchor" aria-label="anchor" href="#ppi-v"></a>
 </h3>
@@ -202,7 +202,18 @@ Network motifs and functions to identify them. Shaded boxes indicate paralogs. R
 <code class="sourceCode R"><span><span class="co"># Find V motifs</span></span>
 <span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_v.html">find_v</a></span><span class="op">(</span><span class="va">grn</span>, <span class="va">paralogs</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span></span>
-<span><span class="co">#&gt; NULL</span></span></code></pre></div>
+<span><span class="co">#&gt;                                     Glyma.01G109100 </span></span>
+<span><span class="co">#&gt; "Glyma.02G058700-&gt;Glyma.01G109100&lt;-Glyma.01G177200" </span></span>
+<span><span class="co">#&gt;                                     Glyma.01G217200 </span></span>
+<span><span class="co">#&gt; "Glyma.11G108100-&gt;Glyma.01G217200&lt;-Glyma.12G033000" </span></span>
+<span><span class="co">#&gt;                                     Glyma.01G232300 </span></span>
+<span><span class="co">#&gt; "Glyma.02G236400-&gt;Glyma.01G232300&lt;-Glyma.14G204400" </span></span>
+<span><span class="co">#&gt;                                     Glyma.01G240300 </span></span>
+<span><span class="co">#&gt; "Glyma.02G236400-&gt;Glyma.01G240300&lt;-Glyma.14G204400" </span></span>
+<span><span class="co">#&gt;                                     Glyma.02G013800 </span></span>
+<span><span class="co">#&gt; "Glyma.02G236400-&gt;Glyma.02G013800&lt;-Glyma.14G204400" </span></span>
+<span><span class="co">#&gt;                                     Glyma.02G035500 </span></span>
+<span><span class="co">#&gt; "Glyma.14G204400-&gt;Glyma.02G035500&lt;-Glyma.02G236400"</span></span></code></pre></div>
 <p>As you can see, there are no V motifs in this example data set. When that is the case, <code>find_*</code> functions return NULL.</p>
 </div>
 <div class="section level3">
@@ -215,18 +226,18 @@ Network motifs and functions to identify them. Shaded boxes indicate paralogs. R
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lambda</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_lambda.html">find_lambda</a></span><span class="op">(</span><span class="va">grn</span>, <span class="va">paralogs</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">lambda</span><span class="op">)</span></span>
+<span><span class="co">#&gt;                                    Glyma.01G0159001 </span></span>
+<span><span class="co">#&gt; "Glyma.08G141400&lt;-Glyma.01G015900-&gt;Glyma.05G183600" </span></span>
+<span><span class="co">#&gt;                                    Glyma.01G0159002 </span></span>
+<span><span class="co">#&gt; "Glyma.18G024900&lt;-Glyma.01G015900-&gt;Glyma.14G057100" </span></span>
+<span><span class="co">#&gt;                                    Glyma.01G0159003 </span></span>
+<span><span class="co">#&gt; "Glyma.09G152400&lt;-Glyma.01G015900-&gt;Glyma.20G151800" </span></span>
+<span><span class="co">#&gt;                                     Glyma.01G019700 </span></span>
+<span><span class="co">#&gt; "Glyma.14G147800&lt;-Glyma.01G019700-&gt;Glyma.13G081400" </span></span>
+<span><span class="co">#&gt;                                     Glyma.01G021100 </span></span>
+<span><span class="co">#&gt; "Glyma.09G152400&lt;-Glyma.01G021100-&gt;Glyma.20G151800" </span></span>
 <span><span class="co">#&gt;                                     Glyma.01G177200 </span></span>
-<span><span class="co">#&gt; "Glyma.09G152400&lt;-Glyma.01G177200-&gt;Glyma.20G151800" </span></span>
-<span><span class="co">#&gt;                                     Glyma.02G051900 </span></span>
-<span><span class="co">#&gt; "Glyma.01G207700&lt;-Glyma.02G051900-&gt;Glyma.11G034700" </span></span>
-<span><span class="co">#&gt;                                     Glyma.02G236400 </span></span>
-<span><span class="co">#&gt; "Glyma.05G223800&lt;-Glyma.02G236400-&gt;Glyma.08G030900" </span></span>
-<span><span class="co">#&gt;                                     Glyma.06G028300 </span></span>
-<span><span class="co">#&gt; "Glyma.11G038800&lt;-Glyma.06G028300-&gt;Glyma.05G066700" </span></span>
-<span><span class="co">#&gt;                                     Glyma.06G096500 </span></span>
-<span><span class="co">#&gt; "Glyma.05G223800&lt;-Glyma.06G096500-&gt;Glyma.08G030900" </span></span>
-<span><span class="co">#&gt;                                     Glyma.07G042800 </span></span>
-<span><span class="co">#&gt; "Glyma.15G165100&lt;-Glyma.07G042800-&gt;Glyma.13G100100"</span></span></code></pre></div>
+<span><span class="co">#&gt; "Glyma.09G152400&lt;-Glyma.01G177200-&gt;Glyma.20G151800"</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="delta">Delta<a class="anchor" aria-label="anchor" href="#delta"></a>
@@ -235,10 +246,17 @@ Network motifs and functions to identify them. Shaded boxes indicate paralogs. R
 <p><span class="math display">\[
 \text{target1&lt;-regulator-&gt;target2}
 \]</span></p>
+<p>To find delta motifs, you have two options:</p>
+<ol style="list-style-type: decimal">
+<li><p>Pass PPI edge list + a vector of previously identified lambda motifs (recommended).</p></li>
+<li><p>Pass PPI edge list + GRN edge list + paralogs data frame. In this option, <code><a href="../reference/find_delta.html">find_delta()</a></code> will find lambda motifs first, then use the lambda vector to find delta motifs. If you have identified lambda motifs beforehand, it is way faster to pass the lambda vector to <code><a href="../reference/find_delta.html">find_delta()</a></code>, so you don’t have to do double work.</p></li>
+</ol>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">delta</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_delta.html">find_delta</a></span><span class="op">(</span><span class="va">grn</span>, <span class="va">paralogs</span>, <span class="va">gma_ppi</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># Find delta motifs from lambda motifs</span></span>
+<span><span class="va">delta</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_delta.html">find_delta</a></span><span class="op">(</span>edgelist_ppi <span class="op">=</span> <span class="va">gma_ppi</span>, lambda_vec <span class="op">=</span> <span class="va">lambda</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">delta</span><span class="op">)</span></span>
-<span><span class="co">#&gt; NULL</span></span></code></pre></div>
+<span><span class="co">#&gt;                                     Glyma.04G221800 </span></span>
+<span><span class="co">#&gt; "Glyma.10G242600&lt;-Glyma.04G221800-&gt;Glyma.20G151500"</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="bifan">Bifan<a class="anchor" aria-label="anchor" href="#bifan"></a>
@@ -247,8 +265,10 @@ Network motifs and functions to identify them. Shaded boxes indicate paralogs. R
 <p><span class="math display">\[
 \text{regulator1,regulator2-&gt;target1,target2}
 \]</span></p>
+<p>Under the hood, what <code><a href="../reference/find_bifan.html">find_bifan()</a></code> does it to find lambda motifs involving the same targets and check if their regulators are paralogs. Thus, if you have identified lambda motifs beforehand, it is much faster to simply give them to <code><a href="../reference/find_bifan.html">find_bifan()</a></code>, so it doesn’t have to find them again.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">bifan</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_bifan.html">find_bifan</a></span><span class="op">(</span><span class="va">grn</span>, <span class="va">paralogs</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># Find bifans from lambda motifs</span></span>
+<span><span class="va">bifan</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_bifan.html">find_bifan</a></span><span class="op">(</span>paralogs <span class="op">=</span> <span class="va">paralogs</span>, lambda_vec <span class="op">=</span> <span class="va">lambda</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">bifan</span><span class="op">)</span></span>
 <span><span class="co">#&gt; NULL</span></span></code></pre></div>
 </div>
@@ -268,9 +288,9 @@ Network motifs and functions to identify them. Shaded boxes indicate paralogs. R
 <span><span class="va">count_df</span></span>
 <span><span class="co">#&gt;    Motif Count</span></span>
 <span><span class="co">#&gt; 1  PPI V  1521</span></span>
-<span><span class="co">#&gt; 2      V     0</span></span>
-<span><span class="co">#&gt; 3 Lambda    18</span></span>
-<span><span class="co">#&gt; 4  Delta     0</span></span>
+<span><span class="co">#&gt; 2      V   112</span></span>
+<span><span class="co">#&gt; 3 Lambda   162</span></span>
+<span><span class="co">#&gt; 4  Delta     1</span></span>
 <span><span class="co">#&gt; 5  Bifan     0</span></span></code></pre></div>
 <p>However, unless you have another data set to which you can compare your frequencies, counting is not enough. You need to evaluate the significance of your motif frequencies. One way to do that is by comparing your observed frequencies to a null distribution generated by counting motifs in <em>N</em> (e.g., 1000) simulated networks.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> <code>magrene</code> allows you to generate null distributions of motif frequencies for each motif type with the function <code><a href="../reference/generate_nulls.html">generate_nulls()</a></code>. As generating the null distributions takes a bit of time, we will load pre-computed null distributions of <em>N</em> = 100. As a rule of thumb, you would probably want <em>N</em> &gt;= 1000.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
@@ -356,8 +376,8 @@ Z = \frac{ n_{observed} - \bar{n}_{null} }{ \sigma_{null} }
 <span>    delta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">delta</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/calculate_Z.html">calculate_Z</a></span><span class="op">(</span><span class="va">observed</span>, <span class="va">nulls</span><span class="op">)</span></span>
-<span><span class="co">#&gt;     lambda      delta          V      bifan </span></span>
-<span><span class="co">#&gt;  2.2903930 -0.1646915        NaN        NaN</span></span></code></pre></div>
+<span><span class="co">#&gt;    lambda     delta         V     bifan </span></span>
+<span><span class="co">#&gt; 43.776757  3.952596       Inf       NaN</span></span></code></pre></div>
 <p>Now that you have Z-scores, you can use a cut-off of your choice to define significance.</p>
 </div>
 <div class="section level2">
@@ -411,17 +431,18 @@ S(A,B) = \frac{2 \left| A \cap B \right|}{ \left|A \right| + \left| B \right|}
 <span><span class="co">#&gt; [1] magrene_0.99.0   BiocStyle_2.20.2</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
-<span><span class="co">#&gt;  [1] knitr_1.39          magrittr_2.0.3      R6_2.5.1           </span></span>
-<span><span class="co">#&gt;  [4] ragg_1.2.2          rlang_1.0.4         fastmap_1.1.0      </span></span>
-<span><span class="co">#&gt;  [7] highr_0.9           stringr_1.4.0       tools_4.1.1        </span></span>
-<span><span class="co">#&gt; [10] xfun_0.31           cli_3.3.0           jquerylib_0.1.4    </span></span>
-<span><span class="co">#&gt; [13] systemfonts_1.0.4   htmltools_0.5.3     yaml_2.3.5         </span></span>
-<span><span class="co">#&gt; [16] digest_0.6.29       rprojroot_2.0.3     pkgdown_2.0.6      </span></span>
-<span><span class="co">#&gt; [19] bookdown_0.27       textshaping_0.3.6   BiocManager_1.30.18</span></span>
-<span><span class="co">#&gt; [22] purrr_0.3.4         sass_0.4.2          fs_1.5.2           </span></span>
-<span><span class="co">#&gt; [25] memoise_2.0.1       cachem_1.0.6        evaluate_0.15      </span></span>
-<span><span class="co">#&gt; [28] rmarkdown_2.14      stringi_1.7.8       compiler_4.1.1     </span></span>
-<span><span class="co">#&gt; [31] bslib_0.4.0         desc_1.4.1          jsonlite_1.8.0</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1] knitr_1.39          magrittr_2.0.3      BiocParallel_1.26.2</span></span>
+<span><span class="co">#&gt;  [4] R6_2.5.1            ragg_1.2.2          rlang_1.0.4        </span></span>
+<span><span class="co">#&gt;  [7] fastmap_1.1.0       highr_0.9           stringr_1.4.0      </span></span>
+<span><span class="co">#&gt; [10] tools_4.1.1         parallel_4.1.1      xfun_0.31          </span></span>
+<span><span class="co">#&gt; [13] cli_3.3.0           jquerylib_0.1.4     systemfonts_1.0.4  </span></span>
+<span><span class="co">#&gt; [16] htmltools_0.5.3     yaml_2.3.5          digest_0.6.29      </span></span>
+<span><span class="co">#&gt; [19] rprojroot_2.0.3     pkgdown_2.0.6       bookdown_0.27      </span></span>
+<span><span class="co">#&gt; [22] textshaping_0.3.6   BiocManager_1.30.18 purrr_0.3.4        </span></span>
+<span><span class="co">#&gt; [25] sass_0.4.2          fs_1.5.2            memoise_2.0.1      </span></span>
+<span><span class="co">#&gt; [28] cachem_1.0.6        evaluate_0.15       rmarkdown_2.14     </span></span>
+<span><span class="co">#&gt; [31] stringi_1.7.8       compiler_4.1.1      bslib_0.4.0        </span></span>
+<span><span class="co">#&gt; [34] desc_1.4.1          jsonlite_1.8.0</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>

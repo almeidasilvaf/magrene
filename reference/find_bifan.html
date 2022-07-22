@@ -56,19 +56,37 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">find_bifan</span><span class="op">(</span>edgelist <span class="op">=</span> <span class="cn">NULL</span>, paralogs <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">find_bifan</span><span class="op">(</span></span>
+<span>  edgelist <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  paralogs <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  lambda_vec <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  bp_param <span class="op">=</span> <span class="fu">BiocParallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocParallel/man/SerialParam-class.html" class="external-link">SerialParam</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>edgelist</dt>
 <dd><p>A 2-column data frame with regulators in column 1 and
-targets in column 2.</p></dd>
+targets in column 2. It can be ignored if you give lambda motifs
+to parameter <strong>lambda_vec</strong> (recommended).</p></dd>
 
 
 <dt>paralogs</dt>
 <dd><p>A 2-column data frame with gene IDs for each paralog
 in the paralog pair.</p></dd>
+
+
+<dt>lambda_vec</dt>
+<dd><p>A character of lambda motifs as returned
+by <code><a href="find_lambda.html">find_lambda()</a></code>. If this is NULL, this function will find lambda
+motifs from <strong>edgelist</strong> and <strong>paralogs</strong> first. Passing
+previously identified lambda motifs will make this function much faster.</p></dd>
+
+
+<dt>bp_param</dt>
+<dd><p>BiocParallel back-end to be used.
+Default: BiocParallel::SerialParam().</p></dd>
 
 </dl></div>
     <div id="value">
