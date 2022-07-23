@@ -9,10 +9,13 @@
 #' each protein in the interacting pair.
 #' @param n Number of degree-preserving simulated networks to generate.
 #' Default: 1000.
+#' @param bp_param BiocParallel back-end to be used.
+#' Default: BiocParallel::SerialParam().
 #'
 #' @return A list of numeric vectors named `lambda`, `delta`, `V`, and `bifan`, 
 #' containing the null distribution of motif counts for each motif type.
 #' 
+#' @importFrom BiocParallel bplapply SerialParam
 #' @export
 #' @rdname generate_nulls
 #' @examples 
@@ -26,12 +29,13 @@
 #' n <- 2 # small n for demonstration purposes
 #' generate_nulls(edgelist, paralogs, edgelist_ppi, n)
 generate_nulls <- function(edgelist = NULL, paralogs = NULL, 
-                           edgelist_ppi = NULL, n = 1000) {
+                           edgelist_ppi = NULL, n = 1000,
+                           bp_param = BiocParallel::SerialParam()) {
     
     names(edgelist) <- c("Node1", "Node2")
     names(edgelist_ppi) <- c("Node1", "Node2")
     
-    nulls <- lapply(seq_len(n), function(x) { # for each iteration x
+    nulls <- bplapply(seq_len(n), function(x) { # for each iteration x
         # Simulate network by shuffling target genes
         sim_grn <- edgelist
         sim_grn$Node2 <- sample(sim_grn$Node2, replace = FALSE)
@@ -39,16 +43,28 @@ generate_nulls <- function(edgelist = NULL, paralogs = NULL,
         sim_ppi$Node2 <- sample(sim_ppi$Node2, replace = FALSE)
 
         # Calculate motif frequencies in iteration x and store them in a vector
-        n_lambda <- length(find_lambda(sim_grn, paralogs))
-        n_delta <- length(find_delta(sim_grn, paralogs, sim_ppi))
-        n_v <- length(find_v(sim_grn, paralogs))
-        n_v_ppi <- length(find_ppi_v(sim_ppi, paralogs))
-        n_bifan <- length(find_bifan(sim_grn, paralogs))
+        lambda <- find_lambda(sim_grn, paralogs, bp_param = bp_param)
+        n_lambda <- length(lambda)
+        
+        n_delta <- 0
+        n_bifan <- 0
+        if(!is.null(lambda)) {
+            n_delta <- length(find_delta(
+                edgelist_ppi = edgelist_ppi, lambda_vec = lambda, 
+                bp_param = bp_param
+            ))
+
+            n_bifan <- length(find_bifan(
+                paralogs = paralogs, lambda_vec = lambda, bp_param = bp_param
+            ))
+        }
+        n_v <- length(find_v(sim_grn, paralogs, bp_param))
+        n_v_ppi <- length(find_ppi_v(sim_ppi, paralogs, bp_param))
         
         n_iteration <- c(n_lambda, n_delta, n_v, n_v_ppi, n_bifan)
         names(n_iteration) <- c("lambda", "delta", "V", "PPI_V", "bifan")
         return(n_iteration)
-    })
+    }, BPPARAM = bp_param)
     
     # Create vectors of null distros for each motif type
     nulls_vector <- unlist(nulls)

@@ -4,7 +4,13 @@
 \alias{generate_nulls}
 \title{Generate null distributions of motif counts for each motif type}
 \usage{
-generate_nulls(edgelist = NULL, paralogs = NULL, edgelist_ppi = NULL, n = 1000)
+generate_nulls(
+  edgelist = NULL,
+  paralogs = NULL,
+  edgelist_ppi = NULL,
+  n = 1000,
+  bp_param = BiocParallel::SerialParam()
+)
 }
 \arguments{
 \item{edgelist}{A 2-column data frame with regulators in column 1 and
@@ -18,6 +24,9 @@ each protein in the interacting pair.}
 
 \item{n}{Number of degree-preserving simulated networks to generate.
 Default: 1000.}
+
+\item{bp_param}{BiocParallel back-end to be used.
+Default: BiocParallel::SerialParam().}
 }
 \value{
 A list of numeric vectors named \code{lambda}, \code{delta}, \code{V}, and \code{bifan},
