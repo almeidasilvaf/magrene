@@ -15,7 +15,7 @@ test_that("generate_nulls() return a list of numeric vectors", {
     n <- 2
     nulls <- generate_nulls(edgelist[1:100, ], paralogs, edgelist_ppi, n)
     expect_equal(class(nulls), "list")
-    expect_equal(class(nulls[[1]]), "integer")
+    expect_true(class(nulls[[1]]) %in% c("integer", "numeric"))
     expect_true("lambda" %in% names(nulls))
     expect_true("delta" %in% names(nulls))
     expect_true("V" %in% names(nulls))
