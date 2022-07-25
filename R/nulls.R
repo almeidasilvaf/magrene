@@ -47,7 +47,7 @@ generate_nulls <- function(edgelist = NULL, paralogs = NULL,
     names(edgelist) <- c("Node1", "Node2")
     names(edgelist_ppi) <- c("Node1", "Node2")
     
-    nulls <- bplapply(seq_len(n), function(x) { # for each iteration x
+    nulls <- lapply(seq_len(n), function(x) { # for each iteration x
         # Simulate network by shuffling target genes
         sim_grn <- edgelist
         sim_grn$Node2 <- sample(sim_grn$Node2, replace = FALSE)
@@ -76,7 +76,7 @@ generate_nulls <- function(edgelist = NULL, paralogs = NULL,
         n_iteration <- c(n_lambda, n_delta, n_v, n_v_ppi, n_bifan)
         names(n_iteration) <- c("lambda", "delta", "V", "PPI_V", "bifan")
         return(n_iteration)
-    }, BPPARAM = bp_param)
+    })
     
     # Create vectors of null distros for each motif type
     nulls_vector <- unlist(nulls)
