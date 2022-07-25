@@ -306,13 +306,74 @@ head(sim)
 summary(sim$sorensen_dice)
 ```
 
+# Parallelization and performance
+
+With `r BiocStyle::Githubpkg("almeidasilvaf/magrene")`, users can identify
+motifs using multiple cores thanks to the Bioconductor 
+package `r BiocStyle::Biocpkg("BiocParallel")`. 
+However, parallelization is not always the best choice, because it may 
+take longer to create multiple copies of your data to split into multiple 
+cores than it takes to find motifs with a single core.
+
+
+To guide users on how many cores to use, we benchmarked each function's 
+performance with 1, 5, 10, 15, and 20 cores. The GRN and PPI networks used for
+benchmarking had 1214095 and 719 edges, respectively, and the paralogs 
+data frame had 13643 rows. The results are shown below.
+
+```{r parallel_benchmark, echo = FALSE, fig.width = 9, fig.height = 4}
+# Time is expressed in seconds
+bench_ppiv <- data.frame(
+    Motif = rep("PPI_V", 7),
+    Cores = c(1, 5, 10, 15, 20, 25, 30),
+    Median_time = c(0.0682, 0.8895, 0.7072, 0.8356, 1.0019, 1.62, 1.84)
+)
+bench_v <- data.frame(
+    Motif = rep("V", 7),
+    Cores = c(1, 5, 10, 15, 20, 25, 30),
+    Median_time = c(68.06, 204.82, 106.33, 85.61, 63.18, 75.21, 62.75)
+)
+
+bench_lambda <- data.frame(
+    Motif = rep("Lambda", 7),
+    Cores = c(1, 5, 10, 15, 20, 25, 30),
+    Median_time = c(1376.31, 350.11, 170.89, 140.87, 109.40, 88.11, 82.54)
+)
+bench_delta <- data.frame(
+    Motif = rep("Delta", 7),
+    Cores = c(1, 5, 10, 15, 20, 25, 30),
+    Median_time = c(0.1793, 5.3629, 3.7199, 2.6788, 2.3954, 2.34, 2.55)
+)
+bench_bifan <- data.frame(
+    Motif = rep("Bifan", 7),
+    Cores = c(1, 5, 10, 15, 20, 25, 30),
+    Median_time = c(10.98, 484.46, 234.72, 173.20, 136.34, 125.18, 103.64)
+)
+bench_results <- rbind(
+    bench_ppiv, bench_v, bench_lambda, bench_delta, bench_bifan
+)
+
+suppressPackageStartupMessages(library(ggplot2))
+p <- ggplot(bench_results, aes(x = Cores, y = Median_time, group = 1)) +
+    geom_line() +
+    geom_point() +
+    theme_bw() +
+    facet_wrap(~Motif, scales = "free", ncol = 5) +
+    labs(
+        title = "Running time for increasing number of cores",
+        x = "Cores", y = "Median time (seconds)"
+    )
+p
+```
+As you can see, there are cases when it's faster to use only 1 thread,
+and other cases when using multiple cores is a good option.
 
 # Session information {.unnumbered}
 
 This document was created under the following conditions:
 
 ```{r sessioninfo}
-sessionInfo()
+sessioninfo::session_info()
 ```
 
 # References {.unnumbered}

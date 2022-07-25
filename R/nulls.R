@@ -9,7 +9,15 @@
 #' each protein in the interacting pair.
 #' @param n Number of degree-preserving simulated networks to generate.
 #' Default: 1000.
-#' @param bp_param BiocParallel back-end to be used.
+#' @param bp_ppiv BiocParallel back-end to be used in \code{find_ppi_v()}.
+#' Default: BiocParallel::SerialParam().
+#' @param bp_v BiocParallel back-end to be used in \code{find_v()}.
+#' Default: BiocParallel::SerialParam().
+#' @param bp_lambda BiocParallel back-end to be used in \code{find_lambda()}.
+#' Default: BiocParallel::SerialParam().
+#' @param bp_delta BiocParallel back-end to be used in \code{find_delta()}.
+#' Default: BiocParallel::SerialParam().
+#' @param bp_bifan BiocParallel back-end to be used in \code{find_bifan()}.
 #' Default: BiocParallel::SerialParam().
 #'
 #' @return A list of numeric vectors named `lambda`, `delta`, `V`, and `bifan`, 
@@ -30,7 +38,11 @@
 #' generate_nulls(edgelist, paralogs, edgelist_ppi, n)
 generate_nulls <- function(edgelist = NULL, paralogs = NULL, 
                            edgelist_ppi = NULL, n = 1000,
-                           bp_param = BiocParallel::SerialParam()) {
+                           bp_ppiv = BiocParallel::SerialParam(),
+                           bp_v = BiocParallel::SerialParam(),
+                           bp_lambda = BiocParallel::SerialParam(),
+                           bp_delta = BiocParallel::SerialParam(),
+                           bp_bifan = BiocParallel::SerialParam()) {
     
     names(edgelist) <- c("Node1", "Node2")
     names(edgelist_ppi) <- c("Node1", "Node2")
@@ -43,7 +55,7 @@ generate_nulls <- function(edgelist = NULL, paralogs = NULL,
         sim_ppi$Node2 <- sample(sim_ppi$Node2, replace = FALSE)
 
         # Calculate motif frequencies in iteration x and store them in a vector
-        lambda <- find_lambda(sim_grn, paralogs, bp_param = bp_param)
+        lambda <- find_lambda(sim_grn, paralogs, bp_param = bp_lambda)
         n_lambda <- length(lambda)
         
         n_delta <- 0
@@ -51,15 +63,15 @@ generate_nulls <- function(edgelist = NULL, paralogs = NULL,
         if(!is.null(lambda)) {
             n_delta <- length(find_delta(
                 edgelist_ppi = edgelist_ppi, lambda_vec = lambda, 
-                bp_param = bp_param
+                bp_param = bp_delta
             ))
 
             n_bifan <- length(find_bifan(
-                paralogs = paralogs, lambda_vec = lambda, bp_param = bp_param
+                paralogs = paralogs, lambda_vec = lambda, bp_param = bp_bifan
             ))
         }
-        n_v <- length(find_v(sim_grn, paralogs, bp_param))
-        n_v_ppi <- length(find_ppi_v(sim_ppi, paralogs, bp_param))
+        n_v <- length(find_v(sim_grn, paralogs, bp_v))
+        n_v_ppi <- length(find_ppi_v(sim_ppi, paralogs, bp_ppiv))
         
         n_iteration <- c(n_lambda, n_delta, n_v, n_v_ppi, n_bifan)
         names(n_iteration) <- c("lambda", "delta", "V", "PPI_V", "bifan")

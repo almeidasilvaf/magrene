@@ -9,7 +9,11 @@ generate_nulls(
   paralogs = NULL,
   edgelist_ppi = NULL,
   n = 1000,
-  bp_param = BiocParallel::SerialParam()
+  bp_ppiv = BiocParallel::SerialParam(),
+  bp_v = BiocParallel::SerialParam(),
+  bp_lambda = BiocParallel::SerialParam(),
+  bp_delta = BiocParallel::SerialParam(),
+  bp_bifan = BiocParallel::SerialParam()
 )
 }
 \arguments{
@@ -25,7 +29,19 @@ each protein in the interacting pair.}
 \item{n}{Number of degree-preserving simulated networks to generate.
 Default: 1000.}
 
-\item{bp_param}{BiocParallel back-end to be used.
+\item{bp_ppiv}{BiocParallel back-end to be used in \code{find_ppi_v()}.
+Default: BiocParallel::SerialParam().}
+
+\item{bp_v}{BiocParallel back-end to be used in \code{find_v()}.
+Default: BiocParallel::SerialParam().}
+
+\item{bp_lambda}{BiocParallel back-end to be used in \code{find_lambda()}.
+Default: BiocParallel::SerialParam().}
+
+\item{bp_delta}{BiocParallel back-end to be used in \code{find_delta()}.
+Default: BiocParallel::SerialParam().}
+
+\item{bp_bifan}{BiocParallel back-end to be used in \code{find_bifan()}.
 Default: BiocParallel::SerialParam().}
 }
 \value{
