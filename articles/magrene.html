@@ -81,7 +81,7 @@
             <address class="author_afil">
       Ghent University / VIB Center for Plant Systems Biology, Ghent, Belgium<br><h4 data-toc-skip class="author">Yves Van de Peer</h4>
             <address class="author_afil">
-      Ghent University / VIB Center for Plant Systems Biology, Ghent, Belgium<br><h4 data-toc-skip class="date">2022-07-23</h4>
+      Ghent University / VIB Center for Plant Systems Biology, Ghent, Belgium<br><h4 data-toc-skip class="date">2022-07-25</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/almeidasilvaf/magrene/blob/HEAD/vignettes/magrene.Rmd" class="external-link"><code>vignettes/magrene.Rmd</code></a></small>
       <div class="hidden name"><code>magrene.Rmd</code></div>
@@ -404,45 +404,93 @@ S(A,B) = \frac{2 \left| A \cap B \right|}{ \left|A \right| + \left| B \right|}
 <span><span class="co">#&gt;  0.2200  1.0000  1.0000  0.9812  1.0000  1.0000</span></span></code></pre></div>
 </div>
 <div class="section level2">
+<h2 id="parallelization-and-performance">Parallelization and performance<a class="anchor" aria-label="anchor" href="#parallelization-and-performance"></a>
+</h2>
+<p>With <em><a href="https://github.com/almeidasilvaf/magrene" class="external-link">magrene</a></em>, users can identify motifs using multiple cores thanks to the Bioconductor package <em><a href="https://bioconductor.org/packages/3.13/BiocParallel" class="external-link">BiocParallel</a></em>. However, parallelization is not always the best choice, because it may take longer to create multiple copies of your data to split into multiple cores than it takes to find motifs with a single core.</p>
+<p>To guide users on how many cores to use, we benchmarked each function’s performance with 1, 5, 10, 15, and 20 cores. The GRN and PPI networks used for benchmarking had 1214095 and 719 edges, respectively, and the paralogs data frame had 13643 rows. The results are shown below.</p>
+<p><img src="magrene_files/figure-html/parallel_benchmark-1.png" width="864" style="display: block; margin: auto;"> As you can see, there are cases when it’s faster to use only 1 thread, and other cases when using multiple cores is a good option.</p>
+</div>
+<div class="section level2">
 <h2 class="unnumbered" id="session-information">Session information<a class="anchor" aria-label="anchor" href="#session-information"></a>
 </h2>
 <p>This document was created under the following conditions:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; R version 4.1.1 (2021-08-10)</span></span>
-<span><span class="co">#&gt; Platform: x86_64-pc-linux-gnu (64-bit)</span></span>
-<span><span class="co">#&gt; Running under: Ubuntu 20.04.3 LTS</span></span>
+<code class="sourceCode R"><span><span class="fu">sessioninfo</span><span class="fu">::</span><span class="fu"><a href="https://r-lib.github.io/sessioninfo/reference/session_info.html" class="external-link">session_info</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold;">─ Session info ───────────────────────────────────────────────────────────────</span></span></span>
+<span><span class="co">#&gt;  <span style="color: #555555; font-style: italic;">setting </span> <span style="color: #555555; font-style: italic;">value</span></span></span>
+<span><span class="co">#&gt;  version  R version 4.1.1 (2021-08-10)</span></span>
+<span><span class="co">#&gt;  os       Ubuntu 20.04.3 LTS</span></span>
+<span><span class="co">#&gt;  system   x86_64, linux-gnu</span></span>
+<span><span class="co">#&gt;  ui       X11</span></span>
+<span><span class="co">#&gt;  language en</span></span>
+<span><span class="co">#&gt;  collate  en_US.UTF-8</span></span>
+<span><span class="co">#&gt;  ctype    en_US.UTF-8</span></span>
+<span><span class="co">#&gt;  tz       UTC</span></span>
+<span><span class="co">#&gt;  date     2022-07-25</span></span>
+<span><span class="co">#&gt;  pandoc   2.11.4 @ /usr/local/bin/ (via rmarkdown)</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Matrix products: default</span></span>
-<span><span class="co">#&gt; BLAS/LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.8.so</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold;">─ Packages ───────────────────────────────────────────────────────────────────</span></span></span>
+<span><span class="co">#&gt;  <span style="color: #555555; font-style: italic;">package     </span> <span style="color: #555555; font-style: italic;">*</span> <span style="color: #555555; font-style: italic;">version</span> <span style="color: #555555; font-style: italic;">date (UTC)</span> <span style="color: #555555; font-style: italic;">lib</span> <span style="color: #555555; font-style: italic;">source</span></span></span>
+<span><span class="co">#&gt;  BiocManager    1.30.18 <span style="color: #555555;">2022-05-18</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  BiocParallel   1.26.2  <span style="color: #555555;">2021-08-22</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
+<span><span class="co">#&gt;  BiocStyle    * 2.20.2  <span style="color: #555555;">2021-06-17</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
+<span><span class="co">#&gt;  bookdown       0.27    <span style="color: #555555;">2022-06-14</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  bslib          0.4.0   <span style="color: #555555;">2022-07-16</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  cachem         1.0.6   <span style="color: #555555;">2021-08-19</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  cli            3.3.0   <span style="color: #555555;">2022-04-25</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  colorspace     2.0-3   <span style="color: #555555;">2022-02-21</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  desc           1.4.1   <span style="color: #555555;">2022-03-06</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  digest         0.6.29  <span style="color: #555555;">2021-12-01</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  dplyr          1.0.9   <span style="color: #555555;">2022-04-28</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  evaluate       0.15    <span style="color: #555555;">2022-02-18</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  fansi          1.0.3   <span style="color: #555555;">2022-03-24</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  farver         2.1.1   <span style="color: #555555;">2022-07-06</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  fastmap        1.1.0   <span style="color: #555555;">2021-01-25</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  fs             1.5.2   <span style="color: #555555;">2021-12-08</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  generics       0.1.3   <span style="color: #555555;">2022-07-05</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  ggplot2      * 3.3.6   <span style="color: #555555;">2022-05-03</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  glue           1.6.2   <span style="color: #555555;">2022-02-24</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  gtable         0.3.0   <span style="color: #555555;">2019-03-25</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  highr          0.9     <span style="color: #555555;">2021-04-16</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  htmltools      0.5.3   <span style="color: #555555;">2022-07-18</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  jquerylib      0.1.4   <span style="color: #555555;">2021-04-26</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  jsonlite       1.8.0   <span style="color: #555555;">2022-02-22</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  knitr          1.39    <span style="color: #555555;">2022-04-26</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  labeling       0.4.2   <span style="color: #555555;">2020-10-20</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  lifecycle      1.0.1   <span style="color: #555555;">2021-09-24</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  magrene      * 0.99.0  <span style="color: #555555;">2022-07-25</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
+<span><span class="co">#&gt;  magrittr       2.0.3   <span style="color: #555555;">2022-03-30</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  memoise        2.0.1   <span style="color: #555555;">2021-11-26</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  munsell        0.5.0   <span style="color: #555555;">2018-06-12</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  pillar         1.8.0   <span style="color: #555555;">2022-07-18</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  pkgconfig      2.0.3   <span style="color: #555555;">2019-09-22</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  pkgdown        2.0.6   <span style="color: #555555;">2022-07-16</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  purrr          0.3.4   <span style="color: #555555;">2020-04-17</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  R6             2.5.1   <span style="color: #555555;">2021-08-19</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  ragg           1.2.2   <span style="color: #555555;">2022-02-21</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  rlang          1.0.4   <span style="color: #555555;">2022-07-12</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  rmarkdown      2.14    <span style="color: #555555;">2022-04-25</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  rprojroot      2.0.3   <span style="color: #555555;">2022-04-02</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  sass           0.4.2   <span style="color: #555555;">2022-07-16</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  scales         1.2.0   <span style="color: #555555;">2022-04-13</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  sessioninfo    1.2.2   <span style="color: #555555;">2021-12-06</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  stringi        1.7.8   <span style="color: #555555;">2022-07-11</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  stringr        1.4.0   <span style="color: #555555;">2019-02-10</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  systemfonts    1.0.4   <span style="color: #555555;">2022-02-11</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  textshaping    0.3.6   <span style="color: #555555;">2021-10-13</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  tibble         3.1.8   <span style="color: #555555;">2022-07-22</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  tidyselect     1.1.2   <span style="color: #555555;">2022-02-21</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  utf8           1.2.2   <span style="color: #555555;">2021-07-24</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  vctrs          0.4.1   <span style="color: #555555;">2022-04-13</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  withr          2.5.0   <span style="color: #555555;">2022-03-03</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  xfun           0.31    <span style="color: #555555;">2022-05-10</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  yaml           2.3.5   <span style="color: #555555;">2022-02-21</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; locale:</span></span>
-<span><span class="co">#&gt;  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              </span></span>
-<span><span class="co">#&gt;  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    </span></span>
-<span><span class="co">#&gt;  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=C             </span></span>
-<span><span class="co">#&gt;  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 </span></span>
-<span><span class="co">#&gt;  [9] LC_ADDRESS=C               LC_TELEPHONE=C            </span></span>
-<span><span class="co">#&gt; [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       </span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [1] /__w/_temp/Library</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [2] /usr/local/lib/R/site-library</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [3] /usr/local/lib/R/library</span></span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; attached base packages:</span></span>
-<span><span class="co">#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; other attached packages:</span></span>
-<span><span class="co">#&gt; [1] magrene_0.99.0   BiocStyle_2.20.2</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
-<span><span class="co">#&gt;  [1] knitr_1.39          magrittr_2.0.3      BiocParallel_1.26.2</span></span>
-<span><span class="co">#&gt;  [4] R6_2.5.1            ragg_1.2.2          rlang_1.0.4        </span></span>
-<span><span class="co">#&gt;  [7] fastmap_1.1.0       highr_0.9           stringr_1.4.0      </span></span>
-<span><span class="co">#&gt; [10] tools_4.1.1         parallel_4.1.1      xfun_0.31          </span></span>
-<span><span class="co">#&gt; [13] cli_3.3.0           jquerylib_0.1.4     systemfonts_1.0.4  </span></span>
-<span><span class="co">#&gt; [16] htmltools_0.5.3     yaml_2.3.5          digest_0.6.29      </span></span>
-<span><span class="co">#&gt; [19] rprojroot_2.0.3     pkgdown_2.0.6       bookdown_0.27      </span></span>
-<span><span class="co">#&gt; [22] textshaping_0.3.6   BiocManager_1.30.18 purrr_0.3.4        </span></span>
-<span><span class="co">#&gt; [25] sass_0.4.2          fs_1.5.2            memoise_2.0.1      </span></span>
-<span><span class="co">#&gt; [28] cachem_1.0.6        evaluate_0.15       rmarkdown_2.14     </span></span>
-<span><span class="co">#&gt; [31] stringi_1.7.8       compiler_4.1.1      bslib_0.4.0        </span></span>
-<span><span class="co">#&gt; [34] desc_1.4.1          jsonlite_1.8.0</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold;">──────────────────────────────────────────────────────────────────────────────</span></span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>

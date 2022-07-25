@@ -61,7 +61,11 @@
 <span>  paralogs <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  edgelist_ppi <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  n <span class="op">=</span> <span class="fl">1000</span>,</span>
-<span>  bp_param <span class="op">=</span> <span class="fu">BiocParallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocParallel/man/SerialParam-class.html" class="external-link">SerialParam</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  bp_ppiv <span class="op">=</span> <span class="fu">BiocParallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocParallel/man/SerialParam-class.html" class="external-link">SerialParam</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  bp_v <span class="op">=</span> <span class="fu">BiocParallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocParallel/man/SerialParam-class.html" class="external-link">SerialParam</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  bp_lambda <span class="op">=</span> <span class="fu">BiocParallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocParallel/man/SerialParam-class.html" class="external-link">SerialParam</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  bp_delta <span class="op">=</span> <span class="fu">BiocParallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocParallel/man/SerialParam-class.html" class="external-link">SerialParam</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  bp_bifan <span class="op">=</span> <span class="fu">BiocParallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocParallel/man/SerialParam-class.html" class="external-link">SerialParam</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -87,8 +91,28 @@ each protein in the interacting pair.</p></dd>
 Default: 1000.</p></dd>
 
 
-<dt>bp_param</dt>
-<dd><p>BiocParallel back-end to be used.
+<dt>bp_ppiv</dt>
+<dd><p>BiocParallel back-end to be used in <code><a href="find_ppi_v.html">find_ppi_v()</a></code>.
+Default: BiocParallel::SerialParam().</p></dd>
+
+
+<dt>bp_v</dt>
+<dd><p>BiocParallel back-end to be used in <code><a href="find_v.html">find_v()</a></code>.
+Default: BiocParallel::SerialParam().</p></dd>
+
+
+<dt>bp_lambda</dt>
+<dd><p>BiocParallel back-end to be used in <code><a href="find_lambda.html">find_lambda()</a></code>.
+Default: BiocParallel::SerialParam().</p></dd>
+
+
+<dt>bp_delta</dt>
+<dd><p>BiocParallel back-end to be used in <code><a href="find_delta.html">find_delta()</a></code>.
+Default: BiocParallel::SerialParam().</p></dd>
+
+
+<dt>bp_bifan</dt>
+<dd><p>BiocParallel back-end to be used in <code><a href="find_bifan.html">find_bifan()</a></code>.
 Default: BiocParallel::SerialParam().</p></dd>
 
 </dl></div>
