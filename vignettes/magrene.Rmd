@@ -317,7 +317,7 @@ cores than it takes to find motifs with a single core.
 
 
 To guide users on how many cores to use, we benchmarked each function's 
-performance with 1, 5, 10, 15, and 20 cores. The GRN and PPI networks used for
+performance with 1, 5, 10, 15, 20, 25, and 30 cores. The GRN and PPI networks used for
 benchmarking had 1214095 and 719 edges, respectively, and the paralogs 
 data frame had 13643 rows. The results are shown below.
 
