@@ -81,7 +81,7 @@
             <address class="author_afil">
       Ghent University / VIB Center for Plant Systems Biology, Ghent, Belgium<br><h4 data-toc-skip class="author">Yves Van de Peer</h4>
             <address class="author_afil">
-      Ghent University / VIB Center for Plant Systems Biology, Ghent, Belgium<br><h4 data-toc-skip class="date">2022-07-25</h4>
+      Ghent University / VIB Center for Plant Systems Biology, Ghent, Belgium<br><h4 data-toc-skip class="date">2022-07-26</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/almeidasilvaf/magrene/blob/HEAD/vignettes/magrene.Rmd" class="external-link"><code>vignettes/magrene.Rmd</code></a></small>
       <div class="hidden name"><code>magrene.Rmd</code></div>
@@ -407,7 +407,7 @@ S(A,B) = \frac{2 \left| A \cap B \right|}{ \left|A \right| + \left| B \right|}
 <h2 id="parallelization-and-performance">Parallelization and performance<a class="anchor" aria-label="anchor" href="#parallelization-and-performance"></a>
 </h2>
 <p>With <em><a href="https://github.com/almeidasilvaf/magrene" class="external-link">magrene</a></em>, users can identify motifs using multiple cores thanks to the Bioconductor package <em><a href="https://bioconductor.org/packages/3.13/BiocParallel" class="external-link">BiocParallel</a></em>. However, parallelization is not always the best choice, because it may take longer to create multiple copies of your data to split into multiple cores than it takes to find motifs with a single core.</p>
-<p>To guide users on how many cores to use, we benchmarked each function’s performance with 1, 5, 10, 15, and 20 cores. The GRN and PPI networks used for benchmarking had 1214095 and 719 edges, respectively, and the paralogs data frame had 13643 rows. The results are shown below.</p>
+<p>To guide users on how many cores to use, we benchmarked each function’s performance with 1, 5, 10, 15, 20, 25, and 30 cores. The GRN and PPI networks used for benchmarking had 1214095 and 719 edges, respectively, and the paralogs data frame had 13643 rows. The results are shown below.</p>
 <p><img src="magrene_files/figure-html/parallel_benchmark-1.png" width="864" style="display: block; margin: auto;"> As you can see, there are cases when it’s faster to use only 1 thread, and other cases when using multiple cores is a good option.</p>
 </div>
 <div class="section level2">
@@ -426,7 +426,7 @@ S(A,B) = \frac{2 \left| A \cap B \right|}{ \left|A \right| + \left| B \right|}
 <span><span class="co">#&gt;  collate  en_US.UTF-8</span></span>
 <span><span class="co">#&gt;  ctype    en_US.UTF-8</span></span>
 <span><span class="co">#&gt;  tz       UTC</span></span>
-<span><span class="co">#&gt;  date     2022-07-25</span></span>
+<span><span class="co">#&gt;  date     2022-07-26</span></span>
 <span><span class="co">#&gt;  pandoc   2.11.4 @ /usr/local/bin/ (via rmarkdown)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold;">─ Packages ───────────────────────────────────────────────────────────────────</span></span></span>
@@ -458,7 +458,7 @@ S(A,B) = \frac{2 \left| A \cap B \right|}{ \left|A \right| + \left| B \right|}
 <span><span class="co">#&gt;  knitr          1.39    <span style="color: #555555;">2022-04-26</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
 <span><span class="co">#&gt;  labeling       0.4.2   <span style="color: #555555;">2020-10-20</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
 <span><span class="co">#&gt;  lifecycle      1.0.1   <span style="color: #555555;">2021-09-24</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  magrene      * 0.99.0  <span style="color: #555555;">2022-07-25</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
+<span><span class="co">#&gt;  magrene      * 0.99.0  <span style="color: #555555;">2022-07-26</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
 <span><span class="co">#&gt;  magrittr       2.0.3   <span style="color: #555555;">2022-03-30</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
 <span><span class="co">#&gt;  memoise        2.0.1   <span style="color: #555555;">2021-11-26</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
 <span><span class="co">#&gt;  munsell        0.5.0   <span style="color: #555555;">2018-06-12</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
