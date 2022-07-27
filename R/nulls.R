@@ -61,17 +61,18 @@ generate_nulls <- function(edgelist = NULL, paralogs = NULL,
         n_delta <- 0
         n_bifan <- 0
         if(!is.null(lambda)) {
-            n_delta <- length(find_delta(
+            n_delta <- find_delta(
                 edgelist_ppi = edgelist_ppi, lambda_vec = lambda, 
-                bp_param = bp_delta
-            ))
+                bp_param = bp_delta, count_only = TRUE
+            )
 
-            n_bifan <- length(find_bifan(
-                paralogs = paralogs, lambda_vec = lambda, bp_param = bp_bifan
-            ))
+            n_bifan <- find_bifan(
+                paralogs = paralogs, lambda_vec = lambda, bp_param = bp_bifan,
+                count_only = TRUE
+            )
         }
-        n_v <- length(find_v(sim_grn, paralogs, bp_v))
-        n_v_ppi <- length(find_ppi_v(sim_ppi, paralogs, bp_ppiv))
+        n_v <- find_v(sim_grn, paralogs, bp_v, count_only = TRUE)
+        n_v_ppi <- find_ppi_v(sim_ppi, paralogs, bp_ppiv, count_only = TRUE)
         
         n_iteration <- c(n_lambda, n_delta, n_v, n_v_ppi, n_bifan)
         names(n_iteration) <- c("lambda", "delta", "V", "PPI_V", "bifan")

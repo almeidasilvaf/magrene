@@ -7,7 +7,8 @@
 find_v(
   edgelist = NULL,
   paralogs = NULL,
-  bp_param = BiocParallel::SerialParam()
+  bp_param = BiocParallel::SerialParam(),
+  count_only = FALSE
 )
 }
 \arguments{
@@ -19,6 +20,10 @@ in the paralog pair.}
 
 \item{bp_param}{BiocParallel back-end to be used.
 Default: BiocParallel::SerialParam().}
+
+\item{count_only}{Logical indicating whether the function should return
+only motif counts as a numeric scalar. If FALSE, it will return
+a character vector of motifs. Default: FALSE.}
 }
 \value{
 A character vector with V motifs represented

@@ -9,7 +9,8 @@ find_delta(
   paralogs = NULL,
   edgelist_ppi = NULL,
   lambda_vec = NULL,
-  bp_param = BiocParallel::SerialParam()
+  bp_param = BiocParallel::SerialParam(),
+  count_only = FALSE
 )
 }
 \arguments{
@@ -31,6 +32,10 @@ previously identified lambda motifs will make this function much faster.}
 
 \item{bp_param}{BiocParallel back-end to be used.
 Default: BiocParallel::SerialParam().}
+
+\item{count_only}{Logical indicating whether the function should return
+only motif counts as a numeric scalar. If FALSE, it will return
+a character vector of motifs. Default: FALSE.}
 }
 \value{
 A character vector with lambda motifs represented
@@ -44,6 +49,7 @@ data(gma_grn)
 data(gma_paralogs)
 data(gma_ppi)
 edgelist <- gma_grn[500:1000, 1:2] # reducing for test purposes
+edgelist <- gma_grn[1:10000, 1:2]
 paralogs <- gma_paralogs[gma_paralogs$type == "WGD", 1:2]
 edgelist_ppi <- gma_ppi
 lambda_vec <- find_lambda(edgelist, paralogs)
