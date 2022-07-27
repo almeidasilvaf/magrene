@@ -81,7 +81,7 @@
             <address class="author_afil">
       Ghent University / VIB Center for Plant Systems Biology, Ghent, Belgium<br><h4 data-toc-skip class="author">Yves Van de Peer</h4>
             <address class="author_afil">
-      Ghent University / VIB Center for Plant Systems Biology, Ghent, Belgium<br><h4 data-toc-skip class="date">2022-07-26</h4>
+      Ghent University / VIB Center for Plant Systems Biology, Ghent, Belgium<br><h4 data-toc-skip class="date">2022-07-27</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/almeidasilvaf/magrene/blob/HEAD/vignettes/magrene.Rmd" class="external-link"><code>vignettes/magrene.Rmd</code></a></small>
       <div class="hidden name"><code>magrene.Rmd</code></div>
@@ -178,18 +178,12 @@ Network motifs and functions to identify them. Shaded boxes indicate paralogs. R
 <code class="sourceCode R"><span><span class="co"># Find PPI V motifs</span></span>
 <span><span class="va">ppi_v</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_ppi_v.html">find_ppi_v</a></span><span class="op">(</span><span class="va">gma_ppi</span>, <span class="va">paralogs</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ppi_v</span><span class="op">)</span></span>
-<span><span class="co">#&gt;                                  Glyma.01G0043001 </span></span>
-<span><span class="co">#&gt; "Glyma.19G213200-Glyma.01G004300-Glyma.03G216600" </span></span>
-<span><span class="co">#&gt;                                  Glyma.01G0043002 </span></span>
-<span><span class="co">#&gt; "Glyma.07G034300-Glyma.01G004300-Glyma.08G207800" </span></span>
-<span><span class="co">#&gt;                                  Glyma.01G0043003 </span></span>
-<span><span class="co">#&gt; "Glyma.14G101700-Glyma.01G004300-Glyma.06G061100" </span></span>
-<span><span class="co">#&gt;                                  Glyma.01G0043004 </span></span>
-<span><span class="co">#&gt; "Glyma.12G028500-Glyma.01G004300-Glyma.11G103700" </span></span>
-<span><span class="co">#&gt;                                  Glyma.01G0043005 </span></span>
-<span><span class="co">#&gt; "Glyma.19G189600-Glyma.01G004300-Glyma.03G189300" </span></span>
-<span><span class="co">#&gt;                                  Glyma.01G0043006 </span></span>
-<span><span class="co">#&gt; "Glyma.15G006700-Glyma.01G004300-Glyma.07G029200"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "Glyma.19G213200-Glyma.01G004300-Glyma.03G216600"</span></span>
+<span><span class="co">#&gt; [2] "Glyma.07G034300-Glyma.01G004300-Glyma.08G207800"</span></span>
+<span><span class="co">#&gt; [3] "Glyma.14G101700-Glyma.01G004300-Glyma.06G061100"</span></span>
+<span><span class="co">#&gt; [4] "Glyma.12G028500-Glyma.01G004300-Glyma.11G103700"</span></span>
+<span><span class="co">#&gt; [5] "Glyma.19G189600-Glyma.01G004300-Glyma.03G189300"</span></span>
+<span><span class="co">#&gt; [6] "Glyma.15G006700-Glyma.01G004300-Glyma.07G029200"</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="v">V<a class="anchor" aria-label="anchor" href="#v"></a>
@@ -202,18 +196,12 @@ Network motifs and functions to identify them. Shaded boxes indicate paralogs. R
 <code class="sourceCode R"><span><span class="co"># Find V motifs</span></span>
 <span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_v.html">find_v</a></span><span class="op">(</span><span class="va">grn</span>, <span class="va">paralogs</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span></span>
-<span><span class="co">#&gt;                                     Glyma.01G109100 </span></span>
-<span><span class="co">#&gt; "Glyma.02G058700-&gt;Glyma.01G109100&lt;-Glyma.01G177200" </span></span>
-<span><span class="co">#&gt;                                     Glyma.01G217200 </span></span>
-<span><span class="co">#&gt; "Glyma.11G108100-&gt;Glyma.01G217200&lt;-Glyma.12G033000" </span></span>
-<span><span class="co">#&gt;                                     Glyma.01G232300 </span></span>
-<span><span class="co">#&gt; "Glyma.02G236400-&gt;Glyma.01G232300&lt;-Glyma.14G204400" </span></span>
-<span><span class="co">#&gt;                                     Glyma.01G240300 </span></span>
-<span><span class="co">#&gt; "Glyma.02G236400-&gt;Glyma.01G240300&lt;-Glyma.14G204400" </span></span>
-<span><span class="co">#&gt;                                     Glyma.02G013800 </span></span>
-<span><span class="co">#&gt; "Glyma.02G236400-&gt;Glyma.02G013800&lt;-Glyma.14G204400" </span></span>
-<span><span class="co">#&gt;                                     Glyma.02G035500 </span></span>
-<span><span class="co">#&gt; "Glyma.14G204400-&gt;Glyma.02G035500&lt;-Glyma.02G236400"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "Glyma.01G177200&lt;-Glyma.16G128800-&gt;Glyma.02G058700"</span></span>
+<span><span class="co">#&gt; [2] "Glyma.01G177200&lt;-Glyma.08G362400-&gt;Glyma.02G058700"</span></span>
+<span><span class="co">#&gt; [3] "Glyma.01G177200&lt;-Glyma.02G103700-&gt;Glyma.02G058700"</span></span>
+<span><span class="co">#&gt; [4] "Glyma.01G177200&lt;-Glyma.09G152400-&gt;Glyma.02G058700"</span></span>
+<span><span class="co">#&gt; [5] "Glyma.01G177200&lt;-Glyma.20G151800-&gt;Glyma.02G058700"</span></span>
+<span><span class="co">#&gt; [6] "Glyma.01G177200&lt;-Glyma.08G020300-&gt;Glyma.02G058700"</span></span></code></pre></div>
 <p>As you can see, there are no V motifs in this example data set. When that is the case, <code>find_*</code> functions return NULL.</p>
 </div>
 <div class="section level3">
@@ -226,18 +214,12 @@ Network motifs and functions to identify them. Shaded boxes indicate paralogs. R
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lambda</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_lambda.html">find_lambda</a></span><span class="op">(</span><span class="va">grn</span>, <span class="va">paralogs</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">lambda</span><span class="op">)</span></span>
-<span><span class="co">#&gt;                                    Glyma.01G0159001 </span></span>
-<span><span class="co">#&gt; "Glyma.08G141400&lt;-Glyma.01G015900-&gt;Glyma.05G183600" </span></span>
-<span><span class="co">#&gt;                                    Glyma.01G0159002 </span></span>
-<span><span class="co">#&gt; "Glyma.18G024900&lt;-Glyma.01G015900-&gt;Glyma.14G057100" </span></span>
-<span><span class="co">#&gt;                                    Glyma.01G0159003 </span></span>
-<span><span class="co">#&gt; "Glyma.09G152400&lt;-Glyma.01G015900-&gt;Glyma.20G151800" </span></span>
-<span><span class="co">#&gt;                                     Glyma.01G019700 </span></span>
-<span><span class="co">#&gt; "Glyma.14G147800&lt;-Glyma.01G019700-&gt;Glyma.13G081400" </span></span>
-<span><span class="co">#&gt;                                     Glyma.01G021100 </span></span>
-<span><span class="co">#&gt; "Glyma.09G152400&lt;-Glyma.01G021100-&gt;Glyma.20G151800" </span></span>
-<span><span class="co">#&gt;                                     Glyma.01G177200 </span></span>
-<span><span class="co">#&gt; "Glyma.09G152400&lt;-Glyma.01G177200-&gt;Glyma.20G151800"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "Glyma.01G132800&lt;-Glyma.07G126500-&gt;Glyma.03G035400"</span></span>
+<span><span class="co">#&gt; [2] "Glyma.01G205300&lt;-Glyma.07G126500-&gt;Glyma.05G064600"</span></span>
+<span><span class="co">#&gt; [3] "Glyma.01G205300&lt;-Glyma.08G227000-&gt;Glyma.05G064600"</span></span>
+<span><span class="co">#&gt; [4] "Glyma.01G205300&lt;-Glyma.07G128700-&gt;Glyma.05G064600"</span></span>
+<span><span class="co">#&gt; [5] "Glyma.01G205300&lt;-Glyma.07G087900-&gt;Glyma.05G064600"</span></span>
+<span><span class="co">#&gt; [6] "Glyma.01G205300&lt;-Glyma.19G022200-&gt;Glyma.05G064600"</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="delta">Delta<a class="anchor" aria-label="anchor" href="#delta"></a>
@@ -255,8 +237,7 @@ Network motifs and functions to identify them. Shaded boxes indicate paralogs. R
 <code class="sourceCode R"><span><span class="co"># Find delta motifs from lambda motifs</span></span>
 <span><span class="va">delta</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_delta.html">find_delta</a></span><span class="op">(</span>edgelist_ppi <span class="op">=</span> <span class="va">gma_ppi</span>, lambda_vec <span class="op">=</span> <span class="va">lambda</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">delta</span><span class="op">)</span></span>
-<span><span class="co">#&gt;                                     Glyma.04G221800 </span></span>
-<span><span class="co">#&gt; "Glyma.10G242600&lt;-Glyma.04G221800-&gt;Glyma.20G151500"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "Glyma.10G242600&lt;-Glyma.04G221800-&gt;Glyma.20G151500"</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="bifan">Bifan<a class="anchor" aria-label="anchor" href="#bifan"></a>
@@ -270,7 +251,7 @@ Network motifs and functions to identify them. Shaded boxes indicate paralogs. R
 <code class="sourceCode R"><span><span class="co"># Find bifans from lambda motifs</span></span>
 <span><span class="va">bifan</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_bifan.html">find_bifan</a></span><span class="op">(</span>paralogs <span class="op">=</span> <span class="va">paralogs</span>, lambda_vec <span class="op">=</span> <span class="va">lambda</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">bifan</span><span class="op">)</span></span>
-<span><span class="co">#&gt; NULL</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "Glyma.01G177200,Glyma.02G058700-&gt;Glyma.09G152400,Glyma.20G151800"</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -289,9 +270,9 @@ Network motifs and functions to identify them. Shaded boxes indicate paralogs. R
 <span><span class="co">#&gt;    Motif Count</span></span>
 <span><span class="co">#&gt; 1  PPI V  1521</span></span>
 <span><span class="co">#&gt; 2      V   112</span></span>
-<span><span class="co">#&gt; 3 Lambda   162</span></span>
+<span><span class="co">#&gt; 3 Lambda   163</span></span>
 <span><span class="co">#&gt; 4  Delta     1</span></span>
-<span><span class="co">#&gt; 5  Bifan     0</span></span></code></pre></div>
+<span><span class="co">#&gt; 5  Bifan     1</span></span></code></pre></div>
 <p>However, unless you have another data set to which you can compare your frequencies, counting is not enough. You need to evaluate the significance of your motif frequencies. One way to do that is by comparing your observed frequencies to a null distribution generated by counting motifs in <em>N</em> (e.g., 1000) simulated networks.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> <code>magrene</code> allows you to generate null distributions of motif frequencies for each motif type with the function <code><a href="../reference/generate_nulls.html">generate_nulls()</a></code>. As generating the null distributions takes a bit of time, we will load pre-computed null distributions of <em>N</em> = 100. As a rule of thumb, you would probably want <em>N</em> &gt;= 1000.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load null distros</span></span>
@@ -377,7 +358,7 @@ Z = \frac{ n_{observed} - \bar{n}_{null} }{ \sigma_{null} }
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/calculate_Z.html">calculate_Z</a></span><span class="op">(</span><span class="va">observed</span>, <span class="va">nulls</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    lambda     delta         V     bifan </span></span>
-<span><span class="co">#&gt; 43.776757  3.952596       Inf       NaN</span></span></code></pre></div>
+<span><span class="co">#&gt; 44.064857  3.952596       Inf       Inf</span></span></code></pre></div>
 <p>Now that you have Z-scores, you can use a cut-off of your choice to define significance.</p>
 </div>
 <div class="section level2">
@@ -426,7 +407,7 @@ S(A,B) = \frac{2 \left| A \cap B \right|}{ \left|A \right| + \left| B \right|}
 <span><span class="co">#&gt;  collate  en_US.UTF-8</span></span>
 <span><span class="co">#&gt;  ctype    en_US.UTF-8</span></span>
 <span><span class="co">#&gt;  tz       UTC</span></span>
-<span><span class="co">#&gt;  date     2022-07-26</span></span>
+<span><span class="co">#&gt;  date     2022-07-27</span></span>
 <span><span class="co">#&gt;  pandoc   2.11.4 @ /usr/local/bin/ (via rmarkdown)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold;">─ Packages ───────────────────────────────────────────────────────────────────</span></span></span>
@@ -458,7 +439,7 @@ S(A,B) = \frac{2 \left| A \cap B \right|}{ \left|A \right| + \left| B \right|}
 <span><span class="co">#&gt;  knitr          1.39    <span style="color: #555555;">2022-04-26</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
 <span><span class="co">#&gt;  labeling       0.4.2   <span style="color: #555555;">2020-10-20</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
 <span><span class="co">#&gt;  lifecycle      1.0.1   <span style="color: #555555;">2021-09-24</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  magrene      * 0.99.0  <span style="color: #555555;">2022-07-26</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
+<span><span class="co">#&gt;  magrene      * 0.99.0  <span style="color: #555555;">2022-07-27</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
 <span><span class="co">#&gt;  magrittr       2.0.3   <span style="color: #555555;">2022-03-30</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
 <span><span class="co">#&gt;  memoise        2.0.1   <span style="color: #555555;">2021-11-26</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
 <span><span class="co">#&gt;  munsell        0.5.0   <span style="color: #555555;">2018-06-12</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>

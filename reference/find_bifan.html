@@ -60,7 +60,8 @@
 <span>  edgelist <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  paralogs <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  lambda_vec <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  bp_param <span class="op">=</span> <span class="fu">BiocParallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocParallel/man/SerialParam-class.html" class="external-link">SerialParam</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  bp_param <span class="op">=</span> <span class="fu">BiocParallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocParallel/man/SerialParam-class.html" class="external-link">SerialParam</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  count_only <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -87,6 +88,12 @@ previously identified lambda motifs will make this function much faster.</p></dd
 <dt>bp_param</dt>
 <dd><p>BiocParallel back-end to be used.
 Default: BiocParallel::SerialParam().</p></dd>
+
+
+<dt>count_only</dt>
+<dd><p>Logical indicating whether the function should return
+only motif counts as a numeric scalar. If FALSE, it will return
+a character vector of motifs. Default: FALSE.</p></dd>
 
 </dl></div>
     <div id="value">
