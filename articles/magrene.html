@@ -81,7 +81,7 @@
             <address class="author_afil">
       Ghent University / VIB Center for Plant Systems Biology, Ghent, Belgium<br><h4 data-toc-skip class="author">Yves Van de Peer</h4>
             <address class="author_afil">
-      Ghent University / VIB Center for Plant Systems Biology, Ghent, Belgium<br><h4 data-toc-skip class="date">2022-07-27</h4>
+      Ghent University / VIB Center for Plant Systems Biology, Ghent, Belgium<br><h4 data-toc-skip class="date">2022-07-28</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/almeidasilvaf/magrene/blob/HEAD/vignettes/magrene.Rmd" class="external-link"><code>vignettes/magrene.Rmd</code></a></small>
       <div class="hidden name"><code>magrene.Rmd</code></div>
@@ -95,7 +95,7 @@
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>Network motifs are the building blocks of complex networks, and they can be interpreted as small genetic circuits. Identifying and counting motifs in gene regulatory networks can reveal important aspects of the evolution of transcriptional regulation. In particular, they can be used to explore the impact of gene duplication in the rewriring of regulatory interactions <span class="citation">(Mottes et al. 2021)</span>. <code>magrene</code> aims to identify and analyze motifs in (duplicated) gene regulatory networks to better comprehend the role of gene duplication in network evolution. The figure below shows the networks motifs users can identify with <code>magrene</code>.</p>
+<p>Network motifs are the building blocks of complex networks, and they can be interpreted as small genetic circuits. Identifying and counting motifs in gene regulatory networks can reveal important aspects of the evolution of transcriptional regulation. In particular, they can be used to explore the impact of gene duplication in the rewiring of regulatory interactions <span class="citation">(Mottes et al. 2021)</span>. <code>magrene</code> aims to identify and analyze motifs in (duplicated) gene regulatory networks to better comprehend the role of gene duplication in network evolution. The figure below shows the networks motifs users can identify with <code>magrene</code>.</p>
 <div class="figure" style="text-align: center">
 <img src="motifs_vignette.png" alt="Network motifs and functions to identify them. Shaded boxes indicate paralogs. Regulators and targets are indicated in purple and green, respectively."><p class="caption">
 Network motifs and functions to identify them. Shaded boxes indicate paralogs. Regulators and targets are indicated in purple and green, respectively.
@@ -343,7 +343,7 @@ Network motifs and functions to identify them. Shaded boxes indicate paralogs. R
 <span><span class="co">#&gt;     0     0     0     0     0     0     0     0     0     0     0     0     0 </span></span>
 <span><span class="co">#&gt; bifan bifan bifan bifan bifan bifan bifan bifan bifan </span></span>
 <span><span class="co">#&gt;     0     0     0     0     0     0     0     0     0</span></span></code></pre></div>
-<p>As you can see, the output of <code><a href="../reference/generate_nulls.html">generate_nulls()</a></code> is a list of numeric vectors with the frequency of each motif type in the simulated networks. You can use the null distribution to calculate Z-scores for your observed frequencies, which are defined as below:</p>
+<p>As you can see, the output of <code><a href="../reference/generate_nulls.html">generate_nulls()</a></code> is a list of numeric vectors with the frequency of each motif type in the simulated networks<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. You can use the null distribution to calculate Z-scores for your observed frequencies, which are defined as below:</p>
 <p><span class="math display">\[
 Z = \frac{ n_{observed} - \bar{n}_{null} }{ \sigma_{null} }
 \]</span></p>
@@ -385,13 +385,6 @@ S(A,B) = \frac{2 \left| A \cap B \right|}{ \left|A \right| + \left| B \right|}
 <span><span class="co">#&gt;  0.2200  1.0000  1.0000  0.9812  1.0000  1.0000</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="parallelization-and-performance">Parallelization and performance<a class="anchor" aria-label="anchor" href="#parallelization-and-performance"></a>
-</h2>
-<p>With <em><a href="https://github.com/almeidasilvaf/magrene" class="external-link">magrene</a></em>, users can identify motifs using multiple cores thanks to the Bioconductor package <em><a href="https://bioconductor.org/packages/3.13/BiocParallel" class="external-link">BiocParallel</a></em>. However, parallelization is not always the best choice, because it may take longer to create multiple copies of your data to split into multiple cores than it takes to find motifs with a single core.</p>
-<p>To guide users on how many cores to use, we benchmarked each function’s performance with 1, 5, 10, 15, 20, 25, and 30 cores. The GRN and PPI networks used for benchmarking had 1214095 and 719 edges, respectively, and the paralogs data frame had 13643 rows. The results are shown below.</p>
-<p><img src="magrene_files/figure-html/parallel_benchmark-1.png" width="864" style="display: block; margin: auto;"> As you can see, there are cases when it’s faster to use only 1 thread, and other cases when using multiple cores is a good option.</p>
-</div>
-<div class="section level2">
 <h2 class="unnumbered" id="session-information">Session information<a class="anchor" aria-label="anchor" href="#session-information"></a>
 </h2>
 <p>This document was created under the following conditions:</p>
@@ -407,7 +400,7 @@ S(A,B) = \frac{2 \left| A \cap B \right|}{ \left|A \right| + \left| B \right|}
 <span><span class="co">#&gt;  collate  en_US.UTF-8</span></span>
 <span><span class="co">#&gt;  ctype    en_US.UTF-8</span></span>
 <span><span class="co">#&gt;  tz       UTC</span></span>
-<span><span class="co">#&gt;  date     2022-07-27</span></span>
+<span><span class="co">#&gt;  date     2022-07-28</span></span>
 <span><span class="co">#&gt;  pandoc   2.11.4 @ /usr/local/bin/ (via rmarkdown)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold;">─ Packages ───────────────────────────────────────────────────────────────────</span></span></span>
@@ -419,32 +412,19 @@ S(A,B) = \frac{2 \left| A \cap B \right|}{ \left|A \right| + \left| B \right|}
 <span><span class="co">#&gt;  bslib          0.4.0   <span style="color: #555555;">2022-07-16</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
 <span><span class="co">#&gt;  cachem         1.0.6   <span style="color: #555555;">2021-08-19</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
 <span><span class="co">#&gt;  cli            3.3.0   <span style="color: #555555;">2022-04-25</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  colorspace     2.0-3   <span style="color: #555555;">2022-02-21</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
 <span><span class="co">#&gt;  desc           1.4.1   <span style="color: #555555;">2022-03-06</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
 <span><span class="co">#&gt;  digest         0.6.29  <span style="color: #555555;">2021-12-01</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  dplyr          1.0.9   <span style="color: #555555;">2022-04-28</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
 <span><span class="co">#&gt;  evaluate       0.15    <span style="color: #555555;">2022-02-18</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  fansi          1.0.3   <span style="color: #555555;">2022-03-24</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  farver         2.1.1   <span style="color: #555555;">2022-07-06</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
 <span><span class="co">#&gt;  fastmap        1.1.0   <span style="color: #555555;">2021-01-25</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
 <span><span class="co">#&gt;  fs             1.5.2   <span style="color: #555555;">2021-12-08</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  generics       0.1.3   <span style="color: #555555;">2022-07-05</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  ggplot2      * 3.3.6   <span style="color: #555555;">2022-05-03</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  glue           1.6.2   <span style="color: #555555;">2022-02-24</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  gtable         0.3.0   <span style="color: #555555;">2019-03-25</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
 <span><span class="co">#&gt;  highr          0.9     <span style="color: #555555;">2021-04-16</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
 <span><span class="co">#&gt;  htmltools      0.5.3   <span style="color: #555555;">2022-07-18</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
 <span><span class="co">#&gt;  jquerylib      0.1.4   <span style="color: #555555;">2021-04-26</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
 <span><span class="co">#&gt;  jsonlite       1.8.0   <span style="color: #555555;">2022-02-22</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
 <span><span class="co">#&gt;  knitr          1.39    <span style="color: #555555;">2022-04-26</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  labeling       0.4.2   <span style="color: #555555;">2020-10-20</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  lifecycle      1.0.1   <span style="color: #555555;">2021-09-24</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  magrene      * 0.99.0  <span style="color: #555555;">2022-07-27</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
+<span><span class="co">#&gt;  magrene      * 0.99.0  <span style="color: #555555;">2022-07-28</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
 <span><span class="co">#&gt;  magrittr       2.0.3   <span style="color: #555555;">2022-03-30</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
 <span><span class="co">#&gt;  memoise        2.0.1   <span style="color: #555555;">2021-11-26</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  munsell        0.5.0   <span style="color: #555555;">2018-06-12</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  pillar         1.8.0   <span style="color: #555555;">2022-07-18</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  pkgconfig      2.0.3   <span style="color: #555555;">2019-09-22</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
 <span><span class="co">#&gt;  pkgdown        2.0.6   <span style="color: #555555;">2022-07-16</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
 <span><span class="co">#&gt;  purrr          0.3.4   <span style="color: #555555;">2020-04-17</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
 <span><span class="co">#&gt;  R6             2.5.1   <span style="color: #555555;">2021-08-19</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
@@ -453,17 +433,11 @@ S(A,B) = \frac{2 \left| A \cap B \right|}{ \left|A \right| + \left| B \right|}
 <span><span class="co">#&gt;  rmarkdown      2.14    <span style="color: #555555;">2022-04-25</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
 <span><span class="co">#&gt;  rprojroot      2.0.3   <span style="color: #555555;">2022-04-02</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
 <span><span class="co">#&gt;  sass           0.4.2   <span style="color: #555555;">2022-07-16</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  scales         1.2.0   <span style="color: #555555;">2022-04-13</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
 <span><span class="co">#&gt;  sessioninfo    1.2.2   <span style="color: #555555;">2021-12-06</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
 <span><span class="co">#&gt;  stringi        1.7.8   <span style="color: #555555;">2022-07-11</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
 <span><span class="co">#&gt;  stringr        1.4.0   <span style="color: #555555;">2019-02-10</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
 <span><span class="co">#&gt;  systemfonts    1.0.4   <span style="color: #555555;">2022-02-11</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
 <span><span class="co">#&gt;  textshaping    0.3.6   <span style="color: #555555;">2021-10-13</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  tibble         3.1.8   <span style="color: #555555;">2022-07-22</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  tidyselect     1.1.2   <span style="color: #555555;">2022-02-21</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  utf8           1.2.2   <span style="color: #555555;">2021-07-24</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  vctrs          0.4.1   <span style="color: #555555;">2022-04-13</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  withr          2.5.0   <span style="color: #555555;">2022-03-03</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
 <span><span class="co">#&gt;  xfun           0.31    <span style="color: #555555;">2022-05-10</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
 <span><span class="co">#&gt;  yaml           2.3.5   <span style="color: #555555;">2022-02-21</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
 <span><span class="co">#&gt; </span></span>
@@ -501,6 +475,7 @@ Szklarczyk, Damian, Annika L Gable, Katerina C Nastou, David Lyon, Rebecca Kirsc
 <hr>
 <ol>
 <li id="fn1"><p><strong>NOTE:</strong> Simulated networks are created by node label permutation (i.e., resampling node labels without replacement). This method allows you to have random networks that preserve the same degree of the original network. Hence, networks are called <strong>degree-preserving simulated networks</strong>.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p><strong>Note on performance:</strong> The function <code><a href="../reference/generate_nulls.html">generate_nulls()</a></code> can be parallelized thanks to the Bioconductor package <em><a href="https://bioconductor.org/packages/3.13/BiocParallel" class="external-link">BiocParallel</a></em>. However, keep in mind that parallelization is not always the best choice, because it may take longer to create multiple copies of your data to split into multiple cores than it takes to find motifs with a single core.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
   </div>

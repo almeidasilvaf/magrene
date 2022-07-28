@@ -56,12 +56,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">find_lambda</span><span class="op">(</span></span>
-<span>  edgelist <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  paralogs <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  bp_param <span class="op">=</span> <span class="fu">BiocParallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocParallel/man/SerialParam-class.html" class="external-link">SerialParam</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  count_only <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">find_lambda</span><span class="op">(</span>edgelist <span class="op">=</span> <span class="cn">NULL</span>, paralogs <span class="op">=</span> <span class="cn">NULL</span>, count_only <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -74,11 +69,6 @@ targets in column 2.</p></dd>
 <dt>paralogs</dt>
 <dd><p>A 2-column data frame with gene IDs for each paralog
 in the paralog pair.</p></dd>
-
-
-<dt>bp_param</dt>
-<dd><p>BiocParallel back-end to be used.
-Default: BiocParallel::SerialParam()</p></dd>
 
 
 <dt>count_only</dt>

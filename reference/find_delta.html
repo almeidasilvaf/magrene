@@ -61,7 +61,6 @@
 <span>  paralogs <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  edgelist_ppi <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  lambda_vec <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  bp_param <span class="op">=</span> <span class="fu">BiocParallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocParallel/man/SerialParam-class.html" class="external-link">SerialParam</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  count_only <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -90,11 +89,6 @@ each protein in the interacting pair.</p></dd>
 by <code><a href="find_lambda.html">find_lambda()</a></code>. If this is NULL, this function will find lambda
 motifs from <strong>edgelist</strong> and <strong>paralogs</strong> first. Passing
 previously identified lambda motifs will make this function much faster.</p></dd>
-
-
-<dt>bp_param</dt>
-<dd><p>BiocParallel back-end to be used.
-Default: BiocParallel::SerialParam().</p></dd>
 
 
 <dt>count_only</dt>
