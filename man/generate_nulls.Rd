@@ -9,11 +9,7 @@ generate_nulls(
   paralogs = NULL,
   edgelist_ppi = NULL,
   n = 1000,
-  bp_ppiv = BiocParallel::SerialParam(),
-  bp_v = BiocParallel::SerialParam(),
-  bp_lambda = BiocParallel::SerialParam(),
-  bp_delta = BiocParallel::SerialParam(),
-  bp_bifan = BiocParallel::SerialParam()
+  bp_param = BiocParallel::SerialParam()
 )
 }
 \arguments{
@@ -29,24 +25,13 @@ each protein in the interacting pair.}
 \item{n}{Number of degree-preserving simulated networks to generate.
 Default: 1000.}
 
-\item{bp_ppiv}{BiocParallel back-end to be used in \code{find_ppi_v()}.
-Default: BiocParallel::SerialParam().}
-
-\item{bp_v}{BiocParallel back-end to be used in \code{find_v()}.
-Default: BiocParallel::SerialParam().}
-
-\item{bp_lambda}{BiocParallel back-end to be used in \code{find_lambda()}.
-Default: BiocParallel::SerialParam().}
-
-\item{bp_delta}{BiocParallel back-end to be used in \code{find_delta()}.
-Default: BiocParallel::SerialParam().}
-
-\item{bp_bifan}{BiocParallel back-end to be used in \code{find_bifan()}.
+\item{bp_param}{BiocParallel back-end to be used.
 Default: BiocParallel::SerialParam().}
 }
 \value{
-A list of numeric vectors named \code{lambda}, \code{delta}, \code{V}, and \code{bifan},
-containing the null distribution of motif counts for each motif type.
+A list of numeric vectors named \code{lambda}, \code{delta}, \code{V},
+\code{PPI_V}, and \code{bifan}, containing the null distribution of motif counts
+for each motif type.
 }
 \description{
 Generate null distributions of motif counts for each motif type

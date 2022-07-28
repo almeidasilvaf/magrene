@@ -8,7 +8,6 @@ find_bifan(
   edgelist = NULL,
   paralogs = NULL,
   lambda_vec = NULL,
-  bp_param = BiocParallel::SerialParam(),
   count_only = FALSE
 )
 }
@@ -25,9 +24,6 @@ by \code{find_lambda()}. If this is NULL, this function will find lambda
 motifs from \strong{edgelist} and \strong{paralogs} first. Passing
 previously identified lambda motifs will make this function much faster.}
 
-\item{bp_param}{BiocParallel back-end to be used.
-Default: BiocParallel::SerialParam().}
-
 \item{count_only}{Logical indicating whether the function should return
 only motif counts as a numeric scalar. If FALSE, it will return
 a character vector of motifs. Default: FALSE.}
@@ -42,12 +38,13 @@ Find bifan motifs
 \examples{
 data(gma_grn)
 data(gma_paralogs)
-edgelist <- gma_grn[600:1400, 1:2] # reducing for test purposes
+edgelist <- gma_grn[1:50000, 1:2]
 paralogs <- gma_paralogs[gma_paralogs$type == "WGD", 1:2]
 paralogs <- rbind(
 paralogs,
 data.frame(duplicate1 = "Glyma.01G177200", 
            duplicate2 = "Glyma.08G116700")
 )
-bifan <- find_bifan(edgelist, paralogs)
+lambda_vec <- find_lambda(edgelist, paralogs)
+bifan <- find_bifan(paralogs = paralogs, lambda_vec = lambda_vec)
 }

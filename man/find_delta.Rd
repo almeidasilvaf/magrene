@@ -9,7 +9,6 @@ find_delta(
   paralogs = NULL,
   edgelist_ppi = NULL,
   lambda_vec = NULL,
-  bp_param = BiocParallel::SerialParam(),
   count_only = FALSE
 )
 }
@@ -29,9 +28,6 @@ each protein in the interacting pair.}
 by \code{find_lambda()}. If this is NULL, this function will find lambda
 motifs from \strong{edgelist} and \strong{paralogs} first. Passing
 previously identified lambda motifs will make this function much faster.}
-
-\item{bp_param}{BiocParallel back-end to be used.
-Default: BiocParallel::SerialParam().}
 
 \item{count_only}{Logical indicating whether the function should return
 only motif counts as a numeric scalar. If FALSE, it will return

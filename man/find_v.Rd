@@ -4,12 +4,7 @@
 \alias{find_v}
 \title{Find V motifs}
 \usage{
-find_v(
-  edgelist = NULL,
-  paralogs = NULL,
-  bp_param = BiocParallel::SerialParam(),
-  count_only = FALSE
-)
+find_v(edgelist = NULL, paralogs = NULL, count_only = FALSE)
 }
 \arguments{
 \item{edgelist}{A 2-column data frame with regulators in column 1 and
@@ -17,9 +12,6 @@ targets in column 2.}
 
 \item{paralogs}{A 2-column data frame with gene IDs for each paralog
 in the paralog pair.}
-
-\item{bp_param}{BiocParallel back-end to be used.
-Default: BiocParallel::SerialParam().}
 
 \item{count_only}{Logical indicating whether the function should return
 only motif counts as a numeric scalar. If FALSE, it will return

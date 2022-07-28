@@ -6,15 +6,12 @@
 #' targets in column 2.
 #' @param paralogs A 2-column data frame with gene IDs for each paralog
 #' in the paralog pair.
-#' @param bp_param BiocParallel back-end to be used.
-#' Default: BiocParallel::SerialParam()
 #' @param count_only Logical indicating whether the function should return
 #' only motif counts as a numeric scalar. If FALSE, it will return
 #' a character vector of motifs. Default: FALSE.
 #'
 #' @return A character vector with lambda motifs represented 
 #' in the format \strong{target1<-regulator->target2}.
-#' @importFrom BiocParallel bplapply SerialParam
 #' @export
 #' @rdname find_lambda
 #' @examples 
@@ -24,7 +21,6 @@
 #' paralogs <- gma_paralogs[gma_paralogs$type == "WGD", 1:2]
 #' motifs <- find_lambda(edgelist, paralogs)
 find_lambda <- function(edgelist = NULL, paralogs = NULL,
-                        bp_param = BiocParallel::SerialParam(),
                         count_only = FALSE) {
     
     names(edgelist) <- c("Node1", "Node2")
@@ -43,7 +39,7 @@ find_lambda <- function(edgelist = NULL, paralogs = NULL,
         reg <- split(edgelist, edgelist$Node2)
         
         # For each paralogous pair, get TFs that regulate both
-        motifs <- unlist(bplapply(seq_len(nrow(paralogs)), function(x) {
+        motifs <- unlist(lapply(seq_len(nrow(paralogs)), function(x) {
             t1 <- paralogs[x, 1]
             t2 <- paralogs[x, 2]
             tfs <- intersect(reg[[t1]]$Node1, reg[[t2]]$Node1)
@@ -58,7 +54,7 @@ find_lambda <- function(edgelist = NULL, paralogs = NULL,
                 }
             }
             return(m)
-        }, BPPARAM = bp_param))
+        }))
     }
     
     if(count_only) {
@@ -82,8 +78,6 @@ find_lambda <- function(edgelist = NULL, paralogs = NULL,
 #' by \code{find_lambda()}. If this is NULL, this function will find lambda
 #' motifs from \strong{edgelist} and \strong{paralogs} first. Passing 
 #' previously identified lambda motifs will make this function much faster.
-#' @param bp_param BiocParallel back-end to be used.
-#' Default: BiocParallel::SerialParam().
 #' @param count_only Logical indicating whether the function should return
 #' only motif counts as a numeric scalar. If FALSE, it will return
 #' a character vector of motifs. Default: FALSE.
@@ -104,7 +98,6 @@ find_lambda <- function(edgelist = NULL, paralogs = NULL,
 #' motifs <- find_delta(edgelist_ppi = edgelist_ppi, lambda_vec = lambda_vec)
 find_delta <- function(edgelist = NULL, paralogs = NULL,
                        edgelist_ppi = NULL, lambda_vec = NULL,
-                       bp_param = BiocParallel::SerialParam(),
                        count_only = FALSE) {
     
     ivec <- paste0(edgelist_ppi[, 1], edgelist_ppi[, 2]) # PPI vector
@@ -114,7 +107,7 @@ find_delta <- function(edgelist = NULL, paralogs = NULL,
     if(is.null(lambda_vec)) {
         lambda <- find_lambda(edgelist, paralogs)
     }
-    motifs <- unlist(bplapply(lambda, function(x) {
+    motifs <- unlist(lapply(lambda, function(x) {
         t1 <- gsub("<-.*", "", x)
         t2 <- gsub(".*->", "", x)
         
@@ -127,7 +120,7 @@ find_delta <- function(edgelist = NULL, paralogs = NULL,
         if(check != 0) {
             motif <- x
         }
-    }, BPPARAM = bp_param))
+    }))
     
     if(count_only) {
         motifs <- length(motifs)
@@ -142,8 +135,6 @@ find_delta <- function(edgelist = NULL, paralogs = NULL,
 #' targets in column 2.
 #' @param paralogs A 2-column data frame with gene IDs for each paralog
 #' in the paralog pair.
-#' @param bp_param BiocParallel back-end to be used.
-#' Default: BiocParallel::SerialParam().
 #' @param count_only Logical indicating whether the function should return
 #' only motif counts as a numeric scalar. If FALSE, it will return
 #' a character vector of motifs. Default: FALSE.
@@ -161,7 +152,6 @@ find_delta <- function(edgelist = NULL, paralogs = NULL,
 #' paralogs <- gma_paralogs[gma_paralogs$type == "WGD", 1:2]
 #' motifs <- find_v(edgelist, paralogs)
 find_v <- function(edgelist = NULL, paralogs = NULL,
-                   bp_param = BiocParallel::SerialParam(),
                    count_only = FALSE) {
     
     names(edgelist) <- c("Node1", "Node2")
@@ -180,7 +170,7 @@ find_v <- function(edgelist = NULL, paralogs = NULL,
         tar <- split(edgelist, edgelist$Node1)
         
         # For each paralogous pair, get TFs that regulate both
-        motifs <- unlist(bplapply(seq_len(nrow(paralogs)), function(x) {
+        motifs <- unlist(lapply(seq_len(nrow(paralogs)), function(x) {
             t1 <- paralogs[x, 1]
             t2 <- paralogs[x, 2]
             tars <- intersect(tar[[t1]]$Node2, tar[[t2]]$Node2)
@@ -195,7 +185,7 @@ find_v <- function(edgelist = NULL, paralogs = NULL,
                 }
             }
             return(m)
-        }, BPPARAM = bp_param))
+        }))
     }
     if(count_only) {
         motifs <- sum(motifs)
@@ -210,8 +200,6 @@ find_v <- function(edgelist = NULL, paralogs = NULL,
 #' protein 2 in column 2.
 #' @param paralogs A 2-column data frame with gene IDs for each paralog
 #' in the paralog pair.
-#' @param bp_param BiocParallel back-end to be used.
-#' Default: BiocParallel::SerialParam().
 #' @param count_only Logical indicating whether the function should return
 #' only motif counts as a numeric scalar. If FALSE, it will return
 #' a character vector of motifs. Default: FALSE.
@@ -222,7 +210,6 @@ find_v <- function(edgelist = NULL, paralogs = NULL,
 #' @details This function aims to find the number of paralogous gene
 #' pairs that share an interaction partner.
 #' 
-#' @importFrom BiocParallel bplapply SerialParam
 #' @importFrom utils combn
 #' @export
 #' @rdname find_ppi_v
@@ -233,7 +220,6 @@ find_v <- function(edgelist = NULL, paralogs = NULL,
 #' paralogs <- gma_paralogs[gma_paralogs$type == "WGD", 1:2]
 #' motifs <- find_ppi_v(edgelist, paralogs)
 find_ppi_v <- function(edgelist = NULL, paralogs = NULL,
-                       bp_param = BiocParallel::SerialParam(),
                        count_only = FALSE) {
     
     names(edgelist) <- c("Node1", "Node2")
@@ -252,7 +238,7 @@ find_ppi_v <- function(edgelist = NULL, paralogs = NULL,
     
     motifs <- NULL
     if(length(targets_and_p) > 0) {
-        motifs <- unlist(bplapply(targets_and_p, function(x) {
+        motifs <- unlist(lapply(targets_and_p, function(x) {
             p <- unique(x[, 1])
             if(length(p) > 1) {
                 comb <- utils::combn(p, 2, simplify = FALSE)
@@ -275,7 +261,7 @@ find_ppi_v <- function(edgelist = NULL, paralogs = NULL,
                 edges <- NULL
             }
             return(edges)
-        }, BPPARAM = bp_param))
+        }))
     }
     names(motifs) <- NULL
     if(count_only) { motifs <- length(motifs) }
@@ -294,8 +280,6 @@ find_ppi_v <- function(edgelist = NULL, paralogs = NULL,
 #' by \code{find_lambda()}. If this is NULL, this function will find lambda
 #' motifs from \strong{edgelist} and \strong{paralogs} first. Passing 
 #' previously identified lambda motifs will make this function much faster.
-#' @param bp_param BiocParallel back-end to be used.
-#' Default: BiocParallel::SerialParam().
 #' @param count_only Logical indicating whether the function should return
 #' only motif counts as a numeric scalar. If FALSE, it will return
 #' a character vector of motifs. Default: FALSE.
@@ -303,27 +287,27 @@ find_ppi_v <- function(edgelist = NULL, paralogs = NULL,
 #' @return A character vector with bifan motifs represented 
 #' in the format \strong{regulator1, regulator2->target1, target2}.
 #' 
-#' @importFrom BiocParallel bplapply SerialParam
 #' @importFrom utils combn
 #' @export
 #' @rdname find_bifan
 #' @examples 
 #' data(gma_grn)
 #' data(gma_paralogs)
-#' edgelist <- gma_grn[600:1400, 1:2] # reducing for test purposes
+#' edgelist <- gma_grn[1:50000, 1:2]
 #' paralogs <- gma_paralogs[gma_paralogs$type == "WGD", 1:2]
 #' paralogs <- rbind(
 #' paralogs,
 #' data.frame(duplicate1 = "Glyma.01G177200", 
 #'            duplicate2 = "Glyma.08G116700")
 #' )
-#' bifan <- find_bifan(edgelist, paralogs)
+#' lambda_vec <- find_lambda(edgelist, paralogs)
+#' bifan <- find_bifan(paralogs = paralogs, lambda_vec = lambda_vec)
 find_bifan <- function(edgelist = NULL, paralogs = NULL,
-                       lambda_vec = NULL,
-                       bp_param = BiocParallel::SerialParam(),
-                       count_only = FALSE) {
+                        lambda_vec = NULL,
+                        count_only = FALSE) {
     
-    pvec <- paste0(paralogs[,1], paralogs[,2]) # paralogs vector
+    names(paralogs) <- c("Dup1", "Dup2")
+    pvec <- paste0(paralogs$Dup1, paralogs$Dup2) # paralogs vector
     
     # Find lambda motifs and compare them pairwise to look for shared neighbors
     lambdas <- lambda_vec
@@ -331,41 +315,56 @@ find_bifan <- function(edgelist = NULL, paralogs = NULL,
         lambdas <- find_lambda(edgelist, paralogs)
     }
     
-    tfnames <- gsub(".*<-", "", lambdas)
-    tfnames <- gsub("->.*", "", tfnames)
+    # Get vector of all unique TFs in lambda motifs
+    tfs_lambda <- gsub(".*<-", "", lambdas)
+    tfs_lambda <- unique(gsub("->.*", "", tfs_lambda))
+    
+    # Get data frame of TFs in lambdas that are paralogs
+    tfpara <- paralogs[paralogs$Dup1 %in% tfs_lambda & 
+                           paralogs$Dup2 %in% tfs_lambda, ]
     final_motifs <- NULL
-    if(length(tfnames) > 1) {
-        comb <- utils::combn(seq_along(lambdas), 2, simplify = FALSE)
-        #comb <- utils::combn(tfnames, 2, simplify = FALSE)
-        final_motifs <- unlist(bplapply(comb, function(x) {
+    if(nrow(tfpara) > 0) {
+        
+        # Create a list of targets for each lambda TF in a paralogous pair
+        patterns <- paste0(unique(c(tfpara$Dup1, tfpara$Dup2)), collapse = "|")
+        flambdas <- lambdas[grep(patterns, lambdas)]
+        
+        ftfs <- gsub("->.*", "", gsub(".*<-", "", flambdas))
+        names(flambdas) <- ftfs
+        targets <- as.list(gsub("<-.*->", ",", flambdas), all.names = TRUE)
+        targets <- tapply(targets, names(targets), function(x) {
+            unlist(x, FALSE, FALSE)
+        })
+        
+        # Check if lambda TF pairs have shared neighbors
+        final_motifs <- unlist(lapply(seq_len(nrow(tfpara)), function(x) {
             motif <- NULL
-            tf1 <- tfnames[x[1]]
-            tf2 <- tfnames[x[2]]
-            # Check 1) - Are TFs in the lambda motifs paralogs?
-            check1 <- paste0(tf1, tf2) %in% pvec
-            check2 <- paste0(tf2, tf1) %in% pvec
-            check_paralogs <- check1 + check2
+            tf1 <- tfpara[x, 1]
+            tf2 <- tfpara[x, 2]
+            ptf1 <- targets[[tf1]]
+            ptf2 <- targets[[tf2]]
             
-            # Check 2) Do paralogous TFs regulate the same targets?
-            if(check_paralogs != 0) {
-                ptf1 <- lambdas[x[1]]
-                ptf1 <- c(
-                    gsub("<-.*", "", ptf1), gsub(".*->", "", ptf1)
-                )
+            check <- unlist(lapply(ptf1, function(y) {
+                inv <- unlist(strsplit(y, split = ","))
+                inv <- paste0(inv[2], ",", inv[1])
                 
-                ptf2 <- lambdas[x[2]]
-                ptf2 <- c(
-                    gsub("<-.*", "", ptf2), gsub(".*->", "", ptf2)
-                )
-                check_shared <- sum(ptf1 %in% ptf2) == 2
-                if(check_shared) {
-                    motif <- paste0(tf1, ",", tf2, "->", ptf1[1], ",", ptf1[2])
+                match <- y %in% ptf2 | inv %in% ptf2
+                return(match)
+            }))
+            if(count_only) {
+                motif <- sum(check)
+            } else {
+                idx <- which(check)
+                if(length(idx) > 0) {
+                    motif <- paste0(tf1, ",", tf2, "->", ptf1[idx])
                 }
             }
             return(motif)
-        }, BPPARAM = bp_param))
+        }))
     }
-    if(count_only) { final_motifs <- length(final_motifs) }
+    if(count_only & !is.numeric(final_motifs)) {
+        final_motifs <- length(final_motifs)
+    }
     return(final_motifs)
 }
 
