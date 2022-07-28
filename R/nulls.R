@@ -51,7 +51,7 @@ generate_nulls <- function(edgelist = NULL, paralogs = NULL,
         n_bifan <- 0
         if(!is.null(lambda)) {
             n_delta <- find_delta(
-                edgelist_ppi = edgelist_ppi, lambda_vec = lambda, 
+                edgelist_ppi = sim_ppi, lambda_vec = lambda, 
                 count_only = TRUE
             )
 
