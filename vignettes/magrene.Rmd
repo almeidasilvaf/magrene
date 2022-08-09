@@ -42,7 +42,7 @@ the role of gene duplication in network evolution. The figure below shows
 the networks motifs users can identify with `magrene`.
 
 
-```{r intro_motifs, echo = FALSE, fig.cap = "Network motifs and functions to identify them. Shaded boxes indicate paralogs. Regulators and targets are indicated in purple and green, respectively."}
+```{r intro_motifs, echo = FALSE, fig.cap = "Network motifs and functions to identify them. Shaded boxes indicate paralogs. Regulators and targets are indicated in purple and green, respectively. Arrows indicate directed regulatory interactions, while dashed lines indicate protein-protein interaction."}
 knitr::include_graphics("motifs_vignette.png")
 ```
 

@@ -10,13 +10,22 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 [![R-CMD-check-bioc](https://github.com/almeidasilvaf/magrene/workflows/R-CMD-check-bioc/badge.svg)](https://github.com/almeidasilvaf/magrene/actions)
 <!-- badges: end -->
 
-The goal of `magrene` is to identify and analyze graph motifs in gene
-regulatory networks (GRNs), including lambda, V, delta, and bifan
-motifs. GRNs can be tested for motif enrichment by comparing motif
+The goal of `magrene` is to identify and analyze graph motifs containing
+duplicated genes in gene regulatory networks (GRNs). Possible motifs
+include V, PPI V, lambda, delta, and bifans.
+
+<img src="vignettes/motifs_vignette.png" title="Network motifs and functions to identify them. Shaded boxes indicate paralogs. Regulators and targets are indicated in purple and green, respectively. Arrows indicate directed regulatory interactions, while dashed lines indicate protein-protein interaction." alt="Network motifs and functions to identify them. Shaded boxes indicate paralogs. Regulators and targets are indicated in purple and green, respectively. Arrows indicate directed regulatory interactions, while dashed lines indicate protein-protein interaction." width="100%" />
+
+Motif frequencies can be analyzed in the context of gene duplications to
+explore the impact of small-scale and whole-genome duplications on gene
+regulatory networks.
+
+Additionally, GRNs can be tested for motif enrichment by comparing motif
 frequencies to a null distribution generated from degree-preserving
-simulated GRNs. Additionally, motif frequencies can be analyzed in the
-context of gene duplications to explore the impact of small-scale and
-whole-genome duplications on gene regulatory networks.
+simulated GRNs.
+
+Finally, users can calculate the interaction similarity between gene
+pairs based on the Sorensen-Dice similarity index.
 
 ## Installation instructions
 
@@ -50,9 +59,9 @@ print(citation('magrene'), bibtex = TRUE)
 #> 
 #> To cite package 'magrene' in publications use:
 #> 
-#>   Fabrício Almeida-Silva and Yves Van de Peer (2022). magrene: Motif
-#>   Analysis In Gene Regulatory Networks. R package version 0.99.0.
-#>   https://github.com/almeidasilvaf/magrene
+#>   Almeida-Silva F, Van de Peer Y (2022). _magrene: Motif Analysis In
+#>   Gene Regulatory Networks_. R package version 0.99.0,
+#>   <https://github.com/almeidasilvaf/magrene>.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 
@@ -84,7 +93,7 @@ contributing to this project, you agree to abide by its terms.
     *[rcmdcheck](https://CRAN.R-project.org/package=rcmdcheck)*
     customized to use [Bioconductor’s docker
     containers](https://www.bioconductor.org/help/docker/) and
-    *[BiocCheck](https://bioconductor.org/packages/3.13/BiocCheck)*.
+    *[BiocCheck](https://bioconductor.org/packages/3.15/BiocCheck)*.
 -   Code coverage assessment is possible thanks to
     [codecov](https://codecov.io/gh) and
     *[covr](https://CRAN.R-project.org/package=covr)*.
@@ -98,4 +107,4 @@ contributing to this project, you agree to abide by its terms.
 For more details, check the `dev` directory.
 
 This package was developed using
-*[biocthis](https://bioconductor.org/packages/3.13/biocthis)*.
+*[biocthis](https://bioconductor.org/packages/3.15/biocthis)*.
