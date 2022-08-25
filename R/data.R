@@ -60,11 +60,15 @@
 
 #' Null distribution of motif frequencies for vignette data set
 #' 
-#' Data were filtered exactly as demonstrated in the vignette.
+#' Data were filtered exactly as demonstrated in the vignette. Briefly,
+#' the top 30k edges from the GRN were kept, and only WGD-derived gene
+#' pairs were used.
 #'
 #' @name nulls
 #' @format A list of numeric vectors with the motif frequencies in each
-#' simulated network.
+#' simulated network. List elements are named \strong{lambda}, \strong{delta},
+#' \strong{V}, \strong{PPI_V}, and \strong{bifan}, and each element has 
+#' length 100.
 #'
 #' @examples 
 #' data(nulls)
