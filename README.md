@@ -14,8 +14,6 @@ The goal of `magrene` is to identify and analyze graph motifs containing
 duplicated genes in gene regulatory networks (GRNs). Possible motifs
 include V, PPI V, lambda, delta, and bifans.
 
-<img src="vignettes/motifs_vignette.png" title="Network motifs and functions to identify them. Shaded boxes indicate paralogs. Regulators and targets are indicated in purple and green, respectively. Arrows indicate directed regulatory interactions, while dashed lines indicate protein-protein interaction." alt="Network motifs and functions to identify them. Shaded boxes indicate paralogs. Regulators and targets are indicated in purple and green, respectively. Arrows indicate directed regulatory interactions, while dashed lines indicate protein-protein interaction." width="100%" />
-
 Motif frequencies can be analyzed in the context of gene duplications to
 explore the impact of small-scale and whole-genome duplications on gene
 regulatory networks.
@@ -26,6 +24,8 @@ simulated GRNs.
 
 Finally, users can calculate the interaction similarity between gene
 pairs based on the Sorensen-Dice similarity index.
+
+<img src="vignettes/motifs_vignette.png" title="Network motifs and functions to identify them. Shaded boxes indicate paralogs. Regulators and targets are indicated in purple and green, respectively. Arrows indicate directed regulatory interactions, while dashed lines indicate protein-protein interaction." alt="Network motifs and functions to identify them. Shaded boxes indicate paralogs. Regulators and targets are indicated in purple and green, respectively. Arrows indicate directed regulatory interactions, while dashed lines indicate protein-protein interaction." width="100%" />
 
 ## Installation instructions
 
