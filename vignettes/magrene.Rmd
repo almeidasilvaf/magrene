@@ -259,12 +259,6 @@ to have random networks that preserve the same degree of the
 original network. Hence, networks are called 
 **degree-preserving simulated networks**.
 
-```{r generate_nulls}
-# Load null distros
-data(nulls)
-head(nulls)
-```
-
 As you can see, the output of `generate_nulls()` is a list of numeric vectors
 with the frequency of each motif type in the simulated networks[^2]. 
 You can use the null distribution to calculate Z-scores for your observed 
