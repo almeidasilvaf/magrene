@@ -77,11 +77,22 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction to magrene</h1>
-                        <h4 data-toc-skip class="author">Fabricio Almeida-Silva</h4>
+                        <h4 data-toc-skip class="author">Fabricio
+Almeida-Silva</h4>
             <address class="author_afil">
-      VIB-UGent Center for Plant Systems Biology, Ghent, BelgiumDepartment of Plant Biotechnology and Bioinformatics, Ghent University, Ghent, Belgium<br><h4 data-toc-skip class="author">Yves Van de Peer</h4>
+      VIB-UGent Center for Plant Systems Biology, Ghent,
+BelgiumDepartment of Plant Biotechnology and Bioinformatics, Ghent
+University, Ghent,
+Belgium<br><h4 data-toc-skip class="author">Yves
+Van de Peer</h4>
             <address class="author_afil">
-      VIB-UGent Center for Plant Systems Biology, Ghent, BelgiumDepartment of Plant Biotechnology and Bioinformatics, Ghent University, Ghent, BelgiumCollege of Horticulture, Academy for Advanced Interdisciplinary Studies, Nanjing Agricultural University, Nanjing, ChinaCenter for Microbial Ecology and Genomics, Department of Biochemistry, Genetics and Microbiology, University of Pretoria, Pretoria, South Africa<br><h4 data-toc-skip class="date">2022-08-25</h4>
+      VIB-UGent Center for Plant Systems Biology, Ghent,
+BelgiumDepartment of Plant Biotechnology and Bioinformatics, Ghent
+University, Ghent, BelgiumCollege of Horticulture, Academy for Advanced
+Interdisciplinary Studies, Nanjing Agricultural University, Nanjing,
+ChinaCenter for Microbial Ecology and Genomics, Department of
+Biochemistry, Genetics and Microbiology, University of Pretoria,
+Pretoria, South Africa<br><h4 data-toc-skip class="date">2022-08-25</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/almeidasilvaf/magrene/blob/HEAD/vignettes/magrene.Rmd" class="external-link"><code>vignettes/magrene.Rmd</code></a></small>
       <div class="hidden name"><code>magrene.Rmd</code></div>
@@ -95,10 +106,22 @@
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>Network motifs are the building blocks of complex networks, and they can be interpreted as small genetic circuits. Identifying and counting motifs in gene regulatory networks can reveal important aspects of the evolution of transcriptional regulation. In particular, they can be used to explore the impact of gene duplication in the rewiring of regulatory interactions <span class="citation">(Mottes et al. 2021)</span>. <code>magrene</code> aims to identify and analyze motifs in (duplicated) gene regulatory networks to better comprehend the role of gene duplication in network evolution. The figure below shows the networks motifs users can identify with <code>magrene</code>.</p>
+<p>Network motifs are the building blocks of complex networks, and they
+can be interpreted as small genetic circuits. Identifying and counting
+motifs in gene regulatory networks can reveal important aspects of the
+evolution of transcriptional regulation. In particular, they can be used
+to explore the impact of gene duplication in the rewiring of regulatory
+interactions <span class="citation">(Mottes et al. 2021)</span>.
+<code>magrene</code> aims to identify and analyze motifs in (duplicated)
+gene regulatory networks to better comprehend the role of gene
+duplication in network evolution. The figure below shows the networks
+motifs users can identify with <code>magrene</code>.</p>
 <div class="figure" style="text-align: center">
 <img src="motifs_vignette.png" alt="Network motifs and functions to identify them. Shaded boxes indicate paralogs. Regulators and targets are indicated in purple and green, respectively. Arrows indicate directed regulatory interactions, while dashed lines indicate protein-protein interaction."><p class="caption">
-Network motifs and functions to identify them. Shaded boxes indicate paralogs. Regulators and targets are indicated in purple and green, respectively. Arrows indicate directed regulatory interactions, while dashed lines indicate protein-protein interaction.
+Network motifs and functions to identify them. Shaded boxes indicate
+paralogs. Regulators and targets are indicated in purple and green,
+respectively. Arrows indicate directed regulatory interactions, while
+dashed lines indicate protein-protein interaction.
 </p>
 </div>
 </div>
@@ -122,11 +145,21 @@ Network motifs and functions to identify them. Shaded boxes indicate paralogs. R
 </h2>
 <p>For this vignette, we will use three example data sets:</p>
 <ol style="list-style-type: decimal">
-<li><p><strong>gma_grn:</strong> A gene regulatory network inferred with <code>BioNERO</code> <span class="citation">(Almeida-Silva and Venancio 2022)</span> using soybean RNA-seq data from the Soybean Expression Atlas <span class="citation">(Machado et al. 2020)</span>.</p></li>
-<li><p><strong>gma_ppi:</strong> A protein-protein interaction (PPI) network for soybean obtained from the STRING database <span class="citation">(Szklarczyk et al. 2021)</span>, filtered to contain only physical interactions with confidence score &gt; 0.4.</p></li>
-<li><p><strong>gma_paralogs:</strong> Soybean paralogous gene pairs derived by whole-genome, tandem, proximal, transposed, and dispersed duplications (WGD, TD, PD, TRD, and DD, respectively). This data set was obtained from <span class="citation">Almeida-Silva et al. (2020)</span>.</p></li>
+<li><p><strong>gma_grn:</strong> A gene regulatory network inferred with
+<code>BioNERO</code> <span class="citation">(Almeida-Silva and Venancio
+2022)</span> using soybean RNA-seq data from the Soybean Expression
+Atlas <span class="citation">(Machado et al. 2020)</span>.</p></li>
+<li><p><strong>gma_ppi:</strong> A protein-protein interaction (PPI)
+network for soybean obtained from the STRING database <span class="citation">(Szklarczyk et al. 2021)</span>, filtered to contain
+only physical interactions with confidence score &gt; 0.4.</p></li>
+<li><p><strong>gma_paralogs:</strong> Soybean paralogous gene pairs
+derived by whole-genome, tandem, proximal, transposed, and dispersed
+duplications (WGD, TD, PD, TRD, and DD, respectively). This data set was
+obtained from <span class="citation">Almeida-Silva et al.
+(2020)</span>.</p></li>
 </ol>
-<p>Networks are represented as edge lists. Let’s take a look at the data.</p>
+<p>Networks are represented as edge lists. Let’s take a look at the
+data.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">gma_grn</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">gma_grn</span><span class="op">)</span></span>
@@ -161,7 +194,12 @@ Network motifs and functions to identify them. Shaded boxes indicate paralogs. R
 <div class="section level2">
 <h2 id="finding-motifs">Finding motifs<a class="anchor" aria-label="anchor" href="#finding-motifs"></a>
 </h2>
-<p>Motifs can be found using <code>find_*</code> motifs, as shown in Figure 1. Each function returns a character vector of motifs, and each motif has its own character representation. Let’s demonstrate how they work. For the sake of demonstration, we will only use WGD-derived paralogs. For GRN motifs, we will only use a smaller subset of the edge list.</p>
+<p>Motifs can be found using <code>find_*</code> motifs, as shown in
+Figure 1. Each function returns a character vector of motifs, and each
+motif has its own character representation. Let’s demonstrate how they
+work. For the sake of demonstration, we will only use WGD-derived
+paralogs. For GRN motifs, we will only use a smaller subset of the edge
+list.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Include only WGD-derived paralogs</span></span>
 <span><span class="va">paralogs</span> <span class="op">&lt;-</span> <span class="va">gma_paralogs</span><span class="op">[</span><span class="va">gma_paralogs</span><span class="op">$</span><span class="va">type</span> <span class="op">==</span> <span class="st">"WGD"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span>
@@ -171,7 +209,9 @@ Network motifs and functions to identify them. Shaded boxes indicate paralogs. R
 <div class="section level3">
 <h3 id="ppi-v">PPI V<a class="anchor" aria-label="anchor" href="#ppi-v"></a>
 </h3>
-<p>PPI V motifs are paralogous proteins that share an interaction partner. To find them, you will use <code><a href="../reference/find_ppi_v.html">find_ppi_v()</a></code>. The character representation of PPI V motifs is:</p>
+<p>PPI V motifs are paralogous proteins that share an interaction
+partner. To find them, you will use <code><a href="../reference/find_ppi_v.html">find_ppi_v()</a></code>. The
+character representation of PPI V motifs is:</p>
 <p><span class="math display">\[
 \text{paralog1-partner-paralog2}
 \]</span></p>
@@ -189,7 +229,10 @@ Network motifs and functions to identify them. Shaded boxes indicate paralogs. R
 <div class="section level3">
 <h3 id="v">V<a class="anchor" aria-label="anchor" href="#v"></a>
 </h3>
-<p>V motifs are paralogous regulators that regulate the same target. These motifs can be created when a regulator undergoes a small-scale duplication. To find them, you will use <code><a href="../reference/find_v.html">find_v()</a></code>. The character representation of V motifs is:</p>
+<p>V motifs are paralogous regulators that regulate the same target.
+These motifs can be created when a regulator undergoes a small-scale
+duplication. To find them, you will use <code><a href="../reference/find_v.html">find_v()</a></code>. The
+character representation of V motifs is:</p>
 <p><span class="math display">\[
 \text{regulator-&gt;target&lt;-regulator}
 \]</span></p>
@@ -203,12 +246,17 @@ Network motifs and functions to identify them. Shaded boxes indicate paralogs. R
 <span><span class="co">#&gt; [4] "Glyma.01G177200&lt;-Glyma.09G152400-&gt;Glyma.02G058700"</span></span>
 <span><span class="co">#&gt; [5] "Glyma.01G177200&lt;-Glyma.20G151800-&gt;Glyma.02G058700"</span></span>
 <span><span class="co">#&gt; [6] "Glyma.01G177200&lt;-Glyma.08G020300-&gt;Glyma.02G058700"</span></span></code></pre></div>
-<p>As you can see, there are no V motifs in this example data set. When that is the case, <code>find_*</code> functions return NULL.</p>
+<p>As you can see, there are no V motifs in this example data set. When
+that is the case, <code>find_*</code> functions return NULL.</p>
 </div>
 <div class="section level3">
 <h3 id="lambda">Lambda<a class="anchor" aria-label="anchor" href="#lambda"></a>
 </h3>
-<p>Lambda motifs are the opposite of V motifs: a single regulator that regulates two target genes that are paralogous. These motifs can be created when an ancestral target gene undergoes a small-scale duplication. To find them you will use <code><a href="../reference/find_lambda.html">find_lambda()</a></code>. The character representation of lambda motifs is:</p>
+<p>Lambda motifs are the opposite of V motifs: a single regulator that
+regulates two target genes that are paralogous. These motifs can be
+created when an ancestral target gene undergoes a small-scale
+duplication. To find them you will use <code><a href="../reference/find_lambda.html">find_lambda()</a></code>. The
+character representation of lambda motifs is:</p>
 <p><span class="math display">\[
 \text{target1&lt;-regulator-&gt;target2}
 \]</span></p>
@@ -225,14 +273,25 @@ Network motifs and functions to identify them. Shaded boxes indicate paralogs. R
 <div class="section level3">
 <h3 id="delta">Delta<a class="anchor" aria-label="anchor" href="#delta"></a>
 </h3>
-<p>Delta motifs are pretty similar to lambda motifs, but here we take protein-protein interactions between targets into account. Thus, they are represented by a regulator that regulates two targets that interact at the protein level. They can be created by the same evolutionary mechanism of lambda motifs. To find them, you will use <code><a href="../reference/find_delta.html">find_delta()</a></code>. The character representation of delta motifs is:</p>
+<p>Delta motifs are pretty similar to lambda motifs, but here we take
+protein-protein interactions between targets into account. Thus, they
+are represented by a regulator that regulates two targets that interact
+at the protein level. They can be created by the same evolutionary
+mechanism of lambda motifs. To find them, you will use
+<code><a href="../reference/find_delta.html">find_delta()</a></code>. The character representation of delta motifs
+is:</p>
 <p><span class="math display">\[
 \text{target1&lt;-regulator-&gt;target2}
 \]</span></p>
 <p>To find delta motifs, you have two options:</p>
 <ol style="list-style-type: decimal">
-<li><p>Pass PPI edge list + a vector of previously identified lambda motifs (recommended).</p></li>
-<li><p>Pass PPI edge list + GRN edge list + paralogs data frame. In this option, <code><a href="../reference/find_delta.html">find_delta()</a></code> will find lambda motifs first, then use the lambda vector to find delta motifs. If you have identified lambda motifs beforehand, it is way faster to pass the lambda vector to <code><a href="../reference/find_delta.html">find_delta()</a></code>, so you don’t have to do double work.</p></li>
+<li><p>Pass PPI edge list + a vector of previously identified lambda
+motifs (recommended).</p></li>
+<li><p>Pass PPI edge list + GRN edge list + paralogs data frame. In this
+option, <code><a href="../reference/find_delta.html">find_delta()</a></code> will find lambda motifs first, then
+use the lambda vector to find delta motifs. If you have identified
+lambda motifs beforehand, it is way faster to pass the lambda vector to
+<code><a href="../reference/find_delta.html">find_delta()</a></code>, so you don’t have to do double work.</p></li>
 </ol>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Find delta motifs from lambda motifs</span></span>
@@ -243,11 +302,21 @@ Network motifs and functions to identify them. Shaded boxes indicate paralogs. R
 <div class="section level3">
 <h3 id="bifan">Bifan<a class="anchor" aria-label="anchor" href="#bifan"></a>
 </h3>
-<p>Bifan motifs are the most complex: they are represented by two paralogous regulators that regulate the same set of two paralogous targets. They can be created when both the ancestral regulator and the ancestral target are duplicated by small-scale duplications, or when the genome undergoes a whole-genome duplication event. To find these motifs, you will use <code><a href="../reference/find_bifan.html">find_bifan()</a></code>. The character representation of bifan motifs is:</p>
+<p>Bifan motifs are the most complex: they are represented by two
+paralogous regulators that regulate the same set of two paralogous
+targets. They can be created when both the ancestral regulator and the
+ancestral target are duplicated by small-scale duplications, or when the
+genome undergoes a whole-genome duplication event. To find these motifs,
+you will use <code><a href="../reference/find_bifan.html">find_bifan()</a></code>. The character representation of
+bifan motifs is:</p>
 <p><span class="math display">\[
 \text{regulator1,regulator2-&gt;target1,target2}
 \]</span></p>
-<p>Under the hood, what <code><a href="../reference/find_bifan.html">find_bifan()</a></code> does it to find lambda motifs involving the same targets and check if their regulators are paralogs. Thus, if you have identified lambda motifs beforehand, it is much faster to simply give them to <code><a href="../reference/find_bifan.html">find_bifan()</a></code>, so it doesn’t have to find them again.</p>
+<p>Under the hood, what <code><a href="../reference/find_bifan.html">find_bifan()</a></code> does it to find lambda
+motifs involving the same targets and check if their regulators are
+paralogs. Thus, if you have identified lambda motifs beforehand, it is
+much faster to simply give them to <code><a href="../reference/find_bifan.html">find_bifan()</a></code>, so it
+doesn’t have to find them again.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Find bifans from lambda motifs</span></span>
 <span><span class="va">bifan</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_bifan.html">find_bifan</a></span><span class="op">(</span>paralogs <span class="op">=</span> <span class="va">paralogs</span>, lambda_vec <span class="op">=</span> <span class="va">lambda</span><span class="op">)</span></span>
@@ -258,7 +327,9 @@ Network motifs and functions to identify them. Shaded boxes indicate paralogs. R
 <div class="section level2">
 <h2 id="counting-motifs-and-evaluating-significance">Counting motifs and evaluating significance<a class="anchor" aria-label="anchor" href="#counting-motifs-and-evaluating-significance"></a>
 </h2>
-<p>As motifs are simple character vectors, one can count their frequencies with the base R <code><a href="https://rdrr.io/r/base/length.html" class="external-link">length()</a></code> function. For example, let’s count the frequency of each motif in our example data set:</p>
+<p>As motifs are simple character vectors, one can count their
+frequencies with the base R <code><a href="https://rdrr.io/r/base/length.html" class="external-link">length()</a></code> function. For example,
+let’s count the frequency of each motif in our example data set:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">count_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>    Motif <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"PPI V"</span>, <span class="st">"V"</span>, <span class="st">"Lambda"</span>, <span class="st">"Delta"</span>, <span class="st">"Bifan"</span><span class="op">)</span>,</span>
@@ -274,33 +345,50 @@ Network motifs and functions to identify them. Shaded boxes indicate paralogs. R
 <span><span class="co">#&gt; 3 Lambda   163</span></span>
 <span><span class="co">#&gt; 4  Delta     1</span></span>
 <span><span class="co">#&gt; 5  Bifan     1</span></span></code></pre></div>
-<p>However, unless you have another data set to which you can compare your frequencies, counting is not enough. You need to evaluate the significance of your motif frequencies. One way to do that is by comparing your observed frequencies to a null distribution generated by counting motifs in <em>N</em> (e.g., 1000) simulated networks.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> <code>magrene</code> allows you to generate null distributions of motif frequencies for each motif type with the function <code><a href="../reference/generate_nulls.html">generate_nulls()</a></code>. As generating the null distributions takes a bit of time, we will demonstrate <code><a href="../reference/generate_nulls.html">generate_nulls()</a></code> with 5 permutations only. As a rule of thumb, you would probably want <em>N</em> &gt;= 1000.</p>
+<p>However, unless you have another data set to which you can compare
+your frequencies, counting is not enough. You need to evaluate the
+significance of your motif frequencies. One way to do that is by
+comparing your observed frequencies to a null distribution generated by
+counting motifs in <em>N</em> (e.g., 1000) simulated networks <a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.
+<code>magrene</code> allows you to generate null distributions of motif
+frequencies for each motif type with the function
+<code><a href="../reference/generate_nulls.html">generate_nulls()</a></code>. As generating the null distributions
+takes a bit of time, we will demonstrate <code><a href="../reference/generate_nulls.html">generate_nulls()</a></code>
+with 5 permutations only. As a rule of thumb, you would probably want
+<em>N</em> &gt;= 1000.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/generate_nulls.html">generate_nulls</a></span><span class="op">(</span><span class="va">grn</span>, <span class="va">paralogs</span>, <span class="va">gma_ppi</span>, n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $lambda</span></span>
 <span><span class="co">#&gt; lambda lambda lambda lambda lambda </span></span>
-<span><span class="co">#&gt;     85     82     95     93     81 </span></span>
+<span><span class="co">#&gt;     80     93     84     77     94 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $delta</span></span>
 <span><span class="co">#&gt; delta delta delta delta delta </span></span>
-<span><span class="co">#&gt;     4     5     8     3     7 </span></span>
+<span><span class="co">#&gt;     2     2     2     4     0 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $V</span></span>
 <span><span class="co">#&gt;   V   V   V   V   V </span></span>
-<span><span class="co">#&gt; 119 126 120 122 132 </span></span>
+<span><span class="co">#&gt; 146 148 120 128 114 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $PPI_V</span></span>
 <span><span class="co">#&gt; PPI_V PPI_V PPI_V PPI_V PPI_V </span></span>
-<span><span class="co">#&gt;   224   192   176   196   204 </span></span>
+<span><span class="co">#&gt;   183   195   160   196   185 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $bifan</span></span>
 <span><span class="co">#&gt; bifan bifan bifan bifan bifan </span></span>
 <span><span class="co">#&gt;     0     0     0     0     0</span></span></code></pre></div>
-<p>As you can see, the output of <code><a href="../reference/generate_nulls.html">generate_nulls()</a></code> is a list of numeric vectors with the frequency of each motif type in the simulated networks<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. You can use the null distribution to calculate Z-scores for your observed frequencies, which are defined as below:</p>
+<p>As you can see, the output of <code><a href="../reference/generate_nulls.html">generate_nulls()</a></code> is a list
+of numeric vectors with the frequency of each motif type in the
+simulated networks<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. You can use the null distribution to
+calculate Z-scores for your observed frequencies, which are defined as
+below:</p>
 <p><span class="math display">\[
 Z = \frac{ n_{observed} - \bar{n}_{null} }{ \sigma_{null} }
 \]</span></p>
-<p>To calculate Z-scores, you can use the function <code><a href="../reference/calculate_Z.html">calculate_Z()</a></code>. As input, you need to give a list of observed frequencies and a list of nulls. Here, we will load pre-computed null distributions of <em>N</em> = 100.</p>
+<p>To calculate Z-scores, you can use the function
+<code><a href="../reference/calculate_Z.html">calculate_Z()</a></code>. As input, you need to give a list of
+observed frequencies and a list of nulls. Here, we will load
+pre-computed null distributions of <em>N</em> = 100.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load null distros</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">nulls</span><span class="op">)</span></span>
@@ -404,16 +492,26 @@ Z = \frac{ n_{observed} - \bar{n}_{null} }{ \sigma_{null} }
 <span><span class="fu"><a href="../reference/calculate_Z.html">calculate_Z</a></span><span class="op">(</span><span class="va">observed</span>, <span class="va">nulls</span><span class="op">)</span></span>
 <span><span class="co">#&gt;     lambda      delta          V      PPI_V      bifan </span></span>
 <span><span class="co">#&gt;   8.856408  -1.068636  -1.560671 113.300559   9.900000</span></span></code></pre></div>
-<p>Now that you have Z-scores, you can use a cut-off of your choice to define significance.</p>
+<p>Now that you have Z-scores, you can use a cut-off of your choice to
+define significance.</p>
 </div>
 <div class="section level2">
 <h2 id="evaluting-interaction-similarity">Evaluting interaction similarity<a class="anchor" aria-label="anchor" href="#evaluting-interaction-similarity"></a>
 </h2>
-<p>Finally, another interesting pattern you may want to analyze is the interaction similarity between paralogous gene pairs. Previous studies have demonstrated that the Sorensen-Dice similarity is a suitable index for interaction similarity <span class="citation">(Defoort, Van de Peer, and Carretero-Paulet 2019; Mottes et al. 2021)</span>, which is defined as:</p>
+<p>Finally, another interesting pattern you may want to analyze is the
+interaction similarity between paralogous gene pairs. Previous studies
+have demonstrated that the Sorensen-Dice similarity is a suitable index
+for interaction similarity <span class="citation">(Defoort, Van de Peer,
+and Carretero-Paulet 2019; Mottes et al. 2021)</span>, which is defined
+as:</p>
 <p><span class="math display">\[
-S(A,B) = \frac{2 \left| A \cap B \right|}{ \left|A \right| + \left| B \right|}
+S(A,B) = \frac{2 \left| A \cap B \right|}{ \left|A \right| + \left| B
+\right|}
 \]</span></p>
-<p>where A and B are the interacting partners of nodes A and B. To calculate the Sorensen-Dice similarity for paralogous gene pairs, you can use the function <code><a href="../reference/sd_similarity.html">sd_similarity()</a></code>. Let’s demonstrate it by calculating the similarity between paralogs in the PPI network.</p>
+<p>where A and B are the interacting partners of nodes A and B. To
+calculate the Sorensen-Dice similarity for paralogous gene pairs, you
+can use the function <code><a href="../reference/sd_similarity.html">sd_similarity()</a></code>. Let’s demonstrate it
+by calculating the similarity between paralogs in the PPI network.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sd_similarity.html">sd_similarity</a></span><span class="op">(</span><span class="va">gma_ppi</span>, <span class="va">paralogs</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">sim</span><span class="op">)</span></span>
@@ -437,8 +535,8 @@ S(A,B) = \frac{2 \left| A \cap B \right|}{ \left|A \right| + \left| B \right|}
 <code class="sourceCode R"><span><span class="fu">sessioninfo</span><span class="fu">::</span><span class="fu"><a href="https://r-lib.github.io/sessioninfo/reference/session_info.html" class="external-link">session_info</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold;">─ Session info ───────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt;  <span style="color: #555555; font-style: italic;">setting </span> <span style="color: #555555; font-style: italic;">value</span></span></span>
-<span><span class="co">#&gt;  version  R version 4.1.1 (2021-08-10)</span></span>
-<span><span class="co">#&gt;  os       Ubuntu 20.04.3 LTS</span></span>
+<span><span class="co">#&gt;  version  R version 4.2.1 (2022-06-23)</span></span>
+<span><span class="co">#&gt;  os       Ubuntu 20.04.4 LTS</span></span>
 <span><span class="co">#&gt;  system   x86_64, linux-gnu</span></span>
 <span><span class="co">#&gt;  ui       X11</span></span>
 <span><span class="co">#&gt;  language en</span></span>
@@ -446,45 +544,46 @@ S(A,B) = \frac{2 \left| A \cap B \right|}{ \left|A \right| + \left| B \right|}
 <span><span class="co">#&gt;  ctype    en_US.UTF-8</span></span>
 <span><span class="co">#&gt;  tz       UTC</span></span>
 <span><span class="co">#&gt;  date     2022-08-25</span></span>
-<span><span class="co">#&gt;  pandoc   2.11.4 @ /usr/local/bin/ (via rmarkdown)</span></span>
+<span><span class="co">#&gt;  pandoc   2.18 @ /usr/local/bin/ (via rmarkdown)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold;">─ Packages ───────────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt;  <span style="color: #555555; font-style: italic;">package     </span> <span style="color: #555555; font-style: italic;">*</span> <span style="color: #555555; font-style: italic;">version</span> <span style="color: #555555; font-style: italic;">date (UTC)</span> <span style="color: #555555; font-style: italic;">lib</span> <span style="color: #555555; font-style: italic;">source</span></span></span>
 <span><span class="co">#&gt;  BiocManager    1.30.18 <span style="color: #555555;">2022-05-18</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  BiocParallel   1.26.2  <span style="color: #555555;">2021-08-22</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
-<span><span class="co">#&gt;  BiocStyle    * 2.20.2  <span style="color: #555555;">2021-06-17</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
+<span><span class="co">#&gt;  BiocParallel   1.30.3  <span style="color: #555555;">2022-06-05</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
+<span><span class="co">#&gt;  BiocStyle    * 2.24.0  <span style="color: #555555;">2022-04-26</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
 <span><span class="co">#&gt;  bookdown       0.28    <span style="color: #555555;">2022-08-09</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  bslib          0.4.0   <span style="color: #555555;">2022-07-16</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  cachem         1.0.6   <span style="color: #555555;">2021-08-19</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  cli            3.3.0   <span style="color: #555555;">2022-04-25</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  desc           1.4.1   <span style="color: #555555;">2022-03-06</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  digest         0.6.29  <span style="color: #555555;">2021-12-01</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  evaluate       0.16    <span style="color: #555555;">2022-08-09</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  fastmap        1.1.0   <span style="color: #555555;">2021-01-25</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  fs             1.5.2   <span style="color: #555555;">2021-12-08</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  highr          0.9     <span style="color: #555555;">2021-04-16</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  htmltools      0.5.3   <span style="color: #555555;">2022-07-18</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  jquerylib      0.1.4   <span style="color: #555555;">2021-04-26</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  jsonlite       1.8.0   <span style="color: #555555;">2022-02-22</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  knitr          1.40    <span style="color: #555555;">2022-08-24</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  bslib          0.4.0   <span style="color: #555555;">2022-07-16</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.2.0)</span></span></span>
+<span><span class="co">#&gt;  cachem         1.0.6   <span style="color: #555555;">2021-08-19</span> <span style="color: #555555;">[2]</span> <span style="color: #555555;">CRAN (R 4.2.0)</span></span></span>
+<span><span class="co">#&gt;  cli            3.3.0   <span style="color: #555555;">2022-04-25</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.2.0)</span></span></span>
+<span><span class="co">#&gt;  codetools      0.2-18  <span style="color: #555555;">2020-11-04</span> <span style="color: #555555;">[3]</span> <span style="color: #555555;">CRAN (R 4.2.1)</span></span></span>
+<span><span class="co">#&gt;  desc           1.4.1   <span style="color: #555555;">2022-03-06</span> <span style="color: #555555;">[2]</span> <span style="color: #555555;">CRAN (R 4.2.0)</span></span></span>
+<span><span class="co">#&gt;  digest         0.6.29  <span style="color: #555555;">2021-12-01</span> <span style="color: #555555;">[2]</span> <span style="color: #555555;">CRAN (R 4.2.0)</span></span></span>
+<span><span class="co">#&gt;  evaluate       0.16    <span style="color: #555555;">2022-08-09</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.2.0)</span></span></span>
+<span><span class="co">#&gt;  fastmap        1.1.0   <span style="color: #555555;">2021-01-25</span> <span style="color: #555555;">[2]</span> <span style="color: #555555;">CRAN (R 4.2.0)</span></span></span>
+<span><span class="co">#&gt;  fs             1.5.2   <span style="color: #555555;">2021-12-08</span> <span style="color: #555555;">[2]</span> <span style="color: #555555;">CRAN (R 4.2.0)</span></span></span>
+<span><span class="co">#&gt;  highr          0.9     <span style="color: #555555;">2021-04-16</span> <span style="color: #555555;">[2]</span> <span style="color: #555555;">CRAN (R 4.2.0)</span></span></span>
+<span><span class="co">#&gt;  htmltools      0.5.3   <span style="color: #555555;">2022-07-18</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.2.0)</span></span></span>
+<span><span class="co">#&gt;  jquerylib      0.1.4   <span style="color: #555555;">2021-04-26</span> <span style="color: #555555;">[2]</span> <span style="color: #555555;">CRAN (R 4.2.0)</span></span></span>
+<span><span class="co">#&gt;  jsonlite       1.8.0   <span style="color: #555555;">2022-02-22</span> <span style="color: #555555;">[2]</span> <span style="color: #555555;">CRAN (R 4.2.0)</span></span></span>
+<span><span class="co">#&gt;  knitr          1.40    <span style="color: #555555;">2022-08-24</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.2.0)</span></span></span>
 <span><span class="co">#&gt;  magrene      * 0.99.0  <span style="color: #555555;">2022-08-25</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
-<span><span class="co">#&gt;  magrittr       2.0.3   <span style="color: #555555;">2022-03-30</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  memoise        2.0.1   <span style="color: #555555;">2021-11-26</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  pkgdown        2.0.6   <span style="color: #555555;">2022-07-16</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  purrr          0.3.4   <span style="color: #555555;">2020-04-17</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  R6             2.5.1   <span style="color: #555555;">2021-08-19</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  ragg           1.2.2   <span style="color: #555555;">2022-02-21</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  rlang          1.0.4   <span style="color: #555555;">2022-07-12</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  rmarkdown      2.16    <span style="color: #555555;">2022-08-24</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  rprojroot      2.0.3   <span style="color: #555555;">2022-04-02</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  sass           0.4.2   <span style="color: #555555;">2022-07-16</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  sessioninfo    1.2.2   <span style="color: #555555;">2021-12-06</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  stringi        1.7.8   <span style="color: #555555;">2022-07-11</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  stringr        1.4.1   <span style="color: #555555;">2022-08-20</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  systemfonts    1.0.4   <span style="color: #555555;">2022-02-11</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  textshaping    0.3.6   <span style="color: #555555;">2021-10-13</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  xfun           0.32    <span style="color: #555555;">2022-08-10</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
-<span><span class="co">#&gt;  yaml           2.3.5   <span style="color: #555555;">2022-02-21</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.1.0)</span></span></span>
+<span><span class="co">#&gt;  magrittr       2.0.3   <span style="color: #555555;">2022-03-30</span> <span style="color: #555555;">[2]</span> <span style="color: #555555;">CRAN (R 4.2.0)</span></span></span>
+<span><span class="co">#&gt;  memoise        2.0.1   <span style="color: #555555;">2021-11-26</span> <span style="color: #555555;">[2]</span> <span style="color: #555555;">CRAN (R 4.2.0)</span></span></span>
+<span><span class="co">#&gt;  pkgdown        2.0.6   <span style="color: #555555;">2022-07-16</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.2.0)</span></span></span>
+<span><span class="co">#&gt;  purrr          0.3.4   <span style="color: #555555;">2020-04-17</span> <span style="color: #555555;">[2]</span> <span style="color: #555555;">CRAN (R 4.2.0)</span></span></span>
+<span><span class="co">#&gt;  R6             2.5.1   <span style="color: #555555;">2021-08-19</span> <span style="color: #555555;">[2]</span> <span style="color: #555555;">CRAN (R 4.2.0)</span></span></span>
+<span><span class="co">#&gt;  ragg           1.2.2   <span style="color: #555555;">2022-02-21</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.2.0)</span></span></span>
+<span><span class="co">#&gt;  rlang          1.0.4   <span style="color: #555555;">2022-07-12</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.2.0)</span></span></span>
+<span><span class="co">#&gt;  rmarkdown      2.16    <span style="color: #555555;">2022-08-24</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.2.0)</span></span></span>
+<span><span class="co">#&gt;  rprojroot      2.0.3   <span style="color: #555555;">2022-04-02</span> <span style="color: #555555;">[2]</span> <span style="color: #555555;">CRAN (R 4.2.0)</span></span></span>
+<span><span class="co">#&gt;  sass           0.4.2   <span style="color: #555555;">2022-07-16</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.2.0)</span></span></span>
+<span><span class="co">#&gt;  sessioninfo    1.2.2   <span style="color: #555555;">2021-12-06</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.2.0)</span></span></span>
+<span><span class="co">#&gt;  stringi        1.7.8   <span style="color: #555555;">2022-07-11</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.2.0)</span></span></span>
+<span><span class="co">#&gt;  stringr        1.4.1   <span style="color: #555555;">2022-08-20</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.2.0)</span></span></span>
+<span><span class="co">#&gt;  systemfonts    1.0.4   <span style="color: #555555;">2022-02-11</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.2.0)</span></span></span>
+<span><span class="co">#&gt;  textshaping    0.3.6   <span style="color: #555555;">2021-10-13</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.2.0)</span></span></span>
+<span><span class="co">#&gt;  xfun           0.32    <span style="color: #555555;">2022-08-10</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.2.0)</span></span></span>
+<span><span class="co">#&gt;  yaml           2.3.5   <span style="color: #555555;">2022-02-21</span> <span style="color: #555555;">[2]</span> <span style="color: #555555;">CRAN (R 4.2.0)</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #555555;"> [1] /__w/_temp/Library</span></span></span>
 <span><span class="co">#&gt; <span style="color: #555555;"> [2] /usr/local/lib/R/site-library</span></span></span>
@@ -497,30 +596,61 @@ S(A,B) = \frac{2 \left| A \cap B \right|}{ \left|A \right| + \left| B \right|}
 </h2>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-almeida2020exploring" class="csl-entry">
-Almeida-Silva, Fabricio, Kanhu C Moharana, Fabricio B Machado, and Thiago M Venancio. 2020. <span>“Exploring the Complexity of Soybean (Glycine Max) Transcriptional Regulation Using Global Gene Co-Expression Networks.”</span> <em>Planta</em> 252 (6): 1–12.
+Almeida-Silva, Fabricio, Kanhu C Moharana, Fabricio B Machado, and
+Thiago M Venancio. 2020. <span>“Exploring the Complexity of Soybean
+(Glycine Max) Transcriptional Regulation Using Global Gene Co-Expression
+Networks.”</span> <em>Planta</em> 252 (6): 1–12.
 </div>
 <div id="ref-almeida2022bionero" class="csl-entry">
-Almeida-Silva, Fabricio, and Thiago M Venancio. 2022. <span>“BioNERO: An All-in-One r/Bioconductor Package for Comprehensive and Easy Biological Network Reconstruction.”</span> <em>Functional &amp; Integrative Genomics</em> 22 (1): 131–36.
+Almeida-Silva, Fabricio, and Thiago M Venancio. 2022. <span>“BioNERO: An
+All-in-One r/Bioconductor Package for Comprehensive and Easy Biological
+Network Reconstruction.”</span> <em>Functional &amp; Integrative
+Genomics</em> 22 (1): 131–36.
 </div>
 <div id="ref-defoort2019evolution" class="csl-entry">
-Defoort, Jonas, Yves Van de Peer, and Lorenzo Carretero-Paulet. 2019. <span>“The Evolution of Gene Duplicates in Angiosperms and the Impact of Protein–Protein Interactions and the Mechanism of Duplication.”</span> <em>Genome Biology and Evolution</em> 11 (8): 2292–2305.
+Defoort, Jonas, Yves Van de Peer, and Lorenzo Carretero-Paulet. 2019.
+<span>“The Evolution of Gene Duplicates in Angiosperms and the Impact of
+Protein–Protein Interactions and the Mechanism of Duplication.”</span>
+<em>Genome Biology and Evolution</em> 11 (8): 2292–2305.
 </div>
 <div id="ref-machado2020systematic" class="csl-entry">
-Machado, Fabricio B, Kanhu C Moharana, Fabricio Almeida-Silva, Rajesh K Gazara, Francisnei Pedrosa-Silva, Fernanda S Coelho, Clı́cia Grativol, and Thiago M Venancio. 2020. <span>“Systematic Analysis of 1298 RNA-Seq Samples and Construction of a Comprehensive Soybean (Glycine Max) Expression Atlas.”</span> <em>The Plant Journal</em> 103 (5): 1894–1909.
+Machado, Fabricio B, Kanhu C Moharana, Fabricio Almeida-Silva, Rajesh K
+Gazara, Francisnei Pedrosa-Silva, Fernanda S Coelho, Clı́cia Grativol,
+and Thiago M Venancio. 2020. <span>“Systematic Analysis of 1298 RNA-Seq
+Samples and Construction of a Comprehensive Soybean (Glycine Max)
+Expression Atlas.”</span> <em>The Plant Journal</em> 103 (5): 1894–1909.
 </div>
 <div id="ref-mottes2021impact" class="csl-entry">
-Mottes, Francesco, Chiara Villa, Matteo Osella, and Michele Caselle. 2021. <span>“The Impact of Whole Genome Duplications on the Human Gene Regulatory Networks.”</span> <em>PLoS Computational Biology</em> 17 (12): e1009638.
+Mottes, Francesco, Chiara Villa, Matteo Osella, and Michele Caselle.
+2021. <span>“The Impact of Whole Genome Duplications on the Human Gene
+Regulatory Networks.”</span> <em>PLoS Computational Biology</em> 17
+(12): e1009638.
 </div>
 <div id="ref-szklarczyk2021string" class="csl-entry">
-Szklarczyk, Damian, Annika L Gable, Katerina C Nastou, David Lyon, Rebecca Kirsch, Sampo Pyysalo, Nadezhda T Doncheva, et al. 2021. <span>“The STRING Database in 2021: Customizable Protein–Protein Networks, and Functional Characterization of User-Uploaded Gene/Measurement Sets.”</span> <em>Nucleic Acids Research</em> 49 (D1): D605–12.
+Szklarczyk, Damian, Annika L Gable, Katerina C Nastou, David Lyon,
+Rebecca Kirsch, Sampo Pyysalo, Nadezhda T Doncheva, et al. 2021.
+<span>“The STRING Database in 2021: Customizable Protein–Protein
+Networks, and Functional Characterization of User-Uploaded
+Gene/Measurement Sets.”</span> <em>Nucleic Acids Research</em> 49 (D1):
+D605–12.
 </div>
 </div>
 </div>
-<div class="footnotes">
+<div class="footnotes footnotes-end-of-document">
 <hr>
 <ol>
-<li id="fn1"><p><strong>NOTE:</strong> Simulated networks are created by node label permutation (i.e., resampling node labels without replacement). This method allows you to have random networks that preserve the same degree of the original network. Hence, networks are called <strong>degree-preserving simulated networks</strong>.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
-<li id="fn2"><p><strong>Note on performance:</strong> The function <code><a href="../reference/generate_nulls.html">generate_nulls()</a></code> can be parallelized thanks to the Bioconductor package <em><a href="https://bioconductor.org/packages/3.13/BiocParallel" class="external-link">BiocParallel</a></em>. However, keep in mind that parallelization is not always the best choice, because it may take longer to create multiple copies of your data to split into multiple cores than it takes to find motifs with a single core.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn1"><p><strong>NOTE:</strong> Simulated networks are created by
+node label permutation (i.e., resampling node labels without
+replacement). This method allows you to have random networks that
+preserve the same degree of the original network. Hence, networks are
+called <strong>degree-preserving simulated networks</strong>.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p><strong>Note on performance:</strong> The function
+<code><a href="../reference/generate_nulls.html">generate_nulls()</a></code> can be parallelized thanks to the
+Bioconductor package <em><a href="https://bioconductor.org/packages/3.15/BiocParallel" class="external-link">BiocParallel</a></em>.
+However, keep in mind that parallelization is not always the best
+choice, because it may take longer to create multiple copies of your
+data to split into multiple cores than it takes to find motifs with a
+single core.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
   </div>
