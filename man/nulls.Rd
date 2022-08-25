@@ -6,7 +6,9 @@
 \title{Null distribution of motif frequencies for vignette data set}
 \format{
 A list of numeric vectors with the motif frequencies in each
-simulated network.
+simulated network. List elements are named \strong{lambda}, \strong{delta},
+\strong{V}, \strong{PPI_V}, and \strong{bifan}, and each element has
+length 100.
 }
 \usage{
 data(nulls)
