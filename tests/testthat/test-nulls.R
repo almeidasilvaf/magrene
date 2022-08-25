@@ -20,6 +20,7 @@ test_that("generate_nulls() return a list of numeric vectors", {
     expect_true("delta" %in% names(nulls))
     expect_true("V" %in% names(nulls))
     expect_true("bifan" %in% names(nulls))
+    expect_true("PPI_V" %in% names(nulls))
 })
 
 test_that("calculate_Z() returns a numeric vector of Z-scores", {
