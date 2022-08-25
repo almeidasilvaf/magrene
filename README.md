@@ -5,9 +5,13 @@
 
 <!-- badges: start -->
 
+[![GitHub
+issues](https://img.shields.io/github/issues/almeidasilvaf/magrene)](https://github.com/almeidasilvaf/magrene/issues)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![R-CMD-check-bioc](https://github.com/almeidasilvaf/magrene/workflows/R-CMD-check-bioc/badge.svg)](https://github.com/almeidasilvaf/magrene/actions)
+[![Codecov test
+coverage](https://codecov.io/gh/almeidasilvaf/magrene/branch/master/graph/badge.svg)](https://codecov.io/gh/almeidasilvaf/magrene?branch=master)
 <!-- badges: end -->
 
 The goal of `magrene` is to identify and analyze graph motifs containing
