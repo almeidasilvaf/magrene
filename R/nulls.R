@@ -70,6 +70,7 @@ generate_nulls <- function(edgelist = NULL, paralogs = NULL,
     
     # Create vectors of null distros for each motif type
     nulls_vector <- unlist(nulls)
+    nulls_vector <- nulls_vector[!is.na(names(nulls_vector))]
     lambda_distro <- nulls_vector[names(nulls_vector) == "lambda"]
     delta_distro <- nulls_vector[names(nulls_vector) == "delta"]
     v_distro <- nulls_vector[names(nulls_vector) == "V"]
@@ -83,7 +84,6 @@ generate_nulls <- function(edgelist = NULL, paralogs = NULL,
     )
     return(null_list)
 }
-
 
 
 #' Calculate Z-score for motif frequencies
