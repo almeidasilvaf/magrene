@@ -1,7 +1,7 @@
 
 # Data in data/
 
-## gma\_grn.rda
+## gma_grn.rda
 
 BioProjects:
 
@@ -50,7 +50,7 @@ gma_grn <- genie3[1:137866, ]
 usethis::use_data(gma_grn, compress = "xz")
 ```
 
-## gma\_paralogs.rda
+## gma_paralogs.rda
 
 Paralogs were downloaded from the Supplementary Data of [Almeida-Silva
 *et al.*, 2020](https://doi.org/10.1007/s00425-020-03499-8).
@@ -74,7 +74,7 @@ names(gma_paralogs) <- c("duplicate1", "duplicate2", "type")
 usethis::use_data(gma_paralogs, compress = "xz")
 ```
 
-## gma\_ppi.rda
+## gma_ppi.rda
 
 Retrieve genes included in the GRN.
 
@@ -127,3 +127,35 @@ gma_ppi <- gma_ppi[gma_ppi$node1 %in% genes_grn, ]
 gma_ppi <- gma_ppi[gma_ppi$node2 %in% genes_grn, ]
 usethis::use_data(gma_ppi, compress = "xz")
 ```
+
+## nulls.rda
+
+Here, we will create a null distribution for use in vignettes.
+
+``` r
+set.seed(123)
+
+# Load data
+data(gma_grn)
+data(gma_ppi)
+data(gma_paralogs)
+
+# Filter data according to vignette
+paralogs <- gma_paralogs[gma_paralogs$type == "WGD", 1:2]
+
+# Keep only the top 30000 edges of the GRN, remove "Weight" variable
+grn <- gma_grn[1:30000, 1:2]
+
+# Generate nulls
+nulls <- generate_nulls(grn, paralogs, gma_ppi, n = 100)
+
+usethis::use_data(
+    nulls, compress = "xz", overwrite = TRUE
+)
+```
+
+# Data in extdata/
+
+## motifs_vignette.png
+
+The figure was created manually.

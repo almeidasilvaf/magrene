@@ -12,7 +12,9 @@ simulated network.
 data(nulls)
 }
 \description{
-Data were filtered exactly as demonstrated in the vignette.
+Data were filtered exactly as demonstrated in the vignette. Briefly,
+the top 30k edges from the GRN were kept, and only WGD-derived gene
+pairs were used.
 }
 \examples{
 data(nulls)
