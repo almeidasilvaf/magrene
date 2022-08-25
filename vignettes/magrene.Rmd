@@ -291,6 +291,7 @@ observed <- list(
     lambda = length(lambda), 
     bifan = length(bifan), 
     V = length(v),
+    PPI_V = length(ppi_v),
     delta = length(delta)
 )
 calculate_Z(observed, nulls)
