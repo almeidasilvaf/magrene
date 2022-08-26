@@ -63,7 +63,7 @@
     <h2>Arguments</h2>
     <dl><dt>observed</dt>
 <dd><p>A list of observed motif frequencies for each motif type.
-List elements must be named 'lambda', 'bifan', 'V', and
+List elements must be named 'lambda', 'bifan', 'V', 'PPI_V', and
 'delta' (not necessarily in that order).</p></dd>
 
 
@@ -83,13 +83,15 @@ as returned by <code>generate_nulls</code>.</p></dd>
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Simulating it for test purposes</span></span></span>
 <span class="r-in"><span><span class="va">null</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1000</span>, mean <span class="op">=</span> <span class="fl">5</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">nulls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>lambda <span class="op">=</span> <span class="va">null</span>, V <span class="op">=</span> <span class="va">null</span>, delta <span class="op">=</span> <span class="va">null</span>, bifan <span class="op">=</span> <span class="va">null</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">observed</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>lambda <span class="op">=</span> <span class="fl">7</span>, bifan <span class="op">=</span> <span class="fl">13</span>, delta <span class="op">=</span> <span class="fl">9</span>, V <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">nulls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    lambda <span class="op">=</span> <span class="va">null</span>, V <span class="op">=</span> <span class="va">null</span>, PPI_V <span class="op">=</span> <span class="va">null</span>, delta <span class="op">=</span> <span class="va">null</span>, bifan <span class="op">=</span> <span class="va">null</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">observed</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>lambda <span class="op">=</span> <span class="fl">7</span>, bifan <span class="op">=</span> <span class="fl">13</span>, delta <span class="op">=</span> <span class="fl">9</span>, V <span class="op">=</span> <span class="fl">5</span>, PPI_V <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">z</span> <span class="op">&lt;-</span> <span class="fu">calculate_Z</span><span class="op">(</span><span class="va">observed</span>, <span class="va">nulls</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># Check for motif enrichment (Z &gt; 5)</span></span></span>
 <span class="r-in"><span><span class="va">z</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">z</span> <span class="op">&gt;</span> <span class="fl">5</span><span class="op">)</span><span class="op">]</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    bifan </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8.102183 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    PPI_V    bifan </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5.075791 8.100199 </span>
 </code></pre></div>
     </div>
   </div>
