@@ -89,7 +89,7 @@ generate_nulls <- function(edgelist = NULL, paralogs = NULL,
 #' Calculate Z-score for motif frequencies
 #'
 #' @param observed A list of observed motif frequencies for each motif type.
-#' List elements must be named 'lambda', 'bifan', 'V', and 
+#' List elements must be named 'lambda', 'bifan', 'V', 'PPI_V', and 
 #' 'delta' (not necessarily in that order).
 #' @param nulls A list of null distributions for each motif type 
 #' as returned by \code{generate_nulls}.
@@ -102,8 +102,10 @@ generate_nulls <- function(edgelist = NULL, paralogs = NULL,
 #' @examples
 #' # Simulating it for test purposes
 #' null <- rnorm(1000, mean = 5, sd = 1)
-#' nulls <- list(lambda = null, V = null, delta = null, bifan = null)
-#' observed <- list(lambda = 7, bifan = 13, delta = 9, V = 5)
+#' nulls <- list(
+#'     lambda = null, V = null, PPI_V = null, delta = null, bifan = null
+#' )
+#' observed <- list(lambda = 7, bifan = 13, delta = 9, V = 5, PPI_V = 10)
 #' z <- calculate_Z(observed, nulls)
 #' # Check for motif enrichment (Z > 5)
 #' z[which(z > 5)]

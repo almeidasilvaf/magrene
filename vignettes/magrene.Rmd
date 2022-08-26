@@ -148,8 +148,6 @@ v <- find_v(grn, paralogs)
 head(v)
 ```
 
-As you can see, there are no V motifs in this example data set. When that is
-the case, `find_*` functions return NULL.
 
 ## Lambda
 

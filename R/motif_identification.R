@@ -287,7 +287,6 @@ find_ppi_v <- function(edgelist = NULL, paralogs = NULL,
 #' @return A character vector with bifan motifs represented 
 #' in the format \strong{regulator1, regulator2->target1, target2}.
 #' 
-#' @importFrom utils combn
 #' @export
 #' @rdname find_bifan
 #' @examples 
