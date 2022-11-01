@@ -1,6 +1,6 @@
 Package: magrene
 Title: Motif Analysis In Gene Regulatory Networks
-Version: 0.99.1
+Version: 1.0.0
 Date: 2022-01-21
 Authors@R: 
     c(
