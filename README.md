@@ -11,7 +11,7 @@ issues](https://img.shields.io/github/issues/almeidasilvaf/magrene)](https://git
 stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![R-CMD-check-bioc](https://github.com/almeidasilvaf/magrene/workflows/R-CMD-check-bioc/badge.svg)](https://github.com/almeidasilvaf/magrene/actions)
 [![Codecov test
-coverage](https://codecov.io/gh/almeidasilvaf/magrene/branch/master/graph/badge.svg)](https://codecov.io/gh/almeidasilvaf/magrene?branch=master)
+coverage](https://codecov.io/gh/almeidasilvaf/magrene/branch/devel/graph/badge.svg)](https://codecov.io/gh/almeidasilvaf/magrene?branch=devel)
 <!-- badges: end -->
 
 The goal of `magrene` is to identify and analyze graph motifs containing
@@ -29,7 +29,17 @@ simulated GRNs.
 Finally, users can calculate the interaction similarity between gene
 pairs based on the Sorensen-Dice similarity index.
 
-<img src="vignettes/motifs_vignette.png" title="Network motifs and functions to identify them. Shaded boxes indicate paralogs. Regulators and targets are indicated in purple and green, respectively. Arrows indicate directed regulatory interactions, while dashed lines indicate protein-protein interaction." alt="Network motifs and functions to identify them. Shaded boxes indicate paralogs. Regulators and targets are indicated in purple and green, respectively. Arrows indicate directed regulatory interactions, while dashed lines indicate protein-protein interaction." width="100%" />
+<div class="figure">
+
+<img src="vignettes/motifs_vignette.png" alt="Network motifs and functions to identify them. Shaded boxes indicate paralogs. Regulators and targets are indicated in purple and green, respectively. Arrows indicate directed regulatory interactions, while dashed lines indicate protein-protein interaction." width="100%" />
+<p class="caption">
+Network motifs and functions to identify them. Shaded boxes indicate
+paralogs. Regulators and targets are indicated in purple and green,
+respectively. Arrows indicate directed regulatory interactions, while
+dashed lines indicate protein-protein interaction.
+</p>
+
+</div>
 
 ## Installation instructions
 
@@ -90,23 +100,23 @@ contributing to this project, you agree to abide by its terms.
 
 ## Development tools
 
--   Continuous code testing is possible thanks to [GitHub
-    actions](https://www.tidyverse.org/blog/2020/04/usethis-1-6-0/)
-    through *[usethis](https://CRAN.R-project.org/package=usethis)*,
-    *[remotes](https://CRAN.R-project.org/package=remotes)*, and
-    *[rcmdcheck](https://CRAN.R-project.org/package=rcmdcheck)*
-    customized to use [Bioconductor’s docker
-    containers](https://www.bioconductor.org/help/docker/) and
-    *[BiocCheck](https://bioconductor.org/packages/3.15/BiocCheck)*.
--   Code coverage assessment is possible thanks to
-    [codecov](https://codecov.io/gh) and
-    *[covr](https://CRAN.R-project.org/package=covr)*.
--   The [documentation website](http://almeidasilvaf.github.io/magrene)
-    is automatically updated thanks to
-    *[pkgdown](https://CRAN.R-project.org/package=pkgdown)*.
--   The documentation is formatted thanks to
-    *[devtools](https://CRAN.R-project.org/package=devtools)* and
-    *[roxygen2](https://CRAN.R-project.org/package=roxygen2)*.
+- Continuous code testing is possible thanks to [GitHub
+  actions](https://www.tidyverse.org/blog/2020/04/usethis-1-6-0/)
+  through *[usethis](https://CRAN.R-project.org/package=usethis)*,
+  *[remotes](https://CRAN.R-project.org/package=remotes)*, and
+  *[rcmdcheck](https://CRAN.R-project.org/package=rcmdcheck)* customized
+  to use [Bioconductor’s docker
+  containers](https://www.bioconductor.org/help/docker/) and
+  *[BiocCheck](https://bioconductor.org/packages/3.15/BiocCheck)*.
+- Code coverage assessment is possible thanks to
+  [codecov](https://codecov.io/gh) and
+  *[covr](https://CRAN.R-project.org/package=covr)*.
+- The [documentation website](http://almeidasilvaf.github.io/magrene) is
+  automatically updated thanks to
+  *[pkgdown](https://CRAN.R-project.org/package=pkgdown)*.
+- The documentation is formatted thanks to
+  *[devtools](https://CRAN.R-project.org/package=devtools)* and
+  *[roxygen2](https://CRAN.R-project.org/package=roxygen2)*.
 
 For more details, check the `dev` directory.
 
